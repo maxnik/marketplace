@@ -95,7 +95,7 @@ p {
 
 #main {
   margin-left: 11em;
-  padding: 0.3em;
+  padding: 0.5em 1em;
 }
 
 #bottom {
@@ -304,6 +304,35 @@ h1 {
 }
 #right dd {
   margin-left: 1em;
+}
+
+#right a {
+  color: orange;
+}
+#right p.bottom-para {
+  text-align: right;
+  margin-right: 0.95em;
+}
+#right p label {
+  color: #095e00;
+  font-weight: bold;
+}
+#right p label.field-label {
+  float: left;
+  width: 4em;
+  text-align: right;
+  margin-top: 0.35em;
+}
+#right p label {
+  font-size: 0.8em;
+}
+#right p input.input-field {
+  width: 10em;
+  margin: 0.1em 0.1em 0.2em 0.4em;
+  padding: 0.2em;
+}
+#right p input.checkbox {
+  margin-left: 4.1em;
 }
 
 

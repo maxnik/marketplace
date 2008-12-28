@@ -1,0 +1,42 @@
+<% if logged_in? -%>
+  <address>Вы вошли как <%= link_to(wbr_by(h(current_user.login), 7), 
+                                    user_path(current_user), :class => 'user-link') %>
+  </address>
+  <span>на Вашем счете 234 WMZ</span>
+  <dl>
+    <dd><%= link_to('выйти из системы', logout_path, :id => 'logout-link') %></dd>
+    <dd><%= link_to('личные сообщения', messages_path, :id => 'messages-link') %></dd>
+    <dt>Управление заказами</dt>
+      <dd><%= link_to('разместить заказ', new_task_path, :id => 'new-task-link') %></dd>
+      <dd><%= link_to('мои заказы', tasks_user_path(current_user), :id => 'my-tasks-link') %></dd>
+    <dt>Управление статьями</dt>
+      <dd><%= link_to('разместить статью', new_article_path, :id => 'new-article-link') %></dd>
+      <dd><%= link_to('мои статьи', user_path(current_user), :id => 'my-articles-link') %></dd>
+    <dt>Управление счетом</dt>
+      <dd><a href="#" id="deposit-link">пополнить счет</a></dd>
+      <dd><a href="#" id="withdraw-link">вывести деньги</a></dd>
+    <dt>Личные данные</dt>
+      <dd><a href="#" id="edit-profile-link">редактировать</a></dd>
+      <dd><a href="#" id="portfolio-link">портфолио</a></dd>
+
+  </dl>
+<% else -%>
+  <% form_tag session_path do -%>
+    <p>
+      <%= label_tag 'Имя', nil, :class => 'field-label' %>
+      <%= text_field_tag 'login', nil, :class => 'input-field' %>
+    </p>
+    <p>
+      <%= label_tag 'Пароль', nil, :class => 'field-label' %>
+      <%= password_field_tag 'password', nil, :class => 'input-field' %>
+    </p>
+    <p>
+      <%= check_box_tag 'not_my_computer', 1, false, :class => 'checkbox' %>
+      <%= label_tag 'not_my_computer', 'чужой компьютер' %>
+    </p>
+    <p class="bottom-para">
+      <%= link_to('регистрация', new_user_path) %> <%= submit_tag 'Войти' %> 
+    </p>
+  <% end -%>
+<% end -%>
+

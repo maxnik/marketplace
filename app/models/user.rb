@@ -5,6 +5,12 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   include Authentication::ByCookieToken
 
+  LOGIN_REGEX = /\A[a-z0-9][a-z0-9\.\-_@]+\z/
+
+  EMAIL_NAME_REGEX  = '[a-z0-9\.%\+\-]+'.freeze
+  EMAIL_REGEX       = /\A#{EMAIL_NAME_REGEX}@#{Authentication.domain_head_regex}#{Authentication.domain_tld_regex}\z/i
+
+  
   attr_accessible :login, :email, :password, :password_confirmation, :wmz
 
   def self.authenticate(login, password)
@@ -44,7 +50,7 @@ class User < ActiveRecord::Base
                   when login.blank? then 'у каждого пользователя должно быть имя'
                   when login.size < 3 then 'слишком короткое имя'
                   when login.size > 20 then 'слишком длинное имя'
-                  when login !~ Authentication.login_regex then 'имя содержит недопустимые символы'
+                  when login !~ LOGIN_REGEX then 'имя содержит недопустимые символы'
                   when ! login_users.blank? then 'это имя уже занято'
                   end
     errors.add(:login, login_error) unless login_error.nil?
@@ -56,7 +62,7 @@ class User < ActiveRecord::Base
                                                  end)
     email_error = case
                   when email.blank? then 'адрес e-mail нужен для регистрации'
-                  when email !~ Authentication.email_regex then 'что-то не похоже на адрес e-mail'
+                  when email !~ EMAIL_REGEX then 'что-то не похоже на адрес e-mail'
                   when ! email_users.blank? then 'этот адрес связан с другим именем'
                   end
     errors.add(:email, email_error) unless email_error.nil?
@@ -87,6 +93,11 @@ class User < ActiveRecord::Base
 
   def to_param
     login
+  end
+
+  def initialize(*args)
+    super
+    self.last_login_at = self.last_tasks_at = self.last_messages_at = Time.now
   end
 
 end

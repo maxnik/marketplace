@@ -1,0 +1,58 @@
+<% RuTils::overrides = true %>
+
+<h1>
+<% if my_personal_page? %>
+  Это Ваша персональная страница
+<% else %>
+  Личная страница пользователя <%= @user.login %>
+<% end %>
+</h1>
+
+<% unless my_personal_page? %>
+<p>
+    Последний раз этот пользователь входил в систему <span><%= time_ago_in_words(@last_login_at) %></span> назад.
+</p>
+<% end %>
+
+
+<% unless (! logged_in?) || my_personal_page? %>
+  <p>
+    Вы можете <%= link_to("написать личное сообщение", message_path(@user.id), :class => 'blue') %> 
+    этому пользователю.
+  </p>
+<% end %>
+
+<% if my_personal_page? %>
+  <table>
+    <tr>
+      <td>E-mail</td>
+      <td class="field-value"><%= current_user.email %></td>
+      <td><a href="#" class="blue">Изменить</a></td>
+    </tr>
+    <tr>
+      <td>Кошелек WMZ</td>
+      <td class="field-value"><%= current_user.wmz %></td>
+      <td><a href="#" class="blue">Изменить</a></td>
+    </tr>
+  </table>
+<% end %>
+<p>
+  За <span><%= time_ago_in_words(@user.created_at) %></span> в сервисе этот пользователь написал <span>23 статьи</span>
+  и купил у других пользователей <span>1 статью</span>.
+</p>
+<p>
+  Заказчики оставили ему <a href="#" class="yellow">5 положительных отзывов</a> и <a href="#" class="yellow">10
+  отрицательных отзывов</a>.
+</p>
+<% if @articles.blank? %>
+  <%= my_personal_page? ? 'Вы еще не выставляли' : 'Этот пользователь еще не выставлял' %> статьи на продажу.
+<% else %>
+  <dl>
+  <% @articles.each do |category, articles| %>
+    <dt><%= link_to(h(category.name), category_path(category)) %></dt>
+    <% articles.each do |article| %>
+      <dd><%= link_to(h(article.title), article_path(article)) %></dd>
+    <% end %>
+  <% end %>
+  </dl>
+<% end %>

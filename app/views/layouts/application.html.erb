@@ -51,7 +51,7 @@
       <div id="menu">
         <%= link_to('ЗАКАЗЫ', tasks_path) %> |
 	<%= link_to('Статьи', articles_path) %> |
-        <%= link_to('Рейтинг копирайтеров', users_path) %> |
+        <%= link_to('Рейтинг пользователей', users_path) %> |
         <a href="#">ФОРУМ</a> |
         <a href="#">В помощь копирайтеру</a>
       </div>
@@ -71,7 +71,7 @@
     </div>
   
     <div id="right">
-      render :partial => '/user_bar'
+      <%= render :partial => '/user_bar' %>
     </div>
 
   <div id="bottom">Самый подвал страницы
