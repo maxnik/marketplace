@@ -408,3 +408,6 @@ wbr:after { content: "\00200B" }
   color: #f00;
 }
 
+body div#heroku_toolbar {
+  display: none;
+}
