@@ -1,0 +1,15 @@
+<dl>
+<% catalog.each do |section, categories| %>
+  <dt>
+    <%= link_to(h(section.name), category_path(section)) %>
+    <% articles_count = section.articles_count + categories.inject(0) {|res, c| res += c.articles_count; res} %>
+    <%= articles_count == 0 ? "" : "<em>#{articles_count}</em>" %>
+  </dt>
+  <% categories.each do |category| %>
+    <dd>
+      <%= link_to(h(category.name), category_path(category)) %>
+      <%= category.articles_count == 0 ? "" : "<em>#{category.articles_count}</em>" %>
+    </dd>
+  <% end %>
+<% end %>
+</dl>

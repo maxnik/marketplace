@@ -62,7 +62,7 @@
            <%= text_field_tag 'q', '', :size => '14', :class => 'search-field' %>
            <%= submit_tag 'Найти', :name => nil, :class => 'button' %>
          <% end %>
-        render :partial => '/catalog', :object => @catalog
+        <%= render :partial => '/catalog', :object => @catalog %>
       </div>
 
       <div id="main">

@@ -14,4 +14,12 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   include AuthenticatedSystem
+
+  before_filter :load_catalog
+
+  protected
+
+  def load_catalog
+    @catalog = Category.load_catalog
+  end
 end

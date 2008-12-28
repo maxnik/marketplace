@@ -362,10 +362,14 @@ a.user-link {
 #main a.proposition {
   background-image: url(/images/balloon.png);
 }
+
+#main ul#tasks a.user-link,
+#main ul#tasks a.proposition {
+  background-color: #eef2e3;
+}
 #main a.user-link,
 #main a.proposition {
   color: #000;
-  background-color: #eef2e3;
 }
 
 #main table.users {

@@ -5,17 +5,7 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   include Authentication::ByCookieToken
 
-  validates_presence_of     :login
-  validates_length_of       :login,    :within => 3..40
-  validates_uniqueness_of   :login
-  validates_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message
-
-  validates_presence_of     :email
-  validates_length_of       :email,    :within => 6..100 #r@a.wk
-  validates_uniqueness_of   :email
-  validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
-
-  attr_accessible :login, :email, :password, :password_confirmation
+  attr_accessible :login, :email, :password, :password_confirmation, :wmz
 
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
@@ -29,6 +19,74 @@ class User < ActiveRecord::Base
 
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
+  end
+
+#   has_many :my_tasks,       :class_name => 'Task', :foreign_key => 'customer_id'
+#   has_many :assigned_tasks, :class_name => 'Task', :foreign_key => 'copywriter_id'
+
+#   has_many :my_messages,       :class_name => 'Message', :foreign_key => 'sender_id'
+#   has_many :received_messages, :class_name => 'Message', :foreign_key => 'recipient_id'
+
+#   has_many :purchased_articles, :as => 'owner'
+#   has_many :articles, :foreign_key => 'author_id'
+
+#   has_many :propositions, :foreign_key => 'sender_id'
+
+  def validate
+    errors.clear
+
+    login_users = User.find(:all, :conditions => if new_record?
+                                                   {:login => login}
+                                                 else
+                                                   ['login = ? AND id <> ?', login, id]
+                                                 end)
+    login_error = case 
+                  when login.blank? then 'у каждого пользователя должно быть имя'
+                  when login.size < 3 then 'слишком короткое имя'
+                  when login.size > 20 then 'слишком длинное имя'
+                  when login !~ Authentication.login_regex then 'имя содержит недопустимые символы'
+                  when ! login_users.blank? then 'это имя уже занято'
+                  end
+    errors.add(:login, login_error) unless login_error.nil?
+
+    email_users = User.find(:all, :conditions => if new_record? 
+                                                   {:email => email}
+                                                 else
+                                                   ['email = ? AND id <> ?', email, id]
+                                                 end)
+    email_error = case
+                  when email.blank? then 'адрес e-mail нужен для регистрации'
+                  when email !~ Authentication.email_regex then 'что-то не похоже на адрес e-mail'
+                  when ! email_users.blank? then 'этот адрес связан с другим именем'
+                  end
+    errors.add(:email, email_error) unless email_error.nil?
+
+    password_error = case
+                     when password.blank? then 'пароль нужен для защиты Ваших данных'
+                     when password.size < 6 then 'слишком короткий пароль'
+                     end
+    errors.add(:password, password_error) unless password_error.nil?
+
+   confirm_error = case
+                   when ! errors.on(:password).nil? then 'повторите правильный пароль'
+                   when password != password_confirmation
+                     errors.add(:password, 'оба введенных пароля должны совпадать')
+                     'повтор не совпадает с первым вводом'
+                   end
+    errors.add(:password_confirmation, confirm_error) unless confirm_error.nil?
+
+    wmz_error = case
+                when (!wmz.blank?) && wmz !~ /^Z(\d){12}$/ then 'неправильный формат номера кошелька'
+                end
+    errors.add(:wmz, wmz_error) unless wmz_error.nil?
+  end
+
+  def self.per_page
+    10
+  end
+
+  def to_param
+    login
   end
 
 end
