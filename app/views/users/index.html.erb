@@ -1,0 +1,29 @@
+<h1>Рейтинг копирайтеров</h1>
+<% if @users.blank? %>
+
+<% else %>
+<table class="users">
+  <thead>
+  <tr>
+    <th>&nbsp;</th>
+    <th><%= link_to('Отзывы', users_path) %></th>
+    <th><%= link_to('Время в сервисе', users_path) %></th>  
+    <th><%= link_to('Написал', users_path) %></th>
+    <th><%= link_to('Приобрел', users_path) %></th>
+  </tr>
+  </thead>
+  <tbody>
+<% @users.each do |user| %>
+  <tr class="<%= cycle('even', 'odd') -%>">
+    <td class="user-login"><%= link_to(wbr_by(h(user.login), 10), user_path(user), :class => 'user-link') %></td>
+    <td class="user-rating"><i>+10</i><br /><b>-20</b></td>
+    <td><%= time_ago_in_words(user.created_at) %></td>
+    <td>0 articles published</td>
+    <td>15 articles bought</td>
+  </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= will_paginate @users %>
+<% end %>

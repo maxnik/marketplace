@@ -1,0 +1,410 @@
+body {
+  background-color: #fff;
+}
+
+body,
+p {
+  padding: 0;
+  margin: 0;
+  font-family: Verdana, sans-serif;
+  color: #000;
+}
+
+#top {
+  background-color: #7bad00;
+  height: 2em;
+}
+#top span {
+  margin-left: 1em;
+  text-transform: uppercase;
+  color: #d5ea9b;
+  font-size: 1.5em;
+}
+#ads,
+#about,
+#left,
+#right,
+#catalog {
+  margin-top: 0.25em;
+}
+
+#ads-about {
+  overflow: hidden;
+}
+
+#ads,
+#about {
+  padding-bottom: 32767px;
+  margin-bottom: -32767px;
+}
+
+#ads div,
+#ads ol li span,
+#ads ol li a,
+#ads a,
+#about p {
+  font-size: 0.7em;
+}
+
+#ads,
+#left {
+  float: left;
+  width: 76%;
+  margin-left: 0.25em;
+}
+
+#ads ol {
+  margin: 0;
+  padding: 0.25em 0.25em 0 0.25em;
+  list-style-type: none;
+}
+#ads ol li {
+  margin: 0.15em;
+}
+#ads ol li a {
+  text-transform: uppercase;
+}
+
+#about,
+#right {
+  margin-left: 77%;
+  margin-right: 0.25em;
+}
+
+#ads ol li,
+#ads a {
+  line-height: 0.4em;
+}
+
+#ads div,
+#about p {
+  line-height: 0.9em;
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+#menu {
+  padding: 0.5em;
+  text-align: center;
+}
+
+#catalog {
+  float: left;
+  width: 10em;
+  margin-bottom: 0.25em;
+}
+
+#main {
+  margin-left: 11em;
+  padding: 0.3em;
+}
+
+#bottom {
+  background-color: #7bad00;
+  clear: left;
+}
+
+#ads,
+#right,
+#catalog {
+  background-color: #eef2e3;
+}
+#about,
+#menu {
+  background-color: #d5ea9b;
+}
+#ads a {
+  color: #7bad00;
+}
+h1,
+#about a,
+#menu a,
+#catalog dt a,
+#catalog h3,
+#main form div label,
+#main form div p span.text,
+#main form div input.button,
+#main form div.checkbox-div span,
+#main form div.radio-button-div span,
+#main form div.select-div select,
+#main form div.upload-div input,
+#right dl dt,
+#right dl dt a,
+#right span {
+  color: #095e00;
+}
+
+#right address a {
+  color: #333;
+}
+#right address,
+#right dl dd a,
+#catalog dl dd a {
+  color: #666;
+}
+
+#catalog {
+  padding: 0.3em;
+}
+#catalog form input.button {
+  padding: 0;
+}
+#catalog form input.search-field {
+  width: 7.5em;
+}
+#catalog h3,
+#catalog dl {
+  font-size: 0.85em;
+}
+#catalog h3 {
+  margin: 0 0 0.3em 0;
+}
+#catalog dl {
+  margin: 0.3em 0 0 0;
+}
+#catalog dt a {
+  font-weight: bold;
+}
+#catalog dt a:hover {
+  background-color: #7bad00;
+  color: #fff;
+  text-decoration: none;
+}
+#catalog dd {
+  margin-left: 0.3em;
+}
+#catalog dd a,
+#catalog em {
+  font-size: 0.8em;
+  letter-spacing: 0.1em;
+}
+#catalog dd a:hover {
+  background-color: #444;
+  color: #fff;
+  text-decoration: none;
+}
+#catalog em {
+  font-style: normal;
+}
+
+h1 {
+  margin: 0.2em 0 0 0;
+  padding: 0;  
+  font-size: 1.5em;
+}
+#main form {
+  margin-top: 1em;
+}
+#main form div label {
+  float: left;
+  width: 10em;
+  text-align: right;
+  margin: 0.5em 0.2em 0 0;
+}
+#main form input.text-field,
+#main form input.error-field,
+#main form input.button,
+#main form textarea {
+  font-size: 140%;
+}
+#main form textarea {
+  width: 20em;
+  height: 10em;
+}
+#main form input.text-field,
+#main form input.error-field {
+  width: 15em;
+}
+#main form .text-field {
+  padding: 0.1em;
+  display: block;
+  border: 2px #d5ea9b solid;
+}
+#main form .error-field {
+  padding: 0.1em;
+  display: block;
+  border: 2px #f00 solid;
+}
+#main form div p {
+  margin: 0 0 0.5em 10.2em;
+}
+#main form div p span,
+#main form div.checkbox-div span,
+#main form div.radio-button-div span {
+  font-size: 0.8em;
+}
+#main form div p span.error {
+  color: #f00;
+  font-weight: bold;
+}
+#main form div label span {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+#main form div input.button {
+  margin-top: 0.6em;
+  margin-left: 7.25em;
+  background-color: #eef2e3;
+  border-color: #eef2e3;
+}
+#main form div.checkbox-div,
+#main form div.radio-button-div {
+  padding-left: 10.2em;
+}
+#main form div.checkbox-div,
+#main form div.radio-button-div,
+#main form div.select-div {
+  margin-bottom: 0.5em;
+}
+#main form div.checkbox-div span,
+#main form div.radio-button-div span {
+  font-weight: bold;
+}
+#main form div.radio-button-div input {
+  margin-bottom: -0.1em;
+}
+#main form div.radio-button-div ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+#main form div.select-div option.section {
+  font-weight: bold;
+}
+#main form div.select-div option.category {
+  padding-left: 2em;
+}
+#main form div.select-div select {
+  font-size: 1.2em;
+  width: 18em;
+}
+#main form div.upload-div input {
+  font-size: 1.13em;
+}
+
+#right {
+  padding: 0.3em 0.5em;
+}
+#right dl {
+  margin: 0.5em 0 0 0;
+  font-size: 0.85em;
+}
+#right dl dt {
+  font-weight: bold;
+}
+#right span {
+  font-size: 0.8em;
+}
+#right address {
+  font-style: normal;
+  margin: 0;
+}
+#right dl dd {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+#right dd {
+  margin-left: 1em;
+}
+
+
+a.user-link,
+#logout-link,
+#messages-link,
+#new-task-link,
+#my-tasks-link,
+#new-article-link,
+#my-articles-link,
+#deposit-link,
+#withdraw-link,
+#edit-profile-link,
+#portfolio-link,
+a.proposition {
+  padding-left: 20px;
+  background-position: center left;
+  background-repeat: no-repeat;
+}
+a.user-link {
+  background-image: url(/images/puzzle.png);
+}
+#main table.users a.user-link {
+  display: block;
+}
+#logout-link {
+  background-image: url(/images/arrow_circle.png);
+}
+#messages-link {
+  background-image: url(/images/mails.png);
+}
+#new-task-link {
+  background-image: url(/images/table__plus.png);
+}
+#my-tasks-link {
+  background-image: url(/images/tables.png);
+}
+#new-article-link {
+  background-image: url(/images/document__plus.png);
+}
+#my-articles-link {
+  background-image: url(/images/documents.png);
+}
+#deposit-link {
+  background-image: url(/images/safe.png);
+}
+#withdraw-link {
+  background-image: url(/images/trophy_arrow.png);
+}
+#edit-profile-link {
+  background-image: url(/images/wrench_screwdriver.png);
+}
+#portfolio-link {
+  background-image: url(/images/database.png);
+}
+#main a.proposition {
+  background-image: url(/images/balloon.png);
+}
+#main a.user-link,
+#main a.proposition {
+  color: #000;
+  background-color: #eef2e3;
+}
+
+#main table.users {
+  margin-left: auto;
+  margin-right: auto;
+}
+#main div.pagination {
+  text-align: center;
+}
+#main table.users td.user-login {
+  width: 5em;
+}
+#main table.users td.user-rating {
+  text-align: center;
+}
+#main table.users tr.even td {
+  background-color: #eee;
+}
+#main table.users tr.odd td {
+  background-color: #ddd;
+}
+#main table.users i {
+  font-style: normal;
+  color: green; 
+}
+#main table.users b {
+  font-weight: normal;
+  color: red;
+}
+// <wbr> in Opera fix
+wbr:after { content: "\00200B" }
+
+#main #proposition-dialog {
+  display: none;
+  background-color: #eef2e3;
+  border: 5px solid #d5ea9b;
+  padding: 1em;
+}
+#main i {
+  color: #f00;
+}
+
