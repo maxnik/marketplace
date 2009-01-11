@@ -1,0 +1,39 @@
+<%= javascript_include_tag 'jquery-1.2.6.pack' %>
+<%= javascript_include_tag 'application' %>
+
+<% RuTils::overrides = true %>
+
+<h1>Список новых заказов</h1>
+<ol id="free-tasks">
+<% @tasks.each do |task| %>
+  <li class="task_<%= task.to_param %>">
+    <h2><%= h(task.name) %></h2>
+    <p class="about-task">
+    <strong>$<%= task.price %></strong> за тысячу знаков,<br /> 
+    размещен
+    <% if is_not_mine?(task) %>
+      <%= link_to(task.customer.login, user_path(task.customer), :class => 'user-link') %>
+    <% else %>
+      Вами
+    <% end %>
+    <%= time_ago_in_words(task.created_at) %> назад
+    </p>
+    <p><%= h(task.body) %></p>        
+    <% if ! logged_in? -%>     
+      <i>Чтобы подать заявку на заказ, нужно <%= link_to('зарегистрироваться', new_user_path) %> в системе.</i>
+    <% elsif is_not_mine?(task) -%>
+      <a href="#" name="<%= task.to_param %>" class="proposition">сделать заявку</a>
+    <% end %>
+  </li>
+<% end %>
+</ol>
+
+<div id="proposition-dialog">
+  Заявка на заказ <span></span>
+  <% form_for :proposition, :url => create_proposition_tasks_path do |f| %>
+    <%= f.hidden_field 'task_id' %>
+    <%= f.text_area 'body', :rows => '5' %><br />
+    <%= submit_tag 'Отправить заявку', :id => 'propose', :disabled => true %> 
+    или <a href="#" class="blue">Отмена</a>
+  <% end %>
+</div>

@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
 
-#   has_many :my_tasks,       :class_name => 'Task', :foreign_key => 'customer_id'
+  has_many :my_tasks,       :class_name => 'Task', :foreign_key => 'customer_id'
 #   has_many :assigned_tasks, :class_name => 'Task', :foreign_key => 'copywriter_id'
 
 #   has_many :my_messages,       :class_name => 'Message', :foreign_key => 'sender_id'
@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
     login_error = case 
                   when login.blank? then 'у каждого пользователя должно быть имя'
                   when login.size < 3 then 'слишком короткое имя'
-                  when login.size > 20 then 'слишком длинное имя'
+                  when login.size > 40 then 'слишком длинное имя'
                   when login !~ LOGIN_REGEX then 'имя содержит недопустимые символы'
                   when ! login_users.blank? then 'это имя уже занято'
                   end

@@ -1,4 +1,3 @@
-<% require 'rutils' %>
 <% RuTils::overrides = true %>
 
 <h1>Рейтинг пользователей</h1>
@@ -10,7 +9,7 @@
   <tr>
     <th>&nbsp;</th>
     <th><%= link_to('Отзывы', users_path) %></th>
-    <th><%= link_to('Время в сервисе', users_path) %></th>  
+    <th><%= link_to('В сервисе', users_path) %></th>  
     <th><%= link_to('Написал', users_path) %></th>
     <th><%= link_to('Приобрел', users_path) %></th>
   </tr>
@@ -21,8 +20,8 @@
     <td class="user-login"><%= link_to(wbr_by(h(user.login), 10), user_path(user), :class => 'user-link') %></td>
     <td class="user-rating"><i>+10</i><br /><b>-20</b></td>
     <td><%= time_ago_in_words(user.created_at) %></td>
-    <td>0 articles published</td>
-    <td>15 articles bought</td>
+    <td><%= 1.to_s+" "+1.items('статью', 'статьи', 'статей') %></td>
+    <td><%= 15.to_s+" "+15.items('статью', 'статьи', 'статей') %></td>
   </tr>
 <% end %>
   </tbody>

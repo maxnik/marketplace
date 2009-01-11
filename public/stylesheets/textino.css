@@ -1,12 +1,31 @@
-body {
-  background-color: #fff;
+HTML,BODY,DIV,SPAN,APPLET,OBJECT,IFRAME,H1,H2,H3,H4,H5,H6,P,BLOCKQUOTE,PRE,A,ABBR,ACRONYM,ADDRESS,BIG,CITE,CODE,DEL,DFN,EM,FONT,IMG,INS,KBD,Q,S,SAMP,SMALL,STRIKE,STRONG,SUB,SUP,TT,VAR,HR,B,U,I,CENTER,DL,DT,DD,OL,UL,LI,FIELDSET,FORM,LABEL,LEGEND,TABLE,CAPTION,TBODY,TFOOT,THEAD,TR,TH,TD{padding:0;margin:0;border:none;outline:none;vertical-align:baseline;font-family:inherit;font-size:100%;}HTML{font-size:100.01%;}DFN,I,CITE,VAR,ADDRESS,EM{font-style:normal;}TH,B,STRONG,H1,H2,H3,H4,H5,H6{font-weight:normal;}TEXTAREA,INPUT,SELECT{font-family:inherit;font-size:1em;}BLOCKQUOTE,Q{quotes:none;}Q:before,Q:after,BLOCKQUOTE:before,BLOCKQUOTE:after{content:'';content:none;}OL,UL{list-style:none;}INS{text-decoration:none;}DEL{text-decoration:line-through;}TABLE{border-collapse:collapse;border-spacing:0;}CAPTION,TH,TD{text-align:left;}:focus{outline:none;}
+
+html, body {
+  height: 100%;
 }
 
-body,
-p {
-  padding: 0;
-  margin: 0;
-  font-family: Verdana, sans-serif;
+body {
+  background-color: #fff;
+  font-size: 0.9em;
+  min-width: 770px; // for all browsers except ie
+}
+
+// body min-width for ie only
+* html .minwidth {
+  border-left: 770px solid #fff; // min-width
+  position: relative;
+  float: left;
+  z-index: 1;
+}
+* html .container {
+  margin-left: -770px; // -min-width
+  position: relative;
+  float: left;
+  z-index: 2;
+}
+
+body,p,textarea,input,select {
+  font-family: Helvetica, Arial, sans-serif;
   color: #000;
 }
 
@@ -25,13 +44,12 @@ p {
 #left,
 #right,
 #catalog {
-  margin-top: 0.25em;
+  margin-top: 0.3em;
 }
 
 #ads-about {
   overflow: hidden;
 }
-
 #ads,
 #about {
   padding-bottom: 32767px;
@@ -43,14 +61,13 @@ p {
 #ads ol li a,
 #ads a,
 #about p {
-  font-size: 0.7em;
+  font-size: 0.9em;
 }
 
 #ads,
 #left {
-  float: left;
-  width: 76%;
-  margin-left: 0.25em;
+  margin-left: 0.3em;
+  margin-right: 13.7em;
 }
 
 #ads ol {
@@ -67,13 +84,14 @@ p {
 
 #about,
 #right {
-  margin-left: 77%;
-  margin-right: 0.25em;
+  float: right;
+  width: 12em;
+  margin-right: 0.3em;
 }
 
 #ads ol li,
 #ads a {
-  line-height: 0.4em;
+  line-height: 0.8em;
 }
 
 #ads div,
@@ -86,15 +104,22 @@ p {
   padding: 0.5em;
   text-align: center;
 }
+#menu ul li {
+  display: inline;
+  margin: 0 1em;
+  font-size: 1.2em;
+}
+
 
 #catalog {
   float: left;
-  width: 10em;
+  width: 11em;
   margin-bottom: 0.25em;
+  clear: left;
 }
 
 #main {
-  margin-left: 11em;
+  margin-left: 11.5em;
   padding: 0.5em 1em;
 }
 
@@ -149,11 +174,11 @@ h1,
   padding: 0;
 }
 #catalog form input.search-field {
-  width: 7.5em;
+  width: 6.6em;
 }
 #catalog h3,
 #catalog dl {
-  font-size: 0.85em;
+  font-size: 1em;
 }
 #catalog h3 {
   margin: 0 0 0.3em 0;
@@ -196,7 +221,7 @@ h1 {
 }
 #main form div label {
   float: left;
-  width: 10em;
+  width: 7.5em;
   text-align: right;
   margin: 0.5em 0.2em 0 0;
 }
@@ -204,15 +229,15 @@ h1 {
 #main form input.error-field,
 #main form input.button,
 #main form textarea {
-  font-size: 140%;
+  font-size: 1.5em;
 }
 #main form textarea {
-  width: 20em;
+  width: 100%;
   height: 10em;
 }
 #main form input.text-field,
 #main form input.error-field {
-  width: 15em;
+  width: 100%;
 }
 #main form .text-field {
   padding: 0.1em;
@@ -225,30 +250,30 @@ h1 {
   border: 2px #f00 solid;
 }
 #main form div p {
-  margin: 0 0 0.5em 10.2em;
+  margin: 0 0 0.5em 7.75em;
 }
 #main form div p span,
 #main form div.checkbox-div span,
 #main form div.radio-button-div span {
-  font-size: 0.8em;
+  font-size: 0.9em;
 }
 #main form div p span.error {
   color: #f00;
   font-weight: bold;
 }
 #main form div label span {
-  font-size: 0.8em;
+  font-size: 0.9em;
   font-weight: bold;
 }
 #main form div input.button {
   margin-top: 0.6em;
-  margin-left: 7.25em;
+  margin-left: 5.15em;
   background-color: #eef2e3;
   border-color: #eef2e3;
 }
 #main form div.checkbox-div,
 #main form div.radio-button-div {
-  padding-left: 10.2em;
+  padding-left: 8.4em;
 }
 #main form div.checkbox-div,
 #main form div.radio-button-div,
@@ -282,11 +307,11 @@ h1 {
 }
 
 #right {
-  padding: 0.3em 0.5em;
+  padding: 0.5em;
 }
 #right dl {
   margin: 0.5em 0 0 0;
-  font-size: 0.85em;
+  font-size: 1em;
 }
 #right dl dt {
   font-weight: bold;
@@ -303,7 +328,7 @@ h1 {
   margin-bottom: 0.4em;
 }
 #right dd {
-  margin-left: 1em;
+  margin-left: 0.6em;
 }
 
 #right a {
@@ -327,14 +352,13 @@ h1 {
   font-size: 0.8em;
 }
 #right p input.input-field {
-  width: 10em;
+  width: 8em;
   margin: 0.1em 0.1em 0.2em 0.4em;
   padding: 0.2em;
 }
 #right p input.checkbox {
   margin-left: 4.1em;
 }
-
 
 a.user-link,
 #logout-link,
@@ -354,6 +378,7 @@ a.proposition {
 }
 a.user-link {
   background-image: url(/images/puzzle.png);
+  color: #000;
 }
 #main table.users a.user-link {
   display: block;
@@ -392,30 +417,33 @@ a.user-link {
   background-image: url(/images/balloon.png);
 }
 
-#main ul#tasks a.user-link,
-#main ul#tasks a.proposition {
-  background-color: #eef2e3;
-}
-#main a.user-link,
 #main a.proposition {
-  color: #000;
+  color: orange;
 }
 
 #main table.users {
   margin-left: auto;
   margin-right: auto;
+  width: 90%;
 }
 #main div.pagination {
   text-align: center;
 }
 #main table.users td.user-login {
   width: 5em;
+  text-align: left;
 }
-#main table.users td.user-rating {
+#main table.users td {
+  vertical-align: middle;
+  padding: 0.25em 0;
+}
+#main table.users td,
+#main table.users th {
   text-align: center;
 }
 #main table.users tr.even td {
   background-color: #eee;
+  color: #7bad00;
 }
 #main table.users tr.odd td {
   background-color: #ddd;
@@ -444,3 +472,19 @@ wbr:after { content: "\00200B" }
 body div#heroku_toolbar {
   display: none;
 }
+
+#main #free-tasks {
+                margin-top: 1em;
+                }
+                #main #free-tasks LI {
+                                  margin-bottom: 1em;
+                                  }
+				  #main #free-tasks LI P.about-task,
+				  #main #free-tasks LI A.user-link {
+				                                 color: #095e00;
+				                                 }
+                                  #main #free-tasks LI H2 {
+                                                       color: orange;
+						       font-weight: bold;
+                                                       }
+

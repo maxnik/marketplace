@@ -1,5 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-          "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+          "http://www.w3.org/TR/html4/strict.dtd">
 <html style="margin: 0 !important;">
 <head>
   <title><%= @title.nil? ? 'Textino' : @title + ' - Textino' %></title>
@@ -8,52 +8,27 @@
   <%= stylesheet_link_tag "textino", :media => "all" %>
 </head>
 <body style="margin: 0 !important;">
+
+<div class="minwidth">
+<div class="container">
+
   <div id="top">
     <span>Textino</span>
   </div>
+
+    <div id="right">
+      <%= render :partial => '/user_bar' %>
+    </div>
   
-  <div id="ads-about">
-    <div id="ads">
-      <ol>
-        <li>
-          <a href="#" class="light-green">Юзер #1</a>
-	  <span>Журналист, выполню качественный копирайт. Тематика различная. Цены умеренные, качество превосходное!</span>
-        </li>
-        <li>
-          <a href="#" class="light-green">Юзер #2</a>
-	  <span>Выполню качественно и в срок копирайт на технические темы. Цена 5-7 за 1000.</span>
-        </li>
-        <li>
-          <a href="#" class="light-green">Юзер #3</a>
-	  <span>Уже давно пишу про детские товары и косметику. Обращайтесь, цены приемлимые.</span>
-        </li>
-        <li>
-          <a href="#" class="light-green">Юзер #4</a>
-	  <span>Компьютерные статьи на заказ, а также выбирайте из готовых.</span>
-        </li>
-        <li>
-          <a href="#" class="light-green">Юзер #5</a>
-	  <span>Рерайт и копирайт в кратчайшие сроки. Исполнительность и аккуратность.</span>
-        </li>
-      </ol>      
-    </div>
-
-    <div id="about">
-      <p>
-        Textino - уникальная по своим возможностям биржа копирайта. Опытные копирайтеры здесь могут заработать денег,
-        а заказчик может приобрести качественный контент для сайта.&nbsp;
-	<a href="#">Узнать больше</a>
-      </p>      
-    </div>
-  </div>
-
     <div id="left">
       <div id="menu">
-        <%= link_to('ЗАКАЗЫ', tasks_path) %> |
-	<%= link_to('Статьи', articles_path) %> |
-        <%= link_to('Рейтинг пользователей', users_path) %> |
-        <a href="#">ФОРУМ</a> |
-        <a href="#">В помощь копирайтеру</a>
+        <ul>
+          <li><%= link_to('Заказы', tasks_path) %> </li>
+	  <li><%= link_to('Статьи', articles_path) %> </li>
+	  <li><%= link_to('Рейтинг', users_path) %> </li>
+	  <li><a href="#">Форум</a> </li>
+	  <li><a href="#">Помощь</a></li>
+        </ul>
       </div>
     
       <div id="catalog">
@@ -70,11 +45,11 @@
       </div>
     </div>
   
-    <div id="right">
-      <%= render :partial => '/user_bar' %>
-    </div>
-
   <div id="bottom">Самый подвал страницы
   </div>
+
+</div>
+</div>
+
 </body>
 </html>

@@ -3,12 +3,12 @@
 <% @user.password = @user.password_confirmation = nil %>
 
 <% dived_form_for @user do |f| %>
-  <%= f.text_field_for(:login, :label => 'Имя пользователя', 
-                               :bottom => 'минимум три латинских буквы или цифры') %>
+  <%= f.text_field_for(:login, :label => 'Имя', 
+                               :bottom => 'от 3-х до 40-ка латинских букв или цифр') %>
   <%= f.text_field_for(:email, :label => 'E-mail',
                                :bottom => 'сюда будут приходить уведомления от Textino') %>
   <%= f.password_field_for(:password, :label => 'Пароль',
-                                      :bottom => 'минимум шесть символов для надежной защиты') %>
+                                      :bottom => 'минимум 6-ть символов для надежной защиты') %>
   <%= f.password_field_for(:password_confirmation, :label => 'Пароль еще раз',
                                       :bottom => 'повторите чтобы исключить ошибку') %>
   <%= f.text_field_for(:wmz, :label => 'Кошелек WMZ',
