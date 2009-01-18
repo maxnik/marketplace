@@ -153,7 +153,6 @@ h1,
 #main form div.select-div select,
 #main form div.upload-div input,
 #right dl dt,
-#right dl dt a,
 #right span {
   color: #095e00;
 }
@@ -162,7 +161,6 @@ h1,
   color: #333;
 }
 #right address,
-#right dl dd a,
 #catalog dl dd a {
   color: #666;
 }
@@ -174,7 +172,7 @@ h1,
   padding: 0;
 }
 #catalog form input.search-field {
-  width: 6.6em;
+  width: 6em;
 }
 #catalog h3,
 #catalog dl {
@@ -324,15 +322,18 @@ h1 {
   margin: 0;
 }
 #right dl dd {
-  margin-top: 0.4em;
-  margin-bottom: 0.4em;
-}
+          margin-top: 0.4em;
+          margin-bottom: 0.4em;
+          }
+          #right dl dd a {
+                       font-size: 0.95em;
+                       }
 #right dd {
   margin-left: 0.6em;
 }
 
 #right a {
-  color: orange;
+  color: #00f;
 }
 #right p.bottom-para {
   text-align: right;
@@ -363,6 +364,7 @@ h1 {
 a.user-link,
 #logout-link,
 #messages-link,
+A.send-message-link,
 #new-task-link,
 #my-tasks-link,
 #new-article-link,
@@ -388,6 +390,9 @@ a.user-link {
 }
 #messages-link {
   background-image: url(/images/mails.png);
+}
+A.send-message-link {
+  background-image: url(/images/mail.png);
 }
 #new-task-link {
   background-image: url(/images/table__plus.png);
@@ -418,7 +423,7 @@ a.user-link {
 }
 
 #main a.proposition {
-  color: orange;
+  color: #00f;
 }
 
 #main table.users {
@@ -441,13 +446,19 @@ a.user-link {
 #main table.users th {
   text-align: center;
 }
-#main table.users tr.even td {
-  background-color: #eee;
-  color: #7bad00;
-}
-#main table.users tr.odd td {
-  background-color: #ddd;
-}
+#main table.users TR.even TD {
+                          background-color: #eee;
+                          color: #7bad00;
+                          }
+#main table.users TR.even A.user-link {
+                          color: #7bad00;
+                          }
+#main table.users TR.odd TD {
+                         background-color: #ddd;
+                         }
+#main table.users TR.odd A.user-link {
+                         color: #000;
+                         }
 #main table.users i {
   font-style: normal;
   color: green; 
@@ -460,14 +471,17 @@ a.user-link {
 wbr:after { content: "\00200B" }
 
 #main #proposition-dialog {
-  display: none;
-  background-color: #eef2e3;
-  border: 5px solid #d5ea9b;
-  padding: 1em;
-}
-#main i {
-  color: #f00;
-}
+      display: none;
+      background-color: #d5ea9b;
+      padding: 1em;
+      }
+
+#main I {
+      color: #095e00;
+      }
+#main A {
+      color: #00f;
+      }
 
 body div#heroku_toolbar {
   display: none;
@@ -476,15 +490,51 @@ body div#heroku_toolbar {
 #main #free-tasks {
                 margin-top: 1em;
                 }
+                #main P.about,
+                #main #propositions LI,
+                #main P.no-tasks,
+                #main #my-tasks LI,
                 #main #free-tasks LI {
                                   margin-bottom: 1em;
+                                  background-color: #f4f4f4;
+                                  padding: 0.75em;
                                   }
-				  #main #free-tasks LI P.about-task,
-				  #main #free-tasks LI A.user-link {
-				                                 color: #095e00;
-				                                 }
+                                  #main #my-tasks LI P.about-task,
+				  #main #free-tasks LI P.about-task {
+				                       color: #095e00;
+				                       }
+                                                       #main #my-tasks LI P.about-task STRONG,
+                                                       #main #free-tasks LI P.about-task STRONG {
+                                                                                         font-weight: bold;
+                                                                                         }
+                                  #main #my-tasks LI H2,
                                   #main #free-tasks LI H2 {
                                                        color: orange;
 						       font-weight: bold;
                                                        }
+                                  #main #free-tasks LI B.proposition-success,
+                                  #main #free-tasks LI B.proposition-error {
+                                                       margin-left: 1em;
+                                                       }
+                                  #main #propositions LI P.proposition-sender STRONG,
+                                  #main #free-tasks LI B.proposition-success {
+                                                       background-color: yellow;
+                                                       color: #444;
+                                                       }
+                                  #main #free-tasks LI B.proposition-error {
+                                                       background-color: #f4a460;
+                                                       color: white;
+                                                       }
 
+#main P.task-body {
+      margin-bottom: 1em;
+      }
+#main #propositions A.send-message-link {
+                    margin-left: 0.5em;
+                    }
+#main #propositions FORM {
+                    margin-top: 0.25em;
+                    }
+#main #propositions LI P.proposition-sender {
+                       color: #095e00;
+                       }

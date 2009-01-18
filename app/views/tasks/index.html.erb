@@ -1,5 +1,5 @@
 <%= javascript_include_tag 'jquery-1.2.6.pack' %>
-<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'tasks_index' %>
 
 <% RuTils::overrides = true %>
 
@@ -20,9 +20,10 @@
     </p>
     <p><%= h(task.body) %></p>        
     <% if ! logged_in? -%>     
-      <i>Чтобы подать заявку на заказ, нужно <%= link_to('зарегистрироваться', new_user_path) %> в системе.</i>
+      <i>Чтобы подать заявку на этот заказ нужно <%= link_to('зарегистрироваться', new_user_path) %> в системе.</i>
     <% elsif is_not_mine?(task) -%>
-      <a href="#" name="<%= task.to_param %>" class="proposition">сделать заявку</a>
+      <a href="#" name="<%= task.to_param %>" title="<%= h(task.name) %>" class="proposition">подать заявку</a>
+      <b></b>
     <% end %>
   </li>
 <% end %>

@@ -12,13 +12,13 @@ class UsersController < ApplicationController
   end
 
   def new
+    @title = 'Регистрация пользователя'
     @user = User.new
   end
  
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
-    # @user.last_login_at = @user.last_tasks_at = @user.last_messages_at = Time.now
     success = @user && @user.save
     if success && @user.errors.empty?
       self.current_user = @user # !! now logged in
@@ -30,12 +30,14 @@ class UsersController < ApplicationController
 
   def show
     @title = "Личная страница #{@user.login}"
-    @last_login_at = @user.last_login_at
-    if logged_in? && @user.id == current_user.id
-      @user.last_login_at = Time.now
-      @user.save
-    end
     @articles = nil
+  end
+
+  def tasks
+    @title = 'Мои заказы'
+    @my_tasks = current_user.my_tasks
+    # @assigned_tasks = current_user.assigned_tasks
+    @assigned_tasks = []
   end
 
   protected

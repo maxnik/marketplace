@@ -1,0 +1,45 @@
+<% RuTils::overrides = true %>
+
+<% if @my_tasks.blank? %>
+  <p class="no-tasks">
+    Здесь Вы сможете следить за заявками от копирайтеров на выполнение Ваших заказов.
+    Получить статью от копирайтера можно либо добавив <%= link_to('новый заказ', new_task_path) %> в систему, либо
+    купив понравившуюся статью в <a href="#">каталоге</a>.
+  </p>
+<% else %>
+  <h1 class="tasks-group">Вы заказали написать</h1> 
+  <ol id="my-tasks">
+  <% @my_tasks.each do |task| %>
+    <li>
+      <h2><%= h(task.name) %></h2>
+      <p class="about-task">
+        <strong>$<%= task.price %></strong> за тыс. знаков, добавлен <%= time_ago_in_words(task.created_at) %> назад
+      </p>
+      <p><%= h(task.body) %> </p>
+      <%= propositions_link(task) %>
+    </li>
+  <% end %>
+  </ol>
+<% end %>
+
+<% if @assigned_tasks.blank? %>
+  <p class="no-tasks"> 
+    Ни один пользователь еще не назначил Вас исполнителем для своих заказов.
+    Вы можете сейчас подать заявку на один из <%= link_to('новых заказов', tasks_path) %>
+    или <a href="#">выставить на продажу</a> в каталог одну из своих статей.
+  </p>
+<% else %>
+  <h1 class="tasks-group">Вам заказали написать</h1>
+  <ul id="assigned-tasks">
+  <% @assigned_tasks.each do |task| %>
+    <li>
+      <h2><%= task.name %></h2>
+      <span>
+        $<%= task.price %> за тыс. знаков, добавлен <%= time_ago_in_words(task.created_at) %> назад
+        <%= link_to('загрузить готовую статью', new_article_path, :class => 'blue') %>
+      </span>
+      <p><%= task.body %> </p>
+    </li>
+  <% end %>
+  </ul>
+<% end %>

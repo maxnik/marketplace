@@ -9,15 +9,15 @@
 </h1>
 
 <% unless my_personal_page? %>
-<p>
-    Последний раз этот пользователь входил в систему <span><%= time_ago_in_words(@last_login_at) %></span> назад.
+<p class="about">
+    Последний раз этот пользователь обращался к системе <span><%= time_ago_in_words(@user.last_login_at) %></span> назад.
 </p>
 <% end %>
 
 
 <% unless (! logged_in?) || my_personal_page? %>
-  <p>
-    Вы можете <%= link_to("написать личное сообщение", message_path(@user.id), :class => 'blue') %> 
+  <p class="about">
+    Вы можете <%= link_to("написать личное сообщение", message_path(@user.id), :class => 'send-message-link') %> 
     этому пользователю.
   </p>
 <% end %>
@@ -36,7 +36,7 @@
     </tr>
   </table>
 <% end %>
-<p>
+<p class="about">
   За <span><%= time_ago_in_words(@user.created_at) %></span> в сервисе 
   <% if my_personal_page? %> Вы написали <% else %> этот пользователь написал <% end %>
   <span>23 статьи</span>
@@ -44,14 +44,16 @@
   <% if my_personal_page? %> купили <% else %> купил <% end %>
   у других пользователей <span>1 статью</span>.
 </p>
-<p>
+<p class="about">
   Заказчики оставили 
   <% if my_personal_page? %> Вам <% else %> ему <% end %>
   <a href="#" class="yellow">5&nbsp;положительных отзывов</a> и 
   <a href="#" class="yellow">10&nbsp;отрицательных отзывов</a>.
 </p>
 <% if @articles.blank? %>
-  <%= my_personal_page? ? 'Вы еще не выставляли' : 'Этот пользователь еще не выставлял' %> статьи на продажу.
+  <p class="about">
+    <%= my_personal_page? ? 'Вы еще не выставляли' : 'Этот пользователь еще не выставлял' %> статьи на продажу.
+  </p>
 <% else %>
   <dl>
   <% @articles.each do |category, articles| %>

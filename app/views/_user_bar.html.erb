@@ -1,5 +1,5 @@
 <% if logged_in? -%>
-  <address>Вы вошли как <%= link_to(wbr_by(h(current_user.login), 7), 
+  <address>Вы вошли как <br /><%= link_to(wbr_by(h(current_user.login), 7), 
                                     user_path(current_user), :class => 'user-link') %>
   </address>
   <span>на Вашем счете 234 WMZ</span>

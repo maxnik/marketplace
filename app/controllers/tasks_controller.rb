@@ -37,12 +37,13 @@ class TasksController < ApplicationController
   end
 
   def create_proposition    
-    @proposition = current_user.propositions.new(params[:proposition])
-    if @proposition.save
-      render :text => '<span style="color: #0a0;">Ваша заявка доставлена заказчику.</span>'
-    else
-      render :text => "<span style=\"color: #b20000;\">#{@proposition.errors.on_base}</span>"
-    end
+    proposition = current_user.propositions.new(params[:proposition])
+    proposition.task_id = params[:proposition][:task_id]
+    render :text => if proposition.save
+                      %[<b class="proposition-success">Ваша заявка отправлена заказчику</b>]
+                    else
+                      %[<b class="proposition-error">#{proposition.errors.on_base}</b>]
+                    end
   end
   
   protected

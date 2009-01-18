@@ -12,12 +12,11 @@ $(document).ready(function () {
 
     var $dialog = $("#proposition-dialog");
     $dialog.center();
-//     $("span", $dialog).text('"' + $(this).parent().siblings("h2").eq(0).text() + '"');
-//     $("input#proposition_task_id", $dialog).attr('value', this.name);
-//     $("textarea", $dialog).val('');
-//     $("input#propose", $dialog).attr('disabled', true);
-//     $("div#right div#errors").html('');
+    $("span", $dialog).text('"' + this.title + '"');
+    $("input#proposition_task_id", $dialog).attr('value', this.name);
+    $("input#propose", $dialog).attr('disabled', true);
     $dialog.show();
+    $("textarea", $dialog).val('').focus();
     return false;
   });
 		    
@@ -40,7 +39,8 @@ $(document).ready(function () {
       $.post($proposition_form[0].action, 
 	     $proposition_form.serialize(),
 	     function (data) {
-	       alert(data);
+	       var proposition_task_id = $('input#proposition_task_id', $proposition_form).attr('value');
+	       $('li.task_' + proposition_task_id + ' b').replaceWith(data);
 	     });
       $("#proposition-dialog").hide();
     }

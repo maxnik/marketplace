@@ -1,0 +1,28 @@
+<% RuTils::overrides = true %>
+
+<h1><%= h(@task.name) %></h1>
+<p class="task-body"><%= h(@task.body) %></p>
+<ol id="propositions">
+  <% @propositions.each do |proposition| %>
+    <li>
+      <p class="proposition-sender">
+        <% sender = proposition.sender %>
+        <%= link_to(sender.login, user_path(sender), :class => 'user-link') %>	
+        <%= time_ago_in_words(sender.created_at) %> в сервисе, заявка сделана 
+        <%= time_ago_in_words(proposition.created_at) %> назад
+	<% if @task.copywriter && @task.copywriter.id == proposition.sender.id %>
+	  <br /><strong>Вы выбрали автора этой заявки как исполнителя</strong>
+	<% end %>
+      </p>
+      <p class="proposition-body">
+        <%= h(proposition.body) %>
+      </p>
+      <% form_for @task do |f| %>
+        <%= hidden_field_tag 'copywriter_id', sender.id %>
+        <input type="submit" value="выбрать эту заявку" /> 
+	<%= link_to('личное сообщение', '#', :class => 'send-message-link') %>
+      <% end %>
+
+    </li>
+  <% end %>
+</ol>
