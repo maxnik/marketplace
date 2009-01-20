@@ -1,0 +1,29 @@
+<%= yield_authenticity_token %>
+<%= javascript_include_tag 'jquery-1.3.min' %>
+<%= javascript_include_tag 'application' %>
+
+<% RuTils::overrides = true %>
+
+<h1 class="tasks-group">Вы заказали написать</h1> 
+
+<% if @my_tasks.blank? %>
+  <p class="no-tasks">
+    Здесь Вы сможете следить за заявками от копирайтеров на выполнение Ваших заказов.
+    Получить статью от копирайтера можно либо добавив <%= link_to('новый заказ', new_task_path) %> в систему, либо
+    купив понравившуюся статью в <a href="#">каталоге</a>.
+  </p>
+<% else %>
+  <ol id="my-tasks">
+  <% @my_tasks.each do |task| %>
+    <li class="task" id="task_<%= task.id %>">
+      <h2><%= h(task.name) %></h2>
+      <p class="about-task">
+        <strong>$<%= task.price %></strong> за тыс. знаков, добавлен <%= time_ago_in_words(task.created_at) %> назад
+      </p>
+      <%= render :partial => 'task_actions', :locals => {:task => task} %>
+      <p><%= h(task.body) %> </p>
+      <%= propositions_link(task) %>
+    </li>
+  <% end %>
+  </ol>
+<% end %>

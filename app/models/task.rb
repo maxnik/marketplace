@@ -7,12 +7,12 @@ class Task < ActiveRecord::Base
 
   attr_accessible :name, :body, :price
 
-  has_many :propositions, :order => 'created_at ASC'
+  has_many :propositions, :order => 'created_at ASC', :dependent => :destroy
 
 #  has_many :articles, :as => 'owner'
 
   def price=(price)
-    write_attribute(:price, (price.to_s.gsub(',', '.').to_f * 100).to_i)
+    write_attribute(:price, (price.to_s.gsub(',', '.').to_f * 100).round)
   end
 
   def price

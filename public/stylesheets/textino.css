@@ -214,9 +214,9 @@ h1 {
   padding: 0;  
   font-size: 1.5em;
 }
-#main form {
-  margin-top: 1em;
-}
+#main FORM.new-form {
+      margin-top: 1em;
+      }
 #main form div label {
   float: left;
   width: 7.5em;
@@ -271,7 +271,7 @@ h1 {
 }
 #main form div.checkbox-div,
 #main form div.radio-button-div {
-  padding-left: 8.4em;
+  padding-left: 7.5em;
 }
 #main form div.checkbox-div,
 #main form div.radio-button-div,
@@ -342,51 +342,66 @@ h1 {
 #right p label {
   color: #095e00;
   font-weight: bold;
+  font-size: 0.9em;
 }
-#right p label.field-label {
-  float: left;
-  width: 4em;
-  text-align: right;
-  margin-top: 0.35em;
-}
-#right p label {
-  font-size: 0.8em;
-}
+#right P LABEL.field-label {
+         display: block;
+         }
 #right p input.input-field {
-  width: 8em;
+  width: 90%;
   margin: 0.1em 0.1em 0.2em 0.4em;
   padding: 0.2em;
 }
-#right p input.checkbox {
-  margin-left: 4.1em;
-}
 
-a.user-link,
+A.user-link,
 #logout-link,
 #messages-link,
 A.send-message-link,
+A.edit-task-link,
+A.delete-task-link,
 #new-task-link,
 #my-tasks-link,
+#assigned-tasks-link,
 #new-article-link,
 #my-articles-link,
 #deposit-link,
 #withdraw-link,
 #edit-profile-link,
 #portfolio-link,
-a.proposition {
-  padding-left: 20px;
+A.propositions-link,
+a.proposition,
+A.select-proposition {
   background-position: center left;
   background-repeat: no-repeat;
 }
+#logout-link,
+#messages-link,
+A.send-message-link,
+A.edit-task-link,
+#new-task-link,
+#my-tasks-link,
+#assigned-tasks-link,
+#new-article-link,
+#my-articles-link,
+#deposit-link,
+#withdraw-link,
+#edit-profile-link,
+#portfolio-link,
+A.propositions-link,
+a.proposition,
+A.select-proposition {
+  padding-left: 20px;
+}
 a.user-link {
-  background-image: url(/images/puzzle.png);
+  background-image: url(/images/user.png);
   color: #000;
+  padding-left: 17px;
 }
 #main table.users a.user-link {
   display: block;
 }
 #logout-link {
-  background-image: url(/images/arrow_circle.png);
+  background-image: url(/images/door__arrow.png);
 }
 #messages-link {
   background-image: url(/images/mails.png);
@@ -399,6 +414,16 @@ A.send-message-link {
 }
 #my-tasks-link {
   background-image: url(/images/tables.png);
+}
+#assigned-tasks-link {
+  background-image: url(/images/tables_pencil.png);
+}
+A.edit-task-link {
+  background-image: url(/images/table__pencil.png);
+}
+A.delete-task-link {
+  background-image: url(/images/slash.png);
+  padding-left: 17px;
 }
 #new-article-link {
   background-image: url(/images/document__plus.png);
@@ -420,6 +445,12 @@ A.send-message-link {
 }
 #main a.proposition {
   background-image: url(/images/balloon.png);
+}
+#main a.propositions-link {
+  background-image: url(/images/balloons.png);
+}
+#main A.select-proposition {
+  background-image: url(/images/auction_hammer_gavel.png);
 }
 
 #main a.proposition {
@@ -491,22 +522,20 @@ body div#heroku_toolbar {
                 margin-top: 1em;
                 }
                 #main P.about,
-                #main #propositions LI,
+                #main #propositions LI.proposition,
                 #main P.no-tasks,
-                #main #my-tasks LI,
-                #main #free-tasks LI {
+                #main #my-tasks LI.task,
+                #main #free-tasks LI.task {
                                   margin-bottom: 1em;
                                   background-color: #f4f4f4;
                                   padding: 0.75em;
                                   }
-                                  #main #my-tasks LI P.about-task,
-				  #main #free-tasks LI P.about-task {
-				                       color: #095e00;
-				                       }
-                                                       #main #my-tasks LI P.about-task STRONG,
-                                                       #main #free-tasks LI P.about-task STRONG {
-                                                                                         font-weight: bold;
-                                                                                         }
+                                  P.about-task {
+				  color: #095e00;
+				  }
+                                  P.about-task STRONG {
+                                               font-weight: bold;
+                                               }
                                   #main #my-tasks LI H2,
                                   #main #free-tasks LI H2 {
                                                        color: orange;
@@ -526,15 +555,16 @@ body div#heroku_toolbar {
                                                        color: white;
                                                        }
 
-#main P.task-body {
-      margin-bottom: 1em;
+#main #propositions {
+      margin-top: 1em;
       }
-#main #propositions A.send-message-link {
-                    margin-left: 0.5em;
-                    }
-#main #propositions FORM {
-                    margin-top: 0.25em;
-                    }
-#main #propositions LI P.proposition-sender {
-                       color: #095e00;
-                       }
+      #main #propositions LI P.proposition-sender {
+                             color: #095e00;
+                             }
+      #main #propositions LI P.proposition-body {
+                             margin: 0.5em 0;
+                             }
+#main .actions LI {
+               display: inline;
+               margin-right: 10px;
+               }

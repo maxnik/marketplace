@@ -1,16 +1,27 @@
-<h1>Log In</h1>
+<h1>Вход в систему</h1>
 
-<% form_tag session_path do -%>
-<p><%= label_tag 'login' %><br />
-<%= text_field_tag 'login', @login %></p>
+<% 
+error_desc = {}
+unless flash[:error].nil?
+  error_desc[:login] = 'ошибка в имени пользователя или пароле'
+  error_desc[:password] = 'введите их еще раз'
+end 
+%>
 
-<p><%= label_tag 'password' %><br/>
-<%= password_field_tag 'password', nil %></p>
+<% dived_form_for :session, :url => {:action => 'create'} do |f| %>
+  <%= f.text_field_for :login, :param_name => 'login',
+                       :label => 'Имя пользователя',
+                       :bottom => 'то имя, что Вы указали при регистрации',
+		       :default => @login,
+		       :error => error_desc[:login] %>
+  <%= f.password_field_for :password, :param_name => 'password',
+                           :label => 'Пароль',
+                           :bottom => 'тот пароль, что Вы указали при регистрации',
+			   :error => error_desc[:password] %>
+  <%= f.check_box_for :not_my_computer, :label => 'чужой компьютер',
+                                        :param_name => 'not_my_computer',
+					:default => (@not_my_computer == '1') %>
+  <%= f.submit_tag 'Войти' %>
+<% end %>
 
-<!-- Uncomment this if you want this functionality
-<p><%= label_tag 'remember_me', 'Remember me' %>
-<%= check_box_tag 'remember_me', '1', @remember_me %></p>
--->
 
-<p><%= submit_tag 'Log in' %></p>
-<% end -%>

@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
     else
       note_failed_signin
       @login           = params[:login]
-      @not_my_computer = params[:remember_me]
+      @not_my_computer = params[:not_my_computer]
       render :action => 'new'
     end
   end

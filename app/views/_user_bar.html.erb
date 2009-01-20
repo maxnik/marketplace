@@ -8,7 +8,8 @@
     <dd><%= link_to('личные сообщения', messages_path, :id => 'messages-link') %></dd>
     <dt>Управление заказами</dt>
       <dd><%= link_to('разместить заказ', new_task_path, :id => 'new-task-link') %></dd>
-      <dd><%= link_to('мои заказы', tasks_user_path(current_user), :id => 'my-tasks-link') %></dd>
+      <dd><%= link_to('Вы заказали', my_tasks_path, :id => 'my-tasks-link') %></dd>      
+      <dd><%= link_to('Вам заказали', assigned_tasks_path, :id => 'assigned-tasks-link') %></dd>
     <dt>Управление статьями</dt>
       <dd><%= link_to('разместить статью', new_article_path, :id => 'new-article-link') %></dd>
       <dd><%= link_to('мои статьи', user_path(current_user), :id => 'my-articles-link') %></dd>

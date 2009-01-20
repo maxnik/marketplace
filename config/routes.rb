@@ -7,14 +7,18 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
 
-  map.resources :users, :member => {:tasks => :get}
+  map.resources :users
 
   map.resource :session
 
   map.resources :messages
 
-  map.resources :tasks, :collection => {:create_proposition => :post}
-  
+  map.resources :tasks, :collection => {:propose => :post,
+                                        :my => :get,
+                                        :assigned => :get}
+  map.assign_task '/tasks/:id/assign/:copywriter_id', :controller => 'tasks', :action => 'assign',
+                  :conditions => {:method => :put}
+
   map.resources :articles, :collection => {:filter => :get}
 
   map.category 'categories/:id', :controller => 'categories', :action => 'show'

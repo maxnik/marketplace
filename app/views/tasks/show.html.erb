@@ -1,28 +1,32 @@
 <% RuTils::overrides = true %>
 
 <h1><%= h(@task.name) %></h1>
+<p class="about-task">
+  <strong>$<%= @task.price %></strong> за тыс. знаков, добавлен <%= time_ago_in_words(@task.created_at) %> назад
+</p>
 <p class="task-body"><%= h(@task.body) %></p>
+<%= render :partial => 'task_actions', :locals => {:task => @task} %>
 <ol id="propositions">
   <% @propositions.each do |proposition| %>
-    <li>
+    <li class="proposition">
       <p class="proposition-sender">
         <% sender = proposition.sender %>
         <%= link_to(sender.login, user_path(sender), :class => 'user-link') %>	
         <%= time_ago_in_words(sender.created_at) %> в сервисе, заявка сделана 
         <%= time_ago_in_words(proposition.created_at) %> назад
 	<% if @task.copywriter && @task.copywriter.id == proposition.sender.id %>
-	  <br /><strong>Вы выбрали автора этой заявки как исполнителя</strong>
+	  <br /><strong>Вы выбрали автора этой заявки исполнителем</strong>
 	<% end %>
       </p>
       <p class="proposition-body">
         <%= h(proposition.body) %>
       </p>
-      <% form_for @task do |f| %>
-        <%= hidden_field_tag 'copywriter_id', sender.id %>
-        <input type="submit" value="выбрать эту заявку" /> 
-	<%= link_to('личное сообщение', '#', :class => 'send-message-link') %>
-      <% end %>
-
+      <ul class="actions">
+      <li><%= link_to('личное сообщение', '#', :class => 'send-message-link') %></li>
+      <li>
+      <%= link_to('выбрать эту заявку', assign_task_path(@task, proposition.sender), :class => 'put select-proposition') %>
+      </li>
+      </ul>
     </li>
   <% end %>
 </ol>

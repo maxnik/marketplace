@@ -3,8 +3,8 @@ class UsersController < ApplicationController
   layout 'application'
 
   before_filter :login_required, :except => [:index, :show, :new, :create]
-  before_filter :find_user, :only => [:show, :edit, :update, :tasks]
-  before_filter :check_ownership, :only => [:edit, :update, :tasks]
+  before_filter :find_user, :only => [:show, :edit, :update]
+  before_filter :check_ownership, :only => [:edit, :update]
 
   def index
     @title = 'Рейтинг пользователей'
@@ -31,13 +31,6 @@ class UsersController < ApplicationController
   def show
     @title = "Личная страница #{@user.login}"
     @articles = nil
-  end
-
-  def tasks
-    @title = 'Мои заказы'
-    @my_tasks = current_user.my_tasks
-    # @assigned_tasks = current_user.assigned_tasks
-    @assigned_tasks = []
   end
 
   protected

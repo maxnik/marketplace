@@ -1,4 +1,4 @@
-<%= javascript_include_tag 'jquery-1.2.6.pack' %>
+<%= javascript_include_tag 'jquery-1.3.min' %>
 <%= javascript_include_tag 'tasks_index' %>
 
 <% RuTils::overrides = true %>
@@ -6,11 +6,10 @@
 <h1>Список новых заказов</h1>
 <ol id="free-tasks">
 <% @tasks.each do |task| %>
-  <li class="task_<%= task.to_param %>">
+  <li class="task" id="task_<%= task.to_param %>">
     <h2><%= h(task.name) %></h2>
     <p class="about-task">
-    <strong>$<%= task.price %></strong> за тысячу знаков,<br /> 
-    размещен
+    <strong>$<%= task.price %></strong> за тысячу знаков, размещен
     <% if is_not_mine?(task) %>
       <%= link_to(task.customer.login, user_path(task.customer), :class => 'user-link') %>
     <% else %>
@@ -31,7 +30,7 @@
 
 <div id="proposition-dialog">
   Заявка на заказ <span></span>
-  <% form_for :proposition, :url => create_proposition_tasks_path do |f| %>
+  <% form_for :proposition, :url => propose_tasks_path do |f| %>
     <%= f.hidden_field 'task_id' %>
     <%= f.text_area 'body', :rows => '5' %><br />
     <%= submit_tag 'Отправить заявку', :id => 'propose', :disabled => true %> 
