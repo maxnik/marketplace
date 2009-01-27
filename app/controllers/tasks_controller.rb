@@ -56,11 +56,12 @@ class TasksController < ApplicationController
   def propose
     proposition = current_user.propositions.new(params[:proposition])
     proposition.task_id = params[:proposition][:task_id]
-    render :json => if proposition.save
-                      {:b_class => 'proposition-success', :text => 'Ваша заявка отправлена заказчику'}
-                    else
-                      {:b_class => 'proposition-error', :text => proposition.errors.on_base}
-                    end
+    proposition.save
+    respond_to do |wants|
+      wants.js { render :json => {"#status_task_#{proposition.task_id}" => render_to_string(:partial => 'status_task',
+                                                                                            :locals => 
+                                                                                            {:proposition => proposition})}}
+    end
   end
 
   def assign

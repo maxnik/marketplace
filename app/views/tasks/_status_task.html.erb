@@ -1,0 +1,5 @@
+<% if proposition.valid? %>
+  <b class="proposition-success" id="status_task_<%= proposition.task_id %>">Ваша заявка отправлена заказчику</b>
+<% else %>
+  <b class="proposition-error" id="status_task_<%= proposition.task_id %>"><%= proposition.errors.on_base %></b>
+<% end %>

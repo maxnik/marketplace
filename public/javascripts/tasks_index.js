@@ -39,9 +39,9 @@ $(document).ready(function () {
       $.post($proposition_form[0].action, 
 	     $proposition_form.serialize(),
 	     function (data) {
- 	       var proposition_task_id = $('input#proposition_task_id', $proposition_form).attr('value');
- 	       $('li#task_' + proposition_task_id + ' b').replaceWith('<b class="' + data.b_class + '">' +
-								      data.text + '</b>');
+	       for (var id in data) {
+		 $(id).replaceWith(data[id]);
+	       }
 	     },
 	     'json');
       $("#proposition-dialog").hide();

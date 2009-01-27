@@ -97,7 +97,7 @@ module UsersHelper
   def propositions_link(task)
     propositions_count = task.propositions_count
     if propositions_count > 0 
-      link_to("#{propositions_count} " + propositions_count.items('заявка', 'заявки', 'заявки') + 
+      link_to("#{propositions_count} " + propositions_count.items('заявка', 'заявки', 'заявок') + 
 	      ' от ' + propositions_count.items('копирайтера', 'копирайтеров', 'копирайтеров'), 
               task_path(task), :class => 'propositions-link') 
     end
