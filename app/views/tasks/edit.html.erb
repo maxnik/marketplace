@@ -1,6 +1,6 @@
 <h1>Редактирование заказа</h1>
 
-<% dived_form_for @task do |f| -%>
+<% dived_form_for @task, :html => {:class => 'new-form'} do |f| -%>
   <%= render :partial => 'task_fields', :object => f %>
   <%= f.submit_tag 'Сохранить правки' %>
 <% end -%>

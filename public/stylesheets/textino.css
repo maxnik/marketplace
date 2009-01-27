@@ -359,6 +359,7 @@ A.user-link,
 A.send-message-link,
 A.edit-task-link,
 A.delete-task-link,
+A.free-task-link,
 #new-task-link,
 #my-tasks-link,
 #assigned-tasks-link,
@@ -370,7 +371,7 @@ A.delete-task-link,
 #portfolio-link,
 A.propositions-link,
 a.proposition,
-A.select-proposition {
+A.assign-link {
   background-position: center left;
   background-repeat: no-repeat;
 }
@@ -386,10 +387,7 @@ A.edit-task-link,
 #deposit-link,
 #withdraw-link,
 #edit-profile-link,
-#portfolio-link,
-A.propositions-link,
-a.proposition,
-A.select-proposition {
+#portfolio-link {
   padding-left: 20px;
 }
 a.user-link {
@@ -416,13 +414,17 @@ A.send-message-link {
   background-image: url(/images/tables.png);
 }
 #assigned-tasks-link {
-  background-image: url(/images/tables_pencil.png);
+  background-image: url(/images/inbox_table.png);
 }
 A.edit-task-link {
   background-image: url(/images/table__pencil.png);
 }
 A.delete-task-link {
-  background-image: url(/images/slash.png);
+  background-image: url(/images/cross.png);
+  padding-left: 17px;
+}
+A.free-task-link {
+  background-image: url(/images/lock_unlock.png);
   padding-left: 17px;
 }
 #new-article-link {
@@ -445,12 +447,15 @@ A.delete-task-link {
 }
 #main a.proposition {
   background-image: url(/images/balloon.png);
+  padding-left: 18px;
 }
 #main a.propositions-link {
   background-image: url(/images/balloons.png);
+  padding-left: 17px;
 }
-#main A.select-proposition {
-  background-image: url(/images/auction_hammer_gavel.png);
+#main A.assign-link {
+  background-image: url(/images/lock.png);
+  padding-left: 17px;
 }
 
 #main a.proposition {
@@ -458,8 +463,7 @@ A.delete-task-link {
 }
 
 #main table.users {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 1em auto 0 auto;
   width: 90%;
 }
 #main div.pagination {
@@ -518,42 +522,42 @@ body div#heroku_toolbar {
   display: none;
 }
 
+#main #my-tasks,
+#main #assigned-tasks,
 #main #free-tasks {
-                margin-top: 1em;
-                }
-                #main P.about,
-                #main #propositions LI.proposition,
-                #main P.no-tasks,
-                #main #my-tasks LI.task,
-                #main #free-tasks LI.task {
-                                  margin-bottom: 1em;
-                                  background-color: #f4f4f4;
-                                  padding: 0.75em;
-                                  }
-                                  P.about-task {
-				  color: #095e00;
-				  }
-                                  P.about-task STRONG {
-                                               font-weight: bold;
-                                               }
-                                  #main #my-tasks LI H2,
-                                  #main #free-tasks LI H2 {
-                                                       color: orange;
-						       font-weight: bold;
-                                                       }
-                                  #main #free-tasks LI B.proposition-success,
-                                  #main #free-tasks LI B.proposition-error {
-                                                       margin-left: 1em;
-                                                       }
-                                  #main #propositions LI P.proposition-sender STRONG,
-                                  #main #free-tasks LI B.proposition-success {
-                                                       background-color: yellow;
-                                                       color: #444;
-                                                       }
-                                  #main #free-tasks LI B.proposition-error {
-                                                       background-color: #f4a460;
-                                                       color: white;
-                                                       }
+      margin-top: 1em;
+      }
+      #main P.about,
+      #main #propositions LI.proposition,
+      LI.task {
+      margin-bottom: 1em;
+      background-color: #f4f4f4;
+      padding: 0.75em;
+      }
+      P.about-task {
+      color: #095e00;
+      }
+      P.about-task STRONG {
+                   font-weight: bold;
+                   }
+      #main #my-tasks LI H2,
+      #main #free-tasks LI H2 {
+                           color: orange;
+			   font-weight: bold;
+                           }
+      #main #free-tasks LI B.proposition-success,
+      #main #free-tasks LI B.proposition-error {
+                           margin-left: 1em;
+                           }
+      #main #propositions LI P.proposition-sender STRONG,
+      #main #free-tasks LI B.proposition-success {
+                           background-color: yellow;
+                           color: #444;
+                           }
+      #main #free-tasks LI B.proposition-error {
+                           background-color: #f4a460;
+                           color: white;
+                           }
 
 #main #propositions {
       margin-top: 1em;

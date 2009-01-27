@@ -10,8 +10,10 @@ module AuthenticatedSystem
     # Future calls avoid the database because nil is not equal to false.
     def current_user
       unless @current_user == false
-        @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) 
-        @current_user.update_attribute('last_login_at', Time.now) if @current_user
+        unless @current_user
+          @current_user = (login_from_session || login_from_basic_auth || login_from_cookie) 
+          @current_user.update_attribute('last_login_at', Time.now) if @current_user
+        end
         @current_user
       end
     end

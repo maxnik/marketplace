@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
 
-  layout 'application', :except => [:propose, :destroy]
+  layout 'application', :except => [:propose, :assign, :destroy]
 
   before_filter :login_required, :except => :index
   before_filter :find_my_task, :only => [:show, :edit, :update, :assign, :destroy]
@@ -43,9 +43,12 @@ class TasksController < ApplicationController
   end
 
   def destroy
+    deleted_param = @task.to_param
+    @task.destroy
+    @task = nil
     respond_to do |wants|
       wants.js do 
-        render :text => "alert(ttt)"
+        render :json => {"#task_#{deleted_param}" => render_to_string(:partial => 'task', :object => @task)}
       end
     end
   end
@@ -61,15 +64,43 @@ class TasksController < ApplicationController
   end
 
   def assign
-    fail
+    old_copywriter = @task.copywriter
+    copywriter = User.find_by_login(params[:copywriter_id])
+    @task.copywriter = copywriter
+    if @task.save
+      @propositions = Proposition.find(:all, :conditions => {:sender_id => [old_copywriter, copywriter],
+                                                             :task_id => @task})
+      respond_to do |wants|
+        wants.js do 
+          task_actions = {"#task_actions_#{@task.to_param}" => render_to_string(:partial => 'task_actions',
+                                                                                :locals => {:task => @task})}
+
+          task_actions["#copywriter_for_#{@task.to_param}"] = '' if copywriter.nil?
+
+          render :json => (@propositions.inject(task_actions) do |fragments, p| 
+                             fragments["#proposition_#{p.to_param}"] = render_to_string(:partial => 'proposition', 
+                                                                                        :locals => {:proposition => p,
+                                                                                                    :task => @task})
+                             fragments
+                           end)
+        end
+      end
+    else
+      respond_to do |wants|
+        wants.js do 
+          render :json => {:status => 'failed'}
+        end
+      end
+    end
   end
   
   def my
-    @title = 'Мои заказы'
+    @title = 'Вы заказали написать'
     @my_tasks = current_user.my_tasks
   end
 
   def assigned
+    @title = "Вам заказали написать"
     # @assigned_tasks = current_user.assigned_tasks
     @assigned_tasks = []
   end

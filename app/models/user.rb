@@ -27,8 +27,11 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
 
-  has_many :my_tasks,       :class_name => 'Task', :foreign_key => 'customer_id', :order => 'created_at DESC'
-#   has_many :assigned_tasks, :class_name => 'Task', :foreign_key => 'copywriter_id'
+  has_many :my_tasks, 
+           :class_name => 'Task', :foreign_key => 'customer_id', 
+           :order => 'created_at DESC', :include => 'copywriter'
+
+  has_many :assigned_tasks, :class_name => 'Task', :foreign_key => 'copywriter_id'
 
 #   has_many :my_messages,       :class_name => 'Message', :foreign_key => 'sender_id'
 #   has_many :received_messages, :class_name => 'Message', :foreign_key => 'recipient_id'

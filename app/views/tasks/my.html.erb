@@ -14,16 +14,6 @@
   </p>
 <% else %>
   <ol id="my-tasks">
-  <% @my_tasks.each do |task| %>
-    <li class="task" id="task_<%= task.id %>">
-      <h2><%= h(task.name) %></h2>
-      <p class="about-task">
-        <strong>$<%= task.price %></strong> за тыс. знаков, добавлен <%= time_ago_in_words(task.created_at) %> назад
-      </p>
-      <%= render :partial => 'task_actions', :locals => {:task => task} %>
-      <p><%= h(task.body) %> </p>
-      <%= propositions_link(task) %>
-    </li>
-  <% end %>
+    <%= render :partial => 'task', :collection => @my_tasks %>
   </ol>
 <% end %>

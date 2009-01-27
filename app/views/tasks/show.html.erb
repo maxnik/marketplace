@@ -1,3 +1,7 @@
+<%= yield_authenticity_token %>
+<%= javascript_include_tag 'jquery-1.3.min' %>
+<%= javascript_include_tag 'application' %>
+
 <% RuTils::overrides = true %>
 
 <h1><%= h(@task.name) %></h1>
@@ -6,27 +10,12 @@
 </p>
 <p class="task-body"><%= h(@task.body) %></p>
 <%= render :partial => 'task_actions', :locals => {:task => @task} %>
+<% if @propositions.blank? %>
 <ol id="propositions">
-  <% @propositions.each do |proposition| %>
-    <li class="proposition">
-      <p class="proposition-sender">
-        <% sender = proposition.sender %>
-        <%= link_to(sender.login, user_path(sender), :class => 'user-link') %>	
-        <%= time_ago_in_words(sender.created_at) %> в сервисе, заявка сделана 
-        <%= time_ago_in_words(proposition.created_at) %> назад
-	<% if @task.copywriter && @task.copywriter.id == proposition.sender.id %>
-	  <br /><strong>Вы выбрали автора этой заявки исполнителем</strong>
-	<% end %>
-      </p>
-      <p class="proposition-body">
-        <%= h(proposition.body) %>
-      </p>
-      <ul class="actions">
-      <li><%= link_to('личное сообщение', '#', :class => 'send-message-link') %></li>
-      <li>
-      <%= link_to('выбрать эту заявку', assign_task_path(@task, proposition.sender), :class => 'put select-proposition') %>
-      </li>
-      </ul>
-    </li>
-  <% end %>
+<li class="proposition">Копирайтеры еще не сделали заявок на этот заказ.</li>
 </ol>
+<% else %>
+<ol id="propositions">
+  <%= render :partial => 'proposition', :collection => @propositions, :locals => {:task => @task} %>
+</ol>
+<% end %>

@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   // All non-GET requests will add the authenticity token
   // if not already present in the data packet
   $("body").bind("ajaxSend", function(elm, xhr, s) {
@@ -16,17 +15,23 @@ $(document).ready(function() {
 		    + "=" + encodeURIComponent(window._auth_token);
   });
 		    
-  var post_methods = ['post', 'put', 'delete'];
+  var post_methods = ['put', 'delete'];
   for (var index in post_methods) {
-    var method = post_methods[index];
-    $('a.' + method).live('click', function() {
-      $.post($(this).attr('href'), '_method='+method, function (data) {
-	alert(data);
-      }, 'json');
-      return false;
-    }).attr("rel", "nofollow");
-  }
+    (function (method) {
 
+      $('a.'+method).live('click', function () {
+	if (!this.title || confirm(this.title)) {
+	  $.post(this.href, '_method='+method, function (data) {
+	    for (var id in data) {
+	      $(id).replaceWith(data[id]);
+	    }
+	  }, 'json');
+	}
+	return false;
+      }).attr('rel', 'nofollow');
+      
+    })(post_methods[index]);
+  }
 });
 		  
 // All ajax requests will trigger the wants.js block

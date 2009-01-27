@@ -3,11 +3,13 @@
 <h1 class="tasks-group">Вам заказали написать</h1>
 
 <% if @assigned_tasks.blank? %>
-  <p class="no-tasks"> 
+<ul id="assigned-tasks">
+<li class="task">
     Ни один пользователь еще не назначил Вас исполнителем для своих заказов.
     Вы можете сейчас подать заявку на один из <%= link_to('новых заказов', tasks_path) %>
     или <a href="#">выставить на продажу</a> в каталог одну из своих статей.
-  </p>
+</li>
+</ul>
 <% else %>
   <ul id="assigned-tasks">
   <% @assigned_tasks.each do |task| %>

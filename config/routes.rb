@@ -16,8 +16,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :tasks, :collection => {:propose => :post,
                                         :my => :get,
                                         :assigned => :get}
-  map.assign_task '/tasks/:id/assign/:copywriter_id', :controller => 'tasks', :action => 'assign',
-                  :conditions => {:method => :put}
+  map.with_options :controller => 'tasks', :action => 'assign', :conditions => {:method => :put} do |t|
+    t.assign_task 'tasks/:id/assign/:copywriter_id'
+    t.deassign_task 'tasks/:id/deassign'
+  end
 
   map.resources :articles, :collection => {:filter => :get}
 

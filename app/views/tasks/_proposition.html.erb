@@ -1,0 +1,25 @@
+<% sender = proposition.sender %>
+
+<li class="proposition" id="proposition_<%= proposition.to_param %>">
+  <p class="proposition-sender">
+    <%= link_to(sender.login, user_path(sender), :class => 'user-link') %>	
+    <%= time_ago_in_words(sender.created_at) %> в сервисе, заявка сделана 
+    <%= time_ago_in_words(proposition.created_at) %> назад
+    <% if task.copywriter && task.copywriter.id == proposition.sender.id %>
+      <br /><strong>Вы выбрали автора этой заявки исполнителем</strong>
+    <% end %>
+  </p>
+  <p class="proposition-body"><%= h(proposition.body) %></p>
+  <ul class="actions">
+  <li><%= link_to('личное сообщение', '#', :class => 'send-message-link') %></li>
+  <li>
+  <% if task.copywriter && task.copywriter.id == proposition.sender.id %>
+    <%= link_to('отменить выбор исполнителя', deassign_task_path(task), :class => 'put free-task-link',
+                :title => 'Разрешить снова принимать заявки на этот заказ?') %>
+  <% else %>
+    <%= link_to('выбрать эту заявку', assign_task_path(task, proposition.sender), :class => 'put assign-link',
+                :title => 'Пересать принимать заявки на заказ и отдать его на выполнение этому копирайтеру?') %>
+  <% end %>
+  </li>
+  </ul>
+</li>
