@@ -1,3 +1,5 @@
+<% @title = 'Новые заказы' %>
+
 <%= javascript_include_tag 'jquery-1.3.min' %>
 <%= javascript_include_tag 'tasks_index' %>
 
@@ -5,26 +7,30 @@
 
 <h1>Список новых заказов</h1>
 <ol id="free-tasks">
-<% @tasks.each do |task| %>
-  <li class="task" id="task_<%= task.to_param %>">
-    <h2><%= h(task.name) %></h2>
-    <p class="about-task">
-    <strong>$<%= task.price %></strong> за тысячу знаков, размещен
-    <% if is_not_mine?(task) %>
-      <%= link_to(task.customer.login, user_path(task.customer), :class => 'user-link') %>
-    <% else %>
-      Вами
-    <% end %>
-    <%= time_ago_in_words(task.created_at) %> назад
-    </p>
-    <p><%= h(task.body) %></p>        
-    <% if ! logged_in? -%>     
-      <i>Чтобы подать заявку на этот заказ нужно <%= link_to('зарегистрироваться', new_user_path) %> в системе.</i>
-    <% elsif is_not_mine?(task) -%>
-      <a href="#" name="<%= task.to_param %>" title="<%= h(task.name) %>" class="proposition">подать заявку</a>
-      <b id="status_task_<%= task.to_param %>"></b>
-    <% end %>
-  </li>
+<% if @tasks.blank? %>
+  <li class="task">Еще не опубликовано ни одного заказа для копирайтеров.</li>
+<% else %>
+  <% @tasks.each do |task| %>
+    <li class="task" id="task_<%= task.to_param %>">
+      <h2><%= h(task.name) %></h2>
+      <p class="about-task">
+      <strong>$<%= task.price %></strong> за тысячу знаков, размещен
+      <% if is_not_mine?(task) %>
+        <%= link_to(task.customer.login, user_path(task.customer), :class => 'user-link') %>
+      <% else %>
+        Вами
+      <% end %>
+      <%= time_ago_in_words(task.created_at) %> назад
+      </p>
+      <p><%= h(task.body) %></p>        
+      <% if ! logged_in? -%>     
+        <i>Чтобы подать заявку на этот заказ нужно <%= link_to('зарегистрироваться', new_user_path) %> в системе.</i>
+      <% elsif is_not_mine?(task) -%>
+        <a href="#" name="<%= task.to_param %>" title="<%= h(task.name) %>" class="proposition">подать заявку</a>
+        <b id="status_task_<%= task.to_param %>"></b>
+      <% end %>
+    </li>
+  <% end %>
 <% end %>
 </ol>
 

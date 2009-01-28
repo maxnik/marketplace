@@ -7,12 +7,10 @@ class TasksController < ApplicationController
   rescue_from(ActiveRecord::RecordNotFound) {|e| redirect_to(tasks_path) }
 
   def index
-    @title = 'Новые заказы'
     @tasks = Task.free_tasks.find(:all, :order => 'created_at DESC')
   end
 
   def new
-    @title = 'Добавить новый заказ'
     @task = current_user.my_tasks.new
   end
 
@@ -26,12 +24,10 @@ class TasksController < ApplicationController
   end
 
   def show
-    @title = 'Заказ и заявки на него'
     @propositions = @task.propositions.find(:all, :include => :sender)    
   end
 
   def edit
-    @title = 'Редактирование заказа'
   end
 
   def update
@@ -96,12 +92,10 @@ class TasksController < ApplicationController
   end
   
   def my
-    @title = 'Вы заказали написать'
     @my_tasks = current_user.my_tasks
   end
 
   def assigned
-    @title = "Вам заказали написать"
     # @assigned_tasks = current_user.assigned_tasks
     @assigned_tasks = []
   end

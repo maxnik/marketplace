@@ -7,12 +7,10 @@ class UsersController < ApplicationController
   before_filter :check_ownership, :only => [:edit, :update]
 
   def index
-    @title = 'Рейтинг пользователей'
     @users = User.paginate(:page => params[:page])
   end
 
   def new
-    @title = 'Регистрация пользователя'
     @user = User.new
   end
  
@@ -29,7 +27,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @title = "Личная страница #{@user.login}"
     @articles = nil
   end
 
