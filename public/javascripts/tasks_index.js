@@ -35,15 +35,25 @@ $(document).ready(function () {
 		    
   $("input#propose").click(function () {
     if ($("#proposition-dialog textarea").val() != "") {
-      var $proposition_form = $("#proposition-dialog form");
-      $.post($proposition_form[0].action, 
-	     $proposition_form.serialize(),
-	     function (data) {
-	       for (var id in data) {
-		 $(id).replaceWith(data[id]);
-	       }
-	     },
-	     'json');
+      var $form = $("#proposition-dialog form");
+	$.ajax({
+ 	  beforeSend: function (XMLHttpRequest) {
+ 	    $('#status_task_'+$('input[name=proposition[task_id]]', $form).val())
+	      .after('<img id="busy" src="/images/busy.gif" />');
+ 	  },
+ 	  complete: function (XMLHttpRequest, textStatus) {
+ 	    $('#busy').remove();
+ 	  },
+ 	  success: function (data, textStatus) {
+ 	    for (var id in data) {
+	      $(id).replaceWith(data[id]);
+	    }
+ 	  },
+ 	  type: 'POST',
+ 	  url: $form[0].action,
+ 	  data: $form.serialize(),
+ 	  dataType: 'json'
+	});
       $("#proposition-dialog").hide();
     }
     return false;

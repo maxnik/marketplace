@@ -6,14 +6,14 @@
 
 <h1 class="tasks-group">Вы заказали написать</h1> 
 
+<ol id="my-tasks">
 <% if @my_tasks.blank? %>
-  <p class="no-tasks">
+  <li class="task">
     Здесь Вы сможете следить за заявками от копирайтеров на выполнение Ваших заказов.
     Получить статью от копирайтера можно либо добавив <%= link_to('новый заказ', new_task_path) %> в систему, либо
     купив понравившуюся статью в <a href="#">каталоге</a>.
-  </p>
+  </li>
 <% else %>
-  <ol id="my-tasks">
     <%= render :partial => 'task', :collection => @my_tasks %>
-  </ol>
 <% end %>
+</ol>

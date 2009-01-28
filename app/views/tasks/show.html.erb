@@ -4,12 +4,15 @@
 
 <% RuTils::overrides = true %>
 
-<h1><%= h(@task.name) %></h1>
-<p class="about-task">
-  <strong>$<%= @task.price %></strong> за тыс. знаков, добавлен <%= time_ago_in_words(@task.created_at) %> назад
-</p>
-<p class="task-body"><%= h(@task.body) %></p>
-<%= render :partial => 'task_actions', :locals => {:task => @task} %>
+<ol id="task_<%= @task.to_param %>">
+  <h1><%= h(@task.name) %></h1>
+  <p class="about-task">
+    <strong>$<%= @task.price %></strong> за тыс. знаков, добавлен <%= time_ago_in_words(@task.created_at) %> назад
+  </p>
+  <p class="task-body"><%= h(@task.body) %></p>
+  <%= render :partial => 'task_actions', :locals => {:task => @task} %>
+</ol>
+
 <% if @propositions.blank? %>
 <ol id="propositions">
 <li class="proposition">Копирайтеры еще не сделали заявок на этот заказ.</li>

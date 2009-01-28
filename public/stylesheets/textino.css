@@ -534,6 +534,9 @@ body div#heroku_toolbar {
       background-color: #f4f4f4;
       padding: 0.75em;
       }
+      LI.task {
+      list-style-type: none;
+      }
       P.about-task {
       color: #095e00;
       }

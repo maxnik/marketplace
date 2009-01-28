@@ -37,7 +37,7 @@ class Task < ActiveRecord::Base
     body_error = case
                  when body.blank? then 'для заказа нужно подробное описание'
                  when body.size < 100 then 'слишком короткое описание заказа'
-                 when body.size > 500 then 'слишком длинное описание заказа'
+                 when body.size > 800 then 'слишком длинное описание заказа'
                  end
     errors.add(:body, body_error) unless body_error.nil?
 

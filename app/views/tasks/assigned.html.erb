@@ -2,25 +2,23 @@
 
 <h1 class="tasks-group">Вам заказали написать</h1>
 
-<% if @assigned_tasks.blank? %>
 <ul id="assigned-tasks">
+<% if @assigned_tasks.blank? %>
 <li class="task">
     Ни один пользователь еще не назначил Вас исполнителем для своих заказов.
     Вы можете сейчас подать заявку на один из <%= link_to('новых заказов', tasks_path) %>
     или <a href="#">выставить на продажу</a> в каталог одну из своих статей.
 </li>
-</ul>
 <% else %>
-  <ul id="assigned-tasks">
   <% @assigned_tasks.each do |task| %>
     <li class="task">
-      <h2><%= task.name %></h2>
+      <h2><%= h(task.name) %></h2>
       <span>
         $<%= task.price %> за тыс. знаков, добавлен <%= time_ago_in_words(task.created_at) %> назад
         <%= link_to('загрузить готовую статью', new_article_path, :class => 'blue') %>
       </span>
-      <p><%= task.body %> </p>
+      <p><%= h(task.body) %> </p>
     </li>
   <% end %>
-  </ul>
 <% end %>
+</ul>

@@ -21,11 +21,24 @@ $(document).ready(function() {
 
       $('a.'+method).live('click', function () {
 	if (!this.title || confirm(this.title)) {
-	  $.post(this.href, '_method='+method, function (data) {
-	    for (var id in data) {
-	      $(id).replaceWith(data[id]);
-	    }
-	  }, 'json');
+	  $.ajax({
+	    clickedLink: this,
+	    beforeSend: function (XMLHttpRequest) {
+	      $(this.clickedLink).replaceWith('<img id="busy" src="/images/busy.gif" />');
+	    },
+	    error: function (XMLHttpRequest) {
+	      $('#busy').replaceWith(this.clickedLink);
+	    },
+	    success: function (data, textStatus) {
+	      for (var id in data) {
+		$(id).replaceWith(data[id]);
+	      }
+	    },
+	    type: 'POST',
+	    url: this.href,
+	    data: '_method='+method,
+	    dataType: 'json'
+	  });
 	}
 	return false;
       }).attr('rel', 'nofollow');
