@@ -1,0 +1,27 @@
+<% if article.nil? %>
+  <tr class="highlighted">
+  <td class="title">Статья удалена</td>
+  <td class="price">&nbsp;</td><td class="length">&nbsp;</td><td class="time">&nbsp;</td>
+  </tr>
+<% else %>
+
+<tr class="<%= cycle('even', 'odd') %>" id="article_<%= article.id %>">
+  <td class="title">
+    <%= link_to(h(article.title).gsub(' ', ' <wbr />'), task_article_path(task, article), :class => 'article-link') %>
+
+     <% if (logged_in? && article.author_id == current_user.id) %>
+       <ul class="actions">
+         <li><%= link_to('редактировать статью', edit_article_path(article), :class => 'edit-article-link',
+	                 :rel => 'nofollow') %></li>
+         <li><%= link_to('удалить статью', article_path(article), :class => 'delete delete-link',
+                         :title => 'Вы уверены, что хотите удалить эту статью?') %></li>
+       </ul>
+     <% end %>
+
+  </td>
+  <td class="price"><%= h(article.price).gsub('.', ',') %><br />WMZ</td>
+  <td class="length"><%= sprintf('%.1f', article.body.chars.size / 1000.0).gsub('.', ',') %> тыс.<br />знаков</td>
+  <td class="time"><%= time_ago_in_words(article.created_at).gsub('около ', 'около<br />') %><br />назад</td>
+</tr>
+
+<% end %>

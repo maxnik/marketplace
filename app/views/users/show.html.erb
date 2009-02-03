@@ -1,5 +1,9 @@
 <% @title = "Личная страница #{@user.login}" %>
 
+<%= yield_authenticity_token %>
+<%= javascript_include_tag 'jquery-1.3.min' %>
+<%= javascript_include_tag 'application' %>
+
 <% RuTils::overrides = true %>
 
 <h1>
@@ -40,11 +44,8 @@
 <% end %>
 <p class="about">
   За <span><%= time_ago_in_words(@user.created_at) %></span> в сервисе 
-  <% if my_personal_page? %> Вы написали <% else %> этот пользователь написал <% end %>
-  <span>23 статьи</span>
-  и 
-  <% if my_personal_page? %> купили <% else %> купил <% end %>
-  у других пользователей <span>1 статью</span>.
+  <%= my_personal_page? ? 'Вы купили' : 'этот пользователь купил' %>
+  у других пользователей <span></span>.
 </p>
 <p class="about">
   Заказчики оставили 
@@ -57,12 +58,22 @@
     <%= my_personal_page? ? 'Вы еще не выставляли' : 'Этот пользователь еще не выставлял' %> статьи на продажу.
   </p>
 <% else %>
-  <dl>
-  <% @articles.each do |category, articles| %>
-    <dt><%= link_to(h(category.name), category_path(category)) %></dt>
-    <% articles.each do |article| %>
-      <dd><%= link_to(h(article.title), article_path(article)) %></dd>
+  <h2 class="about">
+    <%= my_personal_page? ? 'Вы разместили' : 'Этот пользователь разместил' %>
+    <%= @user.forsale_articles_count %> <%= @user.forsale_articles_count.items('статью', 'статьи', 'статей') %> 
+    в каталог на продажу:
+  </h2>
+  <table class="articles">
+     <thead><tr>
+      <th><a href="#">Раздел и название статьи</a></th>
+      <th><a href="#">Цена</a></th>
+      <th><a href="#">Объем</a></th>
+      <th><a href="#">Опубликована</a></th>
+    </tr></thead>
+    <tbody>
+    <% @articles.each do |article| %>
+      <%= render :partial => '/articles/article_row',  :locals => {:article => article} %>
     <% end %>
-  <% end %>
-  </dl>
+    </tbody>
+  </table>
 <% end %>

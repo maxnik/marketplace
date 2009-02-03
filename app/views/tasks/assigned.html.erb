@@ -1,6 +1,9 @@
 <% @title = "Вам заказали написать" %>
 
 <% RuTils::overrides = true %>
+<%= yield_authenticity_token %>
+<%= javascript_include_tag 'jquery-1.3.min' %>
+<%= javascript_include_tag 'application' %>
 
 <h1 class="tasks-group">Вам заказали написать</h1>
 
@@ -9,17 +12,30 @@
 <li class="task">
     Ни один пользователь еще не назначил Вас исполнителем для своих заказов.
     Вы можете сейчас подать заявку на один из <%= link_to('новых заказов', tasks_path) %>
-    или <a href="#">выставить на продажу</a> в каталог одну из своих статей.
+    или <%= link_to('выставить на продажу', new_article_path, :class => 'new-article-link') %> 
+    в каталог одну из своих статей.
 </li>
 <% else %>
   <% @assigned_tasks.each do |task| %>
     <li class="task">
       <h2><%= h(task.name) %></h2>
-      <span>
-        $<%= task.price %> за тыс. знаков, добавлен <%= time_ago_in_words(task.created_at) %> назад
-        <%= link_to('загрузить готовую статью', new_article_path, :class => 'blue') %>
-      </span>
+      <p class="about-task">
+        <strong>$<%= task.price %></strong> за тысячу знаков, 
+	размещен <%= link_to(task.customer.login, user_path(task.customer), :class => 'user-link') %>
+	<%= time_ago_in_words(task.created_at) %> назад 
+     </p>     
       <p><%= h(task.body) %> </p>
+      <ul class="actions">
+        <li><%= link_to('личное сообщение', '#', :class => 'send-message-link') %></li>
+        <li><%= link_to('отправить готовую статью', new_task_article_path(task), :class => 'new-article-link') %></li>
+      </ul>
+      <table class="articles">
+        <tbody>
+        <% task.articles.each do |article| %>
+          <%= render :partial => 'article_row',  :locals => {:article => article, :task => task} %>
+        <% end %>
+        </tbody>
+      </table>
     </li>
   <% end %>
 <% end %>

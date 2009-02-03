@@ -8,7 +8,7 @@
 <h1>Список новых заказов</h1>
 <ol id="free-tasks">
 <% if @tasks.blank? %>
-  <li class="task">Еще не опубликовано ни одного заказа для копирайтеров.</li>
+  <li class="task">В базе биржи сейчас нет ни одного свободного заказа для копирайтеров.</li>
 <% else %>
   <% @tasks.each do |task| %>
     <li class="task" id="task_<%= task.to_param %>">

@@ -29,15 +29,18 @@ class User < ActiveRecord::Base
 
   has_many :my_tasks, 
            :class_name => 'Task', :foreign_key => 'customer_id', 
-           :order => 'created_at DESC', :include => 'copywriter'
+           :order => 'created_at DESC', :include => [:copywriter, :articles], :dependent => :destroy
 
-  has_many :assigned_tasks, :class_name => 'Task', :foreign_key => 'copywriter_id'
+  has_many :assigned_tasks, 
+           :class_name => 'Task', :foreign_key => 'copywriter_id', 
+           :order => 'created_at ASC', :include => [:customer, :articles], :dependent => :nullify
 
 #   has_many :my_messages,       :class_name => 'Message', :foreign_key => 'sender_id'
 #   has_many :received_messages, :class_name => 'Message', :foreign_key => 'recipient_id'
 
-#   has_many :purchased_articles, :as => 'owner'
-#   has_many :articles, :foreign_key => 'author_id'
+  has_many :bought_articles, :class_name => 'Article', :foreign_key => 'buyer_id'
+
+  has_many :authored_articles, :class_name => 'Article', :foreign_key => 'author_id', :dependent => :nullify
 
   has_many :propositions, :foreign_key => 'sender_id'
 

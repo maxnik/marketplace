@@ -16,6 +16,8 @@ class CreateUsers < ActiveRecord::Migration
       t.column :last_tasks_at,             :datetime
       t.column :last_messages_at,          :datetime
 
+      t.column :forsale_articles_count,    :integer, :default => 0
+
     end
     add_index :users, :login, :unique => true
 

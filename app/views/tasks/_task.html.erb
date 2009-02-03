@@ -4,7 +4,7 @@
   <li class="task" id="task_<%= task.to_param %>">
     <h2><%= h(task.name) %></h2>
     <p class="about-task">
-      <strong>$<%= task.price %></strong> за тыс. знаков, добавлен <%= time_ago_in_words(task.created_at) %> назад
+      <strong>$<%= task.price %></strong> за тысячу знаков, размещен <%= time_ago_in_words(task.created_at) %> назад
     </p>
     <%= render :partial => 'task_actions', :locals => {:task => task} %>
     <p><%= h(task.body) %> </p>

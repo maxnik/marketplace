@@ -1,7 +1,7 @@
 $(document).ready(function () {
   $('#main form div input.radio').click(function () {
     var radio_val = $(this).val();
-    if (radio_val == 'catalog') {
+    if (radio_val == 'category') {
       $('#main form #tasks').hide();
       $('#main form #categories').show();
       $('#main form #price-div').show();
@@ -13,10 +13,12 @@ $(document).ready(function () {
       $('#main form #tasks').show();
     }
   });
-		    
+
+/*		    
   $('#pic').MultiFile({
     max: 5,
     accept: 'gif|jpg|png|bmp',
     namePattern: '$name$i'
   });
+*/
 });

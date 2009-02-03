@@ -1,0 +1,63 @@
+<% @title = 'Редактирование статьи' %>
+
+<%= javascript_include_tag 'jquery-1.3.min' %>
+<%= javascript_include_tag 'article_new' %>
+
+<h1>Редактирование статьи</h1>
+
+<% dived_form_for @article, :html => {:multipart => true, :class => 'new-form'} do |f| %>
+  <%= f.text_field_for :title, :label => 'Название статьи',
+                               :bottom => 'название, которое будет занесено в каталог' %>
+
+  <% in_catalog = (@article.owner_type == 'Category') || (params[:type] == 'catalog') %>
+
+  <div class="radio-button-div">
+    <ul>
+      <li><%= radio_button_tag 'type', 'category', in_catalog, :class => 'radio' %><span>статья на продажу</span></li>
+      <li><%= radio_button_tag 'type', 'task', !in_catalog, :class => 'radio' %><span>статья для заказа</span></li>
+    </ul>
+  </div>
+
+  <% category_id = (@article.owner_type == 'Category' && @article.owner_id) || (params[:category_id].to_i) %>
+
+  <div class="select-div" id="categories" style="<%= 'display:none' unless in_catalog %>">
+    <label for="category"><span>Категория</span></label>
+    <select name="category_id">
+    <% @catalog.each do |section, categories| %>
+      <% state = (category_id == section.id) ? 'selected' : ''%>
+      <option value="<%= section.id %>" class="section" <%= state %> ><%= h(section.name) %></option>
+      <% categories.each do |category| %>
+        <% state = (category_id == category.id) ? 'selected' : ''%>
+        <option value="<%= category.id %>" class="category" <%= state %> ><%= h(category.name) %></option>
+      <% end %>
+    <% end %>
+    </select>
+  </div>
+  <%= f.text_field_for :tags_text, :label => 'Ключевые слова',
+	                           :bottom => 'отдельные тэги разделяются запятыми',
+                       	           :div_id => 'tags-div',
+                                   :div_style => ('display:none' unless in_catalog),
+		                   :default => '' %>
+
+  <%= f.text_field_for :price, :label => 'Цена статьи',
+                               :bottom => 'указывается в WMZ только если статья на продажу',
+                               :div_id => 'price-div',
+                               :div_style => ('display:none' unless in_catalog) %>
+
+  <div class="select-div" id="tasks" style="<%= 'display:none' if in_catalog %>">
+    <label for="tasks"><span>Назначенные заказы</span></label>
+    <select name="task_id">
+    <% if @tasks.blank? %>
+      <option value="">назначенных заказов нет</option>
+    <% else %>
+      <% @tasks.each do |task| %>
+        <option value="<%= task.id %>"><%= h(task.name) %></option>
+      <% end %>
+    <% end %>
+    </select>
+  </div>
+  <%= f.text_area_for :body, :label => 'Текст статьи', 
+                             :bottom => 'размер статьи ограничен 5-тью тысячами знаков' %>
+  <%= f.submit_tag 'Сохранить правки' %>
+<% end %>
+

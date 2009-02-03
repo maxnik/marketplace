@@ -9,12 +9,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090117153124) do
+ActiveRecord::Schema.define(:version => 20090129141605) do
 
   create_table "articles", :force => true do |t|
     t.string   "title",                                       :null => false
     t.text     "body",                                        :null => false
-    t.integer  "category_id",    :limit => 11
+    t.integer  "buyer_id",       :limit => 11
     t.integer  "author_id",      :limit => 11,                :null => false
     t.integer  "owner_id",       :limit => 11
     t.string   "owner_type"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20090117153124) do
     t.integer  "customer_id",        :limit => 11,                :null => false
     t.integer  "copywriter_id",      :limit => 11
     t.integer  "propositions_count", :limit => 11, :default => 0
+    t.integer  "articles_count",     :limit => 11, :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -86,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20090117153124) do
     t.datetime "last_login_at"
     t.datetime "last_tasks_at"
     t.datetime "last_messages_at"
+    t.integer  "forsale_articles_count",    :limit => 11,  :default => 0
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true

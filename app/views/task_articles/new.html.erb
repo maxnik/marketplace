@@ -1,0 +1,16 @@
+<% @title = 'Публикация новой статьи для заказа' %>
+
+<%= javascript_include_tag 'jquery-1.3.min' %>
+<%= javascript_include_tag 'article_new' %>
+
+<h1>Новая статья для заказа</h1>
+<h1><%= '"'+h(@task.name)+'"' %></h1>
+
+<% dived_form_for @article, :url => task_articles_path, :html => {:multipart => true, :class => 'new-form'} do |f| %>
+  <%= hidden_field_tag 'task_id', @task.id %>
+  <%= f.text_field_for :title, :label => 'Название статьи',
+                               :bottom => 'может не совпадать с названием заказа' %>
+  <%= f.text_area_for :body, :label => 'Текст статьи', 
+                             :bottom => 'размер статьи ограничен 5-тью тысячами знаков' %>
+  <%= f.submit_tag 'Добавить статью' %>
+<% end %>

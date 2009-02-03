@@ -27,7 +27,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    @articles = nil
+    @articles = @user.authored_articles.forsale.find(:all, :select => 'articles.*, categories.name as category_name, 
+                                                                       categories.url_name as category_url_name', 
+                                            :joins => 'LEFT JOIN categories ON articles.owner_id = categories.id',
+                                            :order => 'articles.created_at DESC')
   end
 
   protected

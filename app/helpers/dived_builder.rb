@@ -5,7 +5,7 @@ class DivedBuilder < ActionView::Helpers::FormBuilder
 
       options = {}
       options.merge!(args.last) if args.last.is_a?(Hash)
-      options[:default]    = @object.send(attr) unless @object.nil?
+      options[:default]    ||= @object.send(attr) unless @object.nil?
       options[:label]      ||= "Название поля"            # field_label
       options[:bottom]     ||= "&nbsp;"                   # bottom_span
       options[:param_name] ||= "#{@object_name}[#{attr}]" # param_name
@@ -14,7 +14,7 @@ class DivedBuilder < ActionView::Helpers::FormBuilder
       bottom_span_class, field_class = error ? ['error', 'error-field'] : ['text', 'text-field']
       options[:bottom] = error if error
 
-      @template.content_tag(:div, :id => options[:div_id]) do 
+      @template.content_tag(:div, :id => options[:div_id], :style => options[:div_style]) do 
         @template.content_tag(:label, :for => attr.to_s) do 
           @template.content_tag(:span) { options[:label] }
         end +

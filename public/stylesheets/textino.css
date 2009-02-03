@@ -25,7 +25,7 @@ body {
 }
 
 body,p,textarea,input,select {
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: Tahoma, Arial, sans-serif;
   color: #000;
 }
 
@@ -153,7 +153,8 @@ h1,
 #main form div.select-div select,
 #main form div.upload-div input,
 #right dl dt,
-#right span {
+#right span,
+#main h2.about {
   color: #095e00;
 }
 
@@ -197,8 +198,8 @@ h1,
 }
 #catalog dd a,
 #catalog em {
-  font-size: 0.8em;
-  letter-spacing: 0.1em;
+  font-size: 0.85em;
+  //letter-spacing: 0.1em;
 }
 #catalog dd a:hover {
   background-color: #444;
@@ -209,7 +210,8 @@ h1,
   font-style: normal;
 }
 
-h1 {
+h1,
+h2.about {
   margin: 0.2em 0 0 0;
   padding: 0;  
   font-size: 1.5em;
@@ -239,13 +241,15 @@ h1 {
 }
 #main form .text-field {
   padding: 0.1em;
-  display: block;
   border: 2px #d5ea9b solid;
 }
 #main form .error-field {
   padding: 0.1em;
-  display: block;
   border: 2px #f00 solid;
+}
+#main FORM INPUT.text-field,
+#main FORM INPUT.error-field {
+  display: block;
 }
 #main form div p {
   margin: 0 0 0.5em 7.75em;
@@ -298,7 +302,7 @@ h1 {
 }
 #main form div.select-div select {
   font-size: 1.2em;
-  width: 18em;
+  width: 70%;
 }
 #main form div.upload-div input {
   font-size: 1.13em;
@@ -358,12 +362,13 @@ A.user-link,
 #messages-link,
 A.send-message-link,
 A.edit-task-link,
-A.delete-task-link,
+A.delete-link,
 A.free-task-link,
-#new-task-link,
+A.new-task-link,
 #my-tasks-link,
 #assigned-tasks-link,
-#new-article-link,
+A.new-article-link,
+A.edit-article-link,
 #my-articles-link,
 #deposit-link,
 #withdraw-link,
@@ -379,10 +384,10 @@ A.assign-link {
 #messages-link,
 A.send-message-link,
 A.edit-task-link,
-#new-task-link,
+A.new-task-link,
 #my-tasks-link,
 #assigned-tasks-link,
-#new-article-link,
+A.new-article-link,
 #my-articles-link,
 #deposit-link,
 #withdraw-link,
@@ -407,7 +412,7 @@ a.user-link {
 A.send-message-link {
   background-image: url(/images/mail.png);
 }
-#new-task-link {
+A.new-task-link {
   background-image: url(/images/table__plus.png);
 }
 #my-tasks-link {
@@ -419,16 +424,20 @@ A.send-message-link {
 A.edit-task-link {
   background-image: url(/images/table__pencil.png);
 }
-A.delete-task-link {
+A.delete-link {
   background-image: url(/images/cross.png);
-  padding-left: 17px;
+  padding-left: 16px;
 }
 A.free-task-link {
   background-image: url(/images/lock_unlock.png);
   padding-left: 17px;
 }
-#new-article-link {
+A.new-article-link {
   background-image: url(/images/document__plus.png);
+}
+A.edit-article-link {
+  background-image: url(/images/document__pencil.png);
+  padding-left: 18px;
 }
 #my-articles-link {
   background-image: url(/images/documents.png);
@@ -464,7 +473,7 @@ A.free-task-link {
 
 #main table.users {
   margin: 1em auto 0 auto;
-  width: 90%;
+  width: 97%;
 }
 #main div.pagination {
   text-align: center;
@@ -483,13 +492,14 @@ A.free-task-link {
 }
 #main table.users TR.even TD {
                           background-color: #eee;
-                          color: #7bad00;
+                          color: #666;
                           }
 #main table.users TR.even A.user-link {
                           color: #7bad00;
                           }
 #main table.users TR.odd TD {
                          background-color: #ddd;
+                         color: #666;
                          }
 #main table.users TR.odd A.user-link {
                          color: #000;
@@ -543,11 +553,10 @@ body div#heroku_toolbar {
       P.about-task STRONG {
                    font-weight: bold;
                    }
-      #main #my-tasks LI H2,
-      #main #free-tasks LI H2 {
-                           color: orange;
-			   font-weight: bold;
-                           }
+      #main LI.task H2 {
+                    color: orange;
+	            font-weight: bold;
+                    }
       #main #free-tasks LI B.proposition-success,
       #main #free-tasks LI B.proposition-error {
                            margin-left: 1em;
@@ -575,3 +584,52 @@ body div#heroku_toolbar {
                display: inline;
                margin-right: 10px;
                }
+
+#main TABLE.articles {
+      margin: 1em auto 0 auto;
+      width: 100%;
+      }
+      #main TABLE.articles TD {
+                           vertical-align: middle;
+                           padding: 0.25em 0;
+                           }
+      #main TABLE.articles TD.price,
+      #main TABLE.articles TD.length,
+      #main TABLE.articles TD.time,
+      #main TABLE.articles TH {
+                           text-align: center;
+                           }
+      #main TABLE.articles TD.title {
+                           padding-left: 0.5em;
+                           }
+      #main TABLE.articles TD.time {
+                           width: 6em;
+                           }
+      #main TABLE.articles TD.length {
+                           width: 4em;
+                           }
+      #main TABLE.articles TD.price {
+                           width: 4em;
+                           }
+      #main TABLE.articles TR TD A.category-link {
+                                 color: #aaa;
+                                 }
+      #main TABLE.articles TR.even TD {
+                                   background-color: #eee;
+                                   color: #666;
+                                   }
+      #main TABLE.articles TR.even A.article-link {
+                                   color: #7bad00;
+                                   }
+      #main TABLE.articles TR.odd TD {
+                                  background-color: #ddd;
+                                  color: #666;
+                                  }
+      #main TABLE.articles TR.odd A.article-link {
+                                  color: #000;
+                                  }
+      #main TABLE.articles TR.highlighted TD {
+                                          background-color: #d5ea9b;
+                                          color: #666;                                          
+                                          }
+
