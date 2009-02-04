@@ -20,7 +20,7 @@
 
   </td>
   <td class="price"><%= h(article.price).gsub('.', ',') %><br />WMZ</td>
-  <td class="length"><%= sprintf('%.1f', article.body.chars.size / 1000.0).gsub('.', ',') %> тыс.<br />знаков</td>
+  <td class="length"><%= sprintf('%.1f', article.length / 1000.0).gsub('.', ',') %> тыс.<br />знаков</td>
   <td class="time"><%= time_ago_in_words(article.created_at).gsub('около ', 'около<br />') %><br />назад</td>
 </tr>
 

@@ -96,7 +96,7 @@ class TasksController < ApplicationController
   end
 
   def assigned
-    @assigned_tasks = current_user.assigned_tasks
+    @assigned_tasks = current_user.assigned_tasks.find(:all, :include => :articles)
   end
 
   protected

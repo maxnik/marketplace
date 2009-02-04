@@ -7,6 +7,16 @@ class Article < ActiveRecord::Base
 
   named_scope :forsale, :conditions => {:buyer_id => nil, :owner_type => 'Category'}
 
+  named_scope :with_categories, 
+              :select => 'articles.*, categories.name AS category_name, categories.url_name AS category_url_name',
+              :joins => 'LEFT OUTER JOIN categories ON articles.owner_id = categories.id'
+
+  named_scope :with_categories_and_author, 
+              :select => 'articles.*, categories.name AS category_name, categories.url_name AS category_url_name,
+                          users.login AS author_login',
+              :joins => 'LEFT OUTER JOIN categories ON categories.id = articles.owner_id 
+                         LEFT OUTER JOIN users ON users.id = articles.author_id'
+
   belongs_to :buyer, :class_name => 'User'
 
   attr_accessible :title, :body, :price
@@ -27,13 +37,18 @@ class Article < ActiveRecord::Base
 
   validates_presence_of :owner, :message => 'можно публиковать статью только для каталога или для заказа'
 
+  def self.per_page
+    10
+  end
+
   protected
 
   def before_validation
+    self.length = self.body.chars.size
     if self.owner.is_a?(Task)
-      self.price = owner.price * (self.body.chars.size / 1000.0)
+      self.price = owner.price * (self.length / 1000.0)
     end
-    if owner_type_changed? || owner_id_changed?
+    if !new_record? && (owner_type_changed? || owner_id_changed?)
       @old_owner = owner_type_was.constantize.find(owner_id_was)
     end
   end

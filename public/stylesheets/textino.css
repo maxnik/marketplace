@@ -376,7 +376,9 @@ A.edit-article-link,
 #portfolio-link,
 A.propositions-link,
 a.proposition,
-A.assign-link {
+A.assign-link,
+A.desc-link,
+A.asc-link {
   background-position: center left;
   background-repeat: no-repeat;
 }
@@ -466,6 +468,14 @@ A.edit-article-link {
   background-image: url(/images/lock.png);
   padding-left: 17px;
 }
+#main A.desc-link {
+  background-image: url(/images/arrow_090.png);
+  padding-left: 15px;
+}
+#main A.asc-link {
+  background-image: url(/images/arrow_270.png);
+  padding-left: 15px;
+}
 
 #main a.proposition {
   color: #00f;
@@ -540,6 +550,7 @@ body div#heroku_toolbar {
       #main P.about,
       #main #propositions LI.proposition,
       LI.task {
+      margin-top: 1em;
       margin-bottom: 1em;
       background-color: #f4f4f4;
       padding: 0.75em;
@@ -612,21 +623,18 @@ body div#heroku_toolbar {
                            width: 4em;
                            }
       #main TABLE.articles TR TD A.category-link {
-                                 color: #aaa;
+                                 color: #7bad00;
                                  }
       #main TABLE.articles TR.even TD {
                                    background-color: #eee;
                                    color: #666;
                                    }
-      #main TABLE.articles TR.even A.article-link {
-                                   color: #7bad00;
-                                   }
+      #main TABLE.articles A.article-link {
+                           color: #000;
+                           }
       #main TABLE.articles TR.odd TD {
                                   background-color: #ddd;
                                   color: #666;
-                                  }
-      #main TABLE.articles TR.odd A.article-link {
-                                  color: #000;
                                   }
       #main TABLE.articles TR.highlighted TD {
                                           background-color: #d5ea9b;

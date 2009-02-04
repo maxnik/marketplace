@@ -4,6 +4,9 @@ class TaskArticlesController < ArticlesController
 
   rescue_from(ActiveRecord::RecordNotFound) {|_| redirect_to(assigned_tasks_path) }
 
+  def show
+  end
+
   def create
     @article = current_user.authored_articles.new(params[:article])
     @article.owner = @task

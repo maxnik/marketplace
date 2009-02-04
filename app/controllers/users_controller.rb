@@ -7,7 +7,8 @@ class UsersController < ApplicationController
   before_filter :check_ownership, :only => [:edit, :update]
 
   def index
-    @users = User.paginate(:page => params[:page])
+    page = (params[:page].to_i == 0) ? 1 : params[:page].to_i
+    @users = User.paginate(:page => page)
   end
 
   def new
@@ -27,10 +28,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @articles = @user.authored_articles.forsale.find(:all, :select => 'articles.*, categories.name as category_name, 
-                                                                       categories.url_name as category_url_name', 
-                                            :joins => 'LEFT JOIN categories ON articles.owner_id = categories.id',
-                                            :order => 'articles.created_at DESC')
+    @articles = @user.authored_articles.forsale.with_categories.find(:all)
   end
 
   protected

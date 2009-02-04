@@ -6,6 +6,14 @@ class ArticlesController < ApplicationController
   rescue_from(ActiveRecord::RecordNotFound) {|_| redirect_to(articles_path) }
 
   def index
+    page = (params[:page].to_i == 0) ? 1 : params[:page].to_i
+    if ['category_name', 'author_login', 'title', 'price', 'length', 'created_at'].include?(params[:order])
+      @order = params[:order]
+      @dir = ['asc', 'desc'].include?(params[:dir]) ? params[:dir] : 'asc'
+    else
+      @order, @dir = 'created_at', 'desc'      
+    end
+    @articles = Article.forsale.with_categories_and_author.paginate(:all, :order => "#{@order} #{@dir}", :page => page)
   end
 
   def show

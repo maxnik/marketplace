@@ -1,0 +1,11 @@
+<tr class="<%= cycle('even', 'odd') %>" id="article_<%= article.id %>">
+  <td class="title">
+      <%= link_to(article.category_name, category_path(article.category_url_name), :class => 'category-link') %>
+      <br />
+    <%= link_to(h(article.title).gsub(' ', ' <wbr />'), article_path(article), :class => 'article-link') %>
+  </td>
+  <td class="author"><%= link_to(h(article.author_login), user_path(article.author_login), :class => 'user-link') %></td>
+  <td class="price"><%= h(article.price).gsub('.', ',') %><br />WMZ</td>
+  <td class="length"><%= sprintf('%.1f', article.length / 1000.0).gsub('.', ',') %> тыс.<br />знаков</td>
+  <td class="time"><%= time_ago_in_words(article.created_at).gsub('около ', 'около<br />') %><br />назад</td>
+</tr>

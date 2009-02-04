@@ -1,0 +1,31 @@
+<% @title = 'Статьи на продажу' %>
+
+<h1>Статьи на продажу</h1>
+
+<% if @articles.blank? %>
+  <p class="about">В каталоге нет еще ни одной статьи на продажу.</p>
+<% else %>
+  <table class="articles">
+  <thead><tr>
+  <% [['Раздел и название', 'category_name'],
+      ['Автор', 'author_login'],
+      ['Цена', 'price'],
+      ['Объем', 'length'],
+      ['Дата', 'created_at']].each do |link_text, column| %>
+      <th>
+      <% if (@order == column) %>
+        <% dir = (@dir == 'asc') ? 'desc' : 'asc' %>
+        <%= link_to(link_text, {:order => column, :dir => dir}, :class => "#{@dir}-link") %>
+      <% else %>
+        <%= link_to(link_text, {:order => column, :dir => 'asc'}) %>
+      <% end %>
+      </th>
+  <% end %>
+  </tr><thead>
+  <tbody>
+  <% @articles.each do |article| %>
+    <%= render :partial => 'article_user_row', :locals => {:article => article} %>
+  <% end %>
+  </tbody>
+  </table>
+<% end %>

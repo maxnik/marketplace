@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(:version => 20090129141605) do
   create_table "articles", :force => true do |t|
     t.string   "title",                                       :null => false
     t.text     "body",                                        :null => false
+    t.integer  "length",         :limit => 11
     t.integer  "buyer_id",       :limit => 11
     t.integer  "author_id",      :limit => 11,                :null => false
     t.integer  "owner_id",       :limit => 11
