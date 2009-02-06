@@ -10,12 +10,6 @@ class TaskArticlesController < ArticlesController
   def create
     @article = current_user.authored_articles.new(params[:article])
     @article.owner = @task
-#     @pictures = ['', '1', '2', '3', '4'].inject([]) do |pictures, postfix|
-#       pic_file = params["pic#{postfix}"]
-#       pictures << Picture.new(:uploaded_data => pic_file) unless pic_file.blank?
-#       pictures
-#     end    
-    @pictures = []
     @service = ArticleService.new(@article, @pictures) # add pictures to service.save
 
     if @service.save

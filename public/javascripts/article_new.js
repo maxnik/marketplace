@@ -14,11 +14,9 @@ $(document).ready(function () {
     }
   });
 
-/*		    
   $('#pic').MultiFile({
     max: 5,
-    accept: 'gif|jpg|png|bmp',
-    namePattern: '$name$i'
+    accept: 'gif|jpg|png|bmp'
   });
-*/
+
 });
