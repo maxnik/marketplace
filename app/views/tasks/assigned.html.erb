@@ -29,13 +29,17 @@
         <li><%= link_to('личное сообщение', '#', :class => 'send-message-link') %></li>
         <li><%= link_to('отправить готовую статью', new_task_article_path(task), :class => 'new-article-link') %></li>
       </ul>
-      <table class="articles">
-        <tbody>
-        <% task.articles.each do |article| %>
-          <%= render :partial => 'article_row',  :locals => {:article => article, :task => task} %>
-        <% end %>
-        </tbody>
-      </table>
+      <% if !task.articles.blank? && task.articles.any? {|a| a.author.id == current_user.id} %>
+        <table class="articles">
+          <tbody>
+          <% task.articles.each do |article| %>
+	    <% if article.author.id == current_user.id %>
+              <%= render :partial => 'article_row',  :locals => {:article => article, :task => task} %>
+	    <% end %>
+          <% end %>
+          </tbody>
+        </table>
+      <% end %>
     </li>
   <% end %>
 <% end %>

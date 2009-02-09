@@ -3,6 +3,7 @@ class TasksController < ApplicationController
   layout 'application', :except => [:propose, :assign, :destroy]
 
   before_filter :login_required, :except => :index
+  before_filter :load_catalog, :except => [:propose, :assign, :destroy]
   before_filter :find_my_task, :only => [:show, :edit, :update, :assign, :destroy]
   rescue_from(ActiveRecord::RecordNotFound) {|e| redirect_to(tasks_path) }
 
@@ -17,7 +18,7 @@ class TasksController < ApplicationController
   def create
     @task = current_user.my_tasks.new(params[:task])
     if @task.save
-      redirect_to(my_tasks_path)
+      redirect_to(task_path(@task))
     else
       render :action => 'new'
     end
@@ -92,11 +93,11 @@ class TasksController < ApplicationController
   end
   
   def my
-    @my_tasks = current_user.my_tasks
+    @my_tasks = current_user.my_tasks.find(:all, :include => {:articles => :author})
   end
 
   def assigned
-    @assigned_tasks = current_user.assigned_tasks.find(:all, :include => :articles)
+    @assigned_tasks = current_user.assigned_tasks.find(:all, :include => {:articles => :author})
   end
 
   protected

@@ -1,12 +1,13 @@
 <% @title = 'Публикация новой статьи на продажу' %>
 
+<%= yield_authenticity_token %>
 <%= javascript_include_tag 'jquery-1.3.min' %>
-<%= javascript_include_tag 'jquery.multifile' %>
-<%= javascript_include_tag 'article_new' %>
+<%= javascript_include_tag 'application' %>
+
 
 <h1>Публикация новой статьи на продажу</h1>
 
-<% dived_form_for @article, :html => {:multipart => true, :class => 'new-form'} do |f| %>
+<% dived_form_for @article, :html => {:multipart => true, :class => 'new-form forsale-article'} do |f| %>
   <%= f.text_field_for :title, :label => 'Название статьи',
                                :bottom => 'название, которое будет занесено в каталог' %>
 
@@ -33,9 +34,12 @@
 
   <%= f.text_area_for :body, :label => 'Текст статьи', 
                              :bottom => 'размер статьи ограничен 5-тью тысячами знаков' %>
-  <div class="upload-div">
-    <label for="pics"><span>Иллюстрации</span></label>
-    <%= file_field_tag 'article[pic][]', :id => 'pic' %>
-  </div>
+  <ol id="pictures">
+    <%= render :partial => '/pictures/picture', :collection => @pictures %>
+  </ol>
+  <%= f.file_field_for :picture, :label => 'Иллюстрации',
+                                 :bottom => 'до 5-ти файлов изображений до 200 кбайт каждый',
+				 :id => 'picture' %>
   <%= f.submit_tag 'Добавить статью' %>
 <% end %>
+<iframe id="upload_frame" name="upload_frame" style="width:1px;height:1px;border:0px" src="about:blank"></iframe>

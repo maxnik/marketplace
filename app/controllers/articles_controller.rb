@@ -1,8 +1,8 @@
 class ArticlesController < ApplicationController
 
   before_filter :login_required, :except => [:index, :show]
-  before_filter :find_my_article, :only => [:edit, :update, :destroy]
-  before_filter :handle_pictures, :only => [:create]
+  before_filter :load_catalog, :except => :destroy
+  before_filter :find_my_article, :only => [:edit, :update]
 
   rescue_from(ActiveRecord::RecordNotFound) {|_| redirect_to(articles_path) }
 
@@ -24,17 +24,18 @@ class ArticlesController < ApplicationController
 
   def new
     @article = Article.new
+    @pictures = current_user.pictures
   end
 
   def create
     @article = current_user.authored_articles.new(params[:article])
     @article.owner = Category.find(params[:category_id]) 
-
-    @service = ArticleService.new(@article, @pictures) # add pictures to service.save
-    if @service.save
+    if @article.save
+      Picture.update_all("owner_type = 'Article', owner_id = #{@article.id}", {:id => current_user.picture_ids})
       redirect_to(user_path(current_user))
     else
-       render :action => 'new'
+      @pictures = current_user.pictures
+      render :action => 'new'
     end                         
   end
 
@@ -60,25 +61,23 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
+    @article = current_user.authored_articles.find(params[:id])
     id = @article.id
     @article.destroy
     respond_to do |wants|
       wants.js { render :json => {"#article_#{id}" => render_to_string(:partial => '/articles/article_row', 
                                                                        :locals => {:article => nil})} }
     end
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |wants|
+      wants.js { render :status => 401 }
+    end
   end
 
   protected
   
   def find_my_article
-    @article = current_user.authored_articles.find(params[:id], :include => :owner)
-  end
-
-  def handle_pictures
-    @pictures = params[:article][:pic].inject([]) do |pics, file|
-      pics << Picture.new(:uploaded_data => pic) if file.is_a?(ActionController::UploadedTempfile)
-      pics
-    end
+    @article = current_user.authored_articles.find(params[:id], :include => [:pictures, :owner])
   end
 
 end

@@ -21,14 +21,14 @@ class CreateUsers < ActiveRecord::Migration
     end
     add_index :users, :login, :unique => true
 
-    (1..200).each do |index|
-      u = User.new(:login => "user#{index}", :email => "user#{index}@textino.ru",
-                   :password => 'password', :password_confirmation => 'password')
-      u.created_at = (index % 10).month.ago
-      u.save!
-    end
-    User.create!(:login => '1234567890_123456789', :email => 'ttt@test.com',
-                 :password => 'password', :password_confirmation => 'password')
+#     (1..200).each do |index|
+#       u = User.new(:login => "user#{index}", :email => "user#{index}@textino.ru",
+#                    :password => 'password', :password_confirmation => 'password')
+#       u.created_at = (index % 10).month.ago
+#       u.save!
+#     end
+#     User.create!(:login => '1234567890_123456789', :email => 'ttt@test.com',
+#                  :password => 'password', :password_confirmation => 'password')
   end
 
   def self.down

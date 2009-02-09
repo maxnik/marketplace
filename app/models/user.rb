@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   include Authentication::ByCookieToken
 
-  LOGIN_REGEX = /\A[a-z0-9][a-z0-9\.\-_@]+\z/
+  LOGIN_REGEX = /\A[a-z0-9][a-z0-9\-_]+\z/
 
   EMAIL_NAME_REGEX  = '[a-z0-9\.%\+\-]+'.freeze
   EMAIL_REGEX       = /\A#{EMAIL_NAME_REGEX}@#{Authentication.domain_head_regex}#{Authentication.domain_tld_regex}\z/i
@@ -43,6 +43,8 @@ class User < ActiveRecord::Base
   has_many :authored_articles, :class_name => 'Article', :foreign_key => 'author_id', :dependent => :nullify
 
   has_many :propositions, :foreign_key => 'sender_id'
+
+  has_many :pictures, :as => 'owner', :dependent => :destroy
 
   def validate
     errors.clear

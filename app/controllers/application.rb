@@ -15,8 +15,6 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
 
-  before_filter :load_catalog
-
   protected
 
   def load_catalog

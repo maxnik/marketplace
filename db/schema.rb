@@ -9,18 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090129141605) do
+ActiveRecord::Schema.define(:version => 20090206072004) do
 
   create_table "articles", :force => true do |t|
-    t.string   "title",                                       :null => false
-    t.text     "body",                                        :null => false
-    t.integer  "length",         :limit => 11
-    t.integer  "buyer_id",       :limit => 11
-    t.integer  "author_id",      :limit => 11,                :null => false
-    t.integer  "owner_id",       :limit => 11
+    t.string   "title",                    :null => false
+    t.text     "body",                     :null => false
+    t.integer  "length",     :limit => 11
+    t.integer  "buyer_id",   :limit => 11
+    t.integer  "author_id",  :limit => 11, :null => false
+    t.integer  "owner_id",   :limit => 11
     t.string   "owner_type"
-    t.integer  "price",          :limit => 11
-    t.integer  "pictures_count", :limit => 11, :default => 0
+    t.integer  "price",      :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -43,7 +42,8 @@ ActiveRecord::Schema.define(:version => 20090129141605) do
   end
 
   create_table "pictures", :force => true do |t|
-    t.integer  "article_id",   :limit => 11
+    t.integer  "owner_id",     :limit => 11
+    t.string   "owner_type"
     t.integer  "parent_id",    :limit => 11
     t.integer  "size",         :limit => 11
     t.integer  "width",        :limit => 11

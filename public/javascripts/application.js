@@ -29,11 +29,7 @@ $(document).ready(function() {
 	    error: function (XMLHttpRequest) {
 	      $('#busy').replaceWith(this.clickedLink);
 	    },
-	    success: function (data, textStatus) {
-	      for (var id in data) {
-		$(id).replaceWith(data[id]);
-	      }
-	    },
+	    success: function (data, textStatus) { replace_elements(data); },
 	    type: 'POST',
 	    url: this.href,
 	    data: '_method='+method,
@@ -45,8 +41,57 @@ $(document).ready(function() {
       
     })(post_methods[index]);
   }
+		    
+  $('form.new-form #picture').change(function () {
+    if (this.value != '') {
+      $('form.new-form').attr('action', '/pictures/create').attr('target', 'upload_frame').submit();
+    }
+  });
+  $('form.edit-article #picture').change(function () {
+    if (this.value != '') {
+      var article_id = $('form.edit-article input#article_id').val();
+      $('form.edit-article').attr('action', '/pictures/connect/'+article_id).attr('target', 'upload_frame').submit();
+    }
+  });
+  
+  $('form.forsale-article input.button').click(function () {
+    $('form.forsale-article').attr('action', '/articles').attr('target', null).submit();
+    return false;
+  });
+  $('form.edit-article input.button').click(function () {
+    var article_id = $('form.edit-article input#article_id').val();
+    $('form.edit-article').attr('action', '/articles/'+article_id).attr('target', null).submit();
+    return false;
+  });
+  $('form.task-article input.button').click(function () {
+    var task_id = $('form.task-article input#task_id').val();
+    $('form.task-article').attr('action', '/tasks/'+task_id+'/articles').attr('target', null).submit();
+    return false;
+  });
+  
+  $('#main form div input.radio').click(function () {
+    var radio_val = $(this).val();
+    if (radio_val == 'category') {
+      $('#main form #tasks').hide();
+      $('#main form #categories').show();
+      $('#main form #price-div').show();
+      $('#main form #tags-div').show();
+    } else if (radio_val == 'task') {
+      $('#main form #price-div').hide();
+      $('#main form #tags-div').hide();
+      $('#main form #categories').hide();
+      $('#main form #tasks').show();
+    }
+  });
+
 });
-		  
+
+function replace_elements(elems) {
+  for (var id in elems) {
+    $(id).replaceWith(elems[id]);
+  }
+}
+
 // All ajax requests will trigger the wants.js block
 // of +respond_to do |wants|+ declarations
 $.ajaxSetup({

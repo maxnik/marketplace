@@ -4,7 +4,7 @@
 
 <h1>Рейтинг пользователей</h1>
 <% if @users.blank? %>
-
+  <p class="about">У нас еще не зарегистрировался ни один пользователь.</p>
 <% else %>
 <table class="users">
   <thead>
@@ -27,7 +27,7 @@
     <% else %>
       <td><%= user.forsale_articles_count %> <%= user.forsale_articles_count.items('статья', 'статьи', 'статей') %></td>
     <% end %>
-    <td><%= 15.to_s+" "+15.items('статью', 'статьи', 'статей') %></td>
+    <td>не покупал<br />статей</td>
   </tr>
 <% end %>
   </tbody>

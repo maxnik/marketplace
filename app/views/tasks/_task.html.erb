@@ -13,5 +13,21 @@
          <%= link_to(task.copywriter.login, user_path(task.copywriter), :class => 'user-link') %></p>
     <% end %>
     <%= propositions_link(task) %>
+    <% unless task.articles.blank? %>
+    <table class="articles">
+    <thead><tr>
+      <th>Название</th>
+      <th>Автор</th>
+      <th>Цена</th>
+      <th>Объем</th>
+      <th>Дата</th>      
+    </tr></thead>
+    <tbody>
+    <% task.articles.each do |article| %>
+      <%= render :partial => 'article_user_row', :locals => {:task => task, :article => article} %>
+    <% end %>
+    </tbody>
+    </table>
+    <% end %>
   </li>
 <% end %>

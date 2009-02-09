@@ -1,18 +1,21 @@
 class Article < ActiveRecord::Base
 
   belongs_to :author, :class_name => 'User'
-  belongs_to :owner, :polymorphic => true # , :counter_cache => true
+  belongs_to :owner, :polymorphic => true
 
-  # has_many :pictures
+  has_many :pictures, :as => 'owner', :dependent => :destroy
 
   named_scope :forsale, :conditions => {:buyer_id => nil, :owner_type => 'Category'}
 
   named_scope :with_categories, 
-              :select => 'articles.*, categories.name AS category_name, categories.url_name AS category_url_name',
+              :select => 'articles.title, articles.price, articles.length, 
+                          articles.created_at, articles.author_id, articles.id,
+                          categories.name AS category_name, categories.url_name AS category_url_name',
               :joins => 'LEFT OUTER JOIN categories ON articles.owner_id = categories.id'
 
   named_scope :with_categories_and_author, 
-              :select => 'articles.*, categories.name AS category_name, categories.url_name AS category_url_name,
+              :select => 'articles.title, articles.price, articles.length, articles.created_at, articles.id,
+                          categories.name AS category_name, categories.url_name AS category_url_name,
                           users.login AS author_login',
               :joins => 'LEFT OUTER JOIN categories ON categories.id = articles.owner_id 
                          LEFT OUTER JOIN users ON users.id = articles.author_id'
@@ -37,6 +40,8 @@ class Article < ActiveRecord::Base
 
   validates_presence_of :owner, :message => 'можно публиковать статью только для каталога или для заказа'
 
+  validates_presence_of :author, :message => 'анонимные статьи не допускаются'
+
   def self.per_page
     10
   end
@@ -44,7 +49,7 @@ class Article < ActiveRecord::Base
   protected
 
   def before_validation
-    self.length = self.body.chars.size
+    self.length = self.body.chars.size unless self.body.nil?
     if self.owner.is_a?(Task)
       self.price = owner.price * (self.length / 1000.0)
     end

@@ -7,10 +7,8 @@
 
 <tr class="<%= cycle('even', 'odd') %>" id="article_<%= article.id %>">
   <td class="title">
-    <% if article.owner_type == 'Category' %>
-      <%= link_to(article.category_name, category_path(article.category_url_name), :class => 'category-link') %>
-      <br />
-    <% end %>
+    <%= link_to(article.category_name, category_path(article.category_url_name), :class => 'category-link') %>
+    <br />
     <%= link_to(h(article.title).gsub(' ', ' <wbr />'), article_path(article), :class => 'article-link') %>
 
      <% if (logged_in? && article.author_id == current_user.id) %>

@@ -9,7 +9,6 @@ class CreateArticles < ActiveRecord::Migration
       t.integer   :owner_id
       t.string    :owner_type
       t.integer   :price
-      t.integer   :pictures_count, :default => 0
       t.timestamps
     end
   end

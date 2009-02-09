@@ -13,6 +13,8 @@
     <dt>Управление статьями</dt>
       <dd><%= link_to('статья в каталог', new_article_path, :class => 'new-article-link') %></dd>
       <dd><%= link_to('мои статьи', user_path(current_user), :id => 'my-articles-link') %></dd>
+      <dd><%= link_to('отказные статьи', refused_articles_path, :id => 'refused-articles-link') %></dd>      
+      <dd><%= link_to('купленные статьи', bought_articles_path, :id => 'bought-articles-link') %></dd>      
     <dt>Управление счетом</dt>
       <dd><a href="#" id="deposit-link">пополнить счет</a></dd>
       <dd><a href="#" id="withdraw-link">вывести деньги</a></dd>

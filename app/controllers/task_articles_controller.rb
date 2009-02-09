@@ -10,9 +10,8 @@ class TaskArticlesController < ArticlesController
   def create
     @article = current_user.authored_articles.new(params[:article])
     @article.owner = @task
-    @service = ArticleService.new(@article, @pictures) # add pictures to service.save
-
-    if @service.save
+    if @article.save
+      Picture.update_all("owner_type = 'Article', owner_id = #{@article.id}", {:id => current_user.picture_ids})
       redirect_to(assigned_tasks_path)
     else
       render :action => 'new'

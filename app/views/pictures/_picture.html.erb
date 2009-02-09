@@ -1,0 +1,10 @@
+<% if picture.nil? %>
+  <li class="highlighted">Иллюстрация удалена.</li>
+<% else %>
+  <li id="picture_<%= picture.id %>">
+    <%= image_tag(picture.public_filename(:thumb)) %>
+    <%= "Параметры изображения: #{picture.width} x #{picture.height}" %><br />
+    <%= "Размер файла: #{picture.size / 1024} кб" %><br />
+    <%= link_to('удалить иллюстрацию', "/pictures/destroy/#{picture.id}", :class => 'delete delete-link') %>
+  </li>
+<% end %>

@@ -25,4 +25,6 @@ class Task < ActiveRecord::Base
 
   validates_numericality_of :price, :greater_than => 0, :message => 'цена за тысячу знаков указана неправильно'
 
+  validates_presence_of :customer_id, :message => 'анонимные заказы не допускаются'
+
 end

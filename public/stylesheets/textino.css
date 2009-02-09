@@ -369,6 +369,9 @@ A.new-task-link,
 #assigned-tasks-link,
 A.new-article-link,
 A.edit-article-link,
+#refused-articles-link,
+#bought-articles-link,
+A.buy-article-link,
 #my-articles-link,
 #deposit-link,
 #withdraw-link,
@@ -390,6 +393,9 @@ A.new-task-link,
 #my-tasks-link,
 #assigned-tasks-link,
 A.new-article-link,
+#refused-articles-link,
+#bought-articles-link,
+A.buy-article-link,
 #my-articles-link,
 #deposit-link,
 #withdraw-link,
@@ -441,11 +447,20 @@ A.edit-article-link {
   background-image: url(/images/document__pencil.png);
   padding-left: 18px;
 }
+#refused-articles-link {
+  background-image: url(/images/documents_exclamation.png);
+}
+#bought-articles-link {
+  background-image: url(/images/inbox_document.png);
+}
+A.buy-article-link {
+  background-image: url(/images/safe_minus.png);
+}
 #my-articles-link {
   background-image: url(/images/documents.png);
 }
 #deposit-link {
-  background-image: url(/images/safe.png);
+  background-image: url(/images/safe_plus.png);
 }
 #withdraw-link {
   background-image: url(/images/trophy_arrow.png);
@@ -636,8 +651,21 @@ body div#heroku_toolbar {
                                   background-color: #ddd;
                                   color: #666;
                                   }
+      FORM #pictures LI.highlighted,
       #main TABLE.articles TR.highlighted TD {
                                           background-color: #d5ea9b;
                                           color: #666;                                          
                                           }
+
+FORM #pictures {
+     padding-left: 7.75em;
+     overflow: auto;
+     }
+     FORM #pictures LI {
+                    clear: left;
+                    }
+                    FORM #pictures LI IMG {
+                                      float: left;
+                                      margin: 0 1em 1em 0;
+                                      }
 

@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   layout 'application'
 
   before_filter :login_required, :except => [:index, :show, :new, :create]
+  before_filter :load_catalog
   before_filter :find_user, :only => [:show, :edit, :update]
   before_filter :check_ownership, :only => [:edit, :update]
 
