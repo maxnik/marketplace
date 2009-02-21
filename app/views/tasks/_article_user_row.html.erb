@@ -2,7 +2,7 @@
   <td class="title">
     <%= link_to(h(article.title).gsub(' ', ' <wbr />'), task_article_path(task, article), :class => 'article-link') %>
        <ul class="actions">
-         <li><%= link_to('купить статью', 'buy_task_article_path(task, article)', 
+         <li><%= link_to('купить статью', buy_task_article_path(task, article), 
                  :class => 'buy-article-link', :rel => 'nofollow') %> </li>
        </ul>
   </td>
