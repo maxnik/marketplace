@@ -49,7 +49,9 @@ class Article < ActiveRecord::Base
   protected
 
   def before_validation
-    self.length = self.body.chars.size unless self.body.nil?
+    unless self.body.nil?
+      self.length = self.body.chars.split(//u).inject(0) {|length, char| length += 1 unless char =~ /\s/; length}
+    end
     if self.owner.is_a?(Task)
       self.price = owner.price * (self.length / 1000.0)
     end

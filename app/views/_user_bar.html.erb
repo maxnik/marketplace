@@ -6,14 +6,14 @@
   <dl>
     <dd><%= link_to('выйти из системы', logout_path, :id => 'logout-link') %></dd>
     <dd><%= link_to('личные сообщения', messages_path, :id => 'messages-link') %></dd>
+    <dd><%= link_to('письмо администратору', '#', :id => 'admin-messages-link') %></dd>
     <dt>Управление заказами</dt>
       <dd><%= link_to('разместить заказ', new_task_path, :class => 'new-task-link') %></dd>
       <dd><%= link_to('Вы заказали', my_tasks_path, :id => 'my-tasks-link') %></dd>      
       <dd><%= link_to('Вам заказали', assigned_tasks_path, :id => 'assigned-tasks-link') %></dd>
     <dt>Управление статьями</dt>
-      <dd><%= link_to('статья в каталог', new_article_path, :class => 'new-article-link') %></dd>
-      <dd><%= link_to('мои статьи', user_path(current_user), :id => 'my-articles-link') %></dd>
-      <dd><%= link_to('отказные статьи', refused_articles_path, :id => 'refused-articles-link') %></dd>      
+      <dd><%= link_to('разместить статью', new_article_path, :class => 'new-article-link') %></dd>
+      <dd><%= link_to('мои статьи', my_articles_path, :id => 'my-articles-link') %></dd>
       <dd><%= link_to('купленные статьи', bought_articles_path, :id => 'bought-articles-link') %></dd>      
     <dt>Управление счетом</dt>
       <dd><a href="#" id="deposit-link">пополнить счет</a></dd>

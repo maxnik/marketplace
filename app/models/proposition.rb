@@ -5,6 +5,8 @@ class Proposition < ActiveRecord::Base
   belongs_to :task, :counter_cache => true
   belongs_to :sender, :class_name => 'User'
 
+  named_scope :assigned, :conditions => {:assigned => true}
+
   protected
 
   def validate_on_create

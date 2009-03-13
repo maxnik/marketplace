@@ -13,15 +13,19 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :messages
 
-  map.resources :tasks, :collection => {:propose => :post, :my => :get, :assigned => :get} do |task|
+  map.resources :articles, :collection => {:filter => :get, 
+                                           :my => :get, 
+                                           :bought => :get}
+
+  map.resources :tasks, :collection => {:propose => :post, 
+                                        :my => :get, 
+                                        :assigned => :get},
+                        :member => {:close => :put} do |task|
     task.resources :articles, :controller => 'task_articles', :member => {:buy => :put}
   end
-  map.with_options :controller => 'tasks', :action => 'assign', :conditions => {:method => :put} do |t|
-    t.assign_task 'tasks/:id/assign/:copywriter_id'
-    t.deassign_task 'tasks/:id/deassign'
+  map.with_options :controller => 'tasks', :conditions => {:method => :put} do |t|
+    t.assign_task 'tasks/:id/assign/:proposition_id', :action => 'assign'
   end
-
-  map.resources :articles, :collection => {:filter => :get, :refused => :get, :bought => :get}
 
   map.category 'categories/:id', :controller => 'categories', :action => 'show'
 

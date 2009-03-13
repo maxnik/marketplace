@@ -4,11 +4,11 @@ class ArticlesController < ApplicationController
   before_filter :load_catalog, :except => :destroy
   before_filter :find_my_article, :only => [:edit, :update]
 
-  rescue_from(ActiveRecord::RecordNotFound) {|_| redirect_to(articles_path) }
+  # rescue_from(ActiveRecord::RecordNotFound) {|_| redirect_to(articles_path) }
 
   def index
     page = (params[:page].to_i == 0) ? 1 : params[:page].to_i
-    if ['category_name', 'author_login', 'title', 'price', 'length', 'created_at'].include?(params[:order])
+    if ['category_name', 'author_login', 'price', 'length', 'created_at'].include?(params[:order])
       @order = params[:order]
       @dir = ['asc', 'desc'].include?(params[:dir]) ? params[:dir] : 'asc'
     else
@@ -45,7 +45,7 @@ class ArticlesController < ApplicationController
 
   def update
     @article.owner = if params[:type] == 'task'
-                       current_user.assigned_tasks.find(params[:task_id])
+                       current_user.assigned_tasks.find_by_id(params[:task_id])
                      else
                        Category.find(params[:category_id])              
                      end
@@ -56,6 +56,7 @@ class ArticlesController < ApplicationController
         redirect_to(user_path(current_user))
       end
     else
+      @tasks = current_user.assigned_tasks
       render :action => 'edit'
     end
   end

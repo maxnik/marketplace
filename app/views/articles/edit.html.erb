@@ -45,6 +45,8 @@
                                :div_id => 'price-div',
                                :div_style => ('display:none' unless in_catalog) %>
 
+  <% task_id = (@article.owner_type == 'Task' && @article.owner_id) || (params[:task_id].to_i) %>
+
   <div class="select-div" id="tasks" style="<%= 'display:none' if in_catalog %>">
     <label for="tasks"><span>Назначенные заказы</span></label>
     <select name="task_id">
@@ -52,7 +54,8 @@
       <option value="">назначенных заказов нет</option>
     <% else %>
       <% @tasks.each do |task| %>
-        <option value="<%= task.id %>"><%= h(task.name) %></option>
+        <% state = (task_id == task.id) ? 'selected' : '' %>
+        <option value="<%= task.id %>" <%= state %> ><%= h(task.name) %></option>
       <% end %>
     <% end %>
     </select>

@@ -12,7 +12,7 @@
 <% else %>
   <% @tasks.each do |task| %>
     <li class="task" id="task_<%= task.to_param %>">
-      <h2><%= h(task.name) %></h2>
+      <h2 class="task-name"><%= h(task.name) %></h2>
       <p class="about-task">
       <strong>$<%= task.price %></strong> за тысячу знаков, размещен
       <% if is_not_mine?(task) %>
@@ -22,7 +22,7 @@
       <% end %>
       <%= time_ago_in_words(task.created_at) %> назад
       </p>
-      <p><%= h(task.body) %></p>        
+      <p class="task-body"><%= h(task.body) %></p>        
       <% if ! logged_in? -%>     
         <i>Чтобы подать заявку на этот заказ нужно <%= link_to('зарегистрироваться', new_user_path) %> в системе.</i>
       <% elsif is_not_mine?(task) -%>

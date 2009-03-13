@@ -28,20 +28,6 @@
   </p>
 <% end %>
 
-<% if my_personal_page? %>
-  <table>
-    <tr>
-      <td>E-mail</td>
-      <td class="field-value"><%= current_user.email %></td>
-      <td><a href="#" class="blue">Изменить</a></td>
-    </tr>
-    <tr>
-      <td>Кошелек WMZ</td>
-      <td class="field-value"><%= current_user.wmz %></td>
-      <td><a href="#" class="blue">Изменить</a></td>
-    </tr>
-  </table>
-<% end %>
 <p class="about">
   За <span><%= time_ago_in_words(@user.created_at) %></span> в сервисе 
   <%= my_personal_page? ? 'Вы купили' : 'этот пользователь купил' %>

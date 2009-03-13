@@ -10,7 +10,7 @@ class PicturesController < ApplicationController
         pictures = render_to_string(:partial => 'picture', :collection => current_user.pictures)
         pictures = ('<ol id="pictures">'+pictures+'</ol>').to_json
         wants.js do
-          responds_to_parent { render :text => "replace_elements({'#pictures': #{pictures}})" }
+          responds_to_parent { render :text => "replace_elements({'pictures': #{pictures}})" }
         end
       else
         error = picture.errors.on(:base)
@@ -29,7 +29,7 @@ class PicturesController < ApplicationController
         pictures = render_to_string(:partial => 'picture', :collection => article.pictures)
         pictures = ('<ol id="pictures">'+pictures+'</ol>').to_json
         wants.js do 
-          responds_to_parent { render :text => "replace_elements({'#pictures': #{pictures}})" }
+          responds_to_parent { render :text => "replace_elements({'pictures': #{pictures}})" }
         end
       else
         error = picture.errors.on(:base)
@@ -49,7 +49,7 @@ class PicturesController < ApplicationController
       picture.destroy
       respond_to do |wants|
         wants.js do 
-          render :json => {"#picture_#{id}" => render_to_string(:partial => 'picture', :object => nil)} 
+          render :json => {"picture_#{id}" => render_to_string(:partial => 'picture', :object => nil)} 
         end
       end
     end

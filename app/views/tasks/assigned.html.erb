@@ -5,10 +5,10 @@
 <%= javascript_include_tag 'jquery-1.3.min' %>
 <%= javascript_include_tag 'application' %>
 
-<h1 class="tasks-group">Вам заказали написать</h1>
+<h1>Вам заказали написать</h1>
 
 <ul id="assigned-tasks">
-<% if @assigned_tasks.blank? %>
+<% if @tasks.blank? %>
 <li class="task">
     Ни один пользователь еще не назначил Вас исполнителем для своих заказов.
     Вы можете сейчас подать заявку на один из <%= link_to('новых заказов', tasks_path) %>
@@ -16,19 +16,29 @@
     в каталог одну из своих статей.
 </li>
 <% else %>
-  <% @assigned_tasks.each do |task| %>
+  <% @tasks.each do |task| %>
     <li class="task">
-      <h2><%= h(task.name) %></h2>
+      <h2 class="task-name"><%= h(task.name) %></h2>
       <p class="about-task">
         <strong>$<%= task.price %></strong> за тысячу знаков, 
 	размещен <%= link_to(task.customer.login, user_path(task.customer), :class => 'user-link') %>
 	<%= time_ago_in_words(task.created_at) %> назад 
      </p>     
-      <p><%= h(task.body) %> </p>
+      <p class="task-body"><%= h(task.body) %> </p>
+
+      <ul class="propositions">
+      <% @propositions.each do |proposition| %>
+        <% if proposition.task_id == task.id %>
+	  <li><%= h(proposition.body) %></li>
+	<% end %>
+      <% end %>
+      </ul>
+
       <ul class="actions">
         <li><%= link_to('личное сообщение', '#', :class => 'send-message-link') %></li>
         <li><%= link_to('отправить готовую статью', new_task_article_path(task), :class => 'new-article-link') %></li>
       </ul>
+
       <% if !task.articles.blank? && task.articles.any? {|a| a.author.id == current_user.id} %>
         <table class="articles">
           <tbody>
@@ -40,6 +50,7 @@
           </tbody>
         </table>
       <% end %>
+
     </li>
   <% end %>
 <% end %>

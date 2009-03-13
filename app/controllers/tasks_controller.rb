@@ -3,12 +3,12 @@ class TasksController < ApplicationController
   layout 'application', :except => [:propose, :assign, :destroy]
 
   before_filter :login_required, :except => :index
-  before_filter :load_catalog, :except => [:propose, :assign, :destroy]
-  before_filter :find_my_task, :only => [:show, :edit, :update, :assign, :destroy]
+  before_filter :load_catalog, :except => [:propose, :assign, :close, :destroy]
+  before_filter :find_my_task, :only => [:show, :edit, :update, :assign, :close, :destroy]
   rescue_from(ActiveRecord::RecordNotFound) {|e| redirect_to(tasks_path) }
 
   def index
-    @tasks = Task.free_tasks.find(:all, :order => 'created_at DESC')
+    @tasks = Task.free_tasks
   end
 
   def new
@@ -45,7 +45,7 @@ class TasksController < ApplicationController
     @task = nil
     respond_to do |wants|
       wants.js do 
-        render :json => {"#task_#{deleted_param}" => render_to_string(:partial => 'task', :object => @task)}
+        render :json => {"task_#{deleted_param}" => render_to_string(:partial => 'task', :object => @task)}
       end
     end
   end
@@ -55,41 +55,65 @@ class TasksController < ApplicationController
     proposition.task_id = params[:proposition][:task_id]
     proposition.save
     respond_to do |wants|
-      wants.js { render :json => {"#status_task_#{proposition.task_id}" => render_to_string(:partial => 'status_task',
-                                                                                            :locals => 
-                                                                                            {:proposition => proposition})}}
+      wants.js { render :json => {"status_task_#{proposition.task_id}" => render_to_string(:partial => 'status_task',
+                                                                                           :locals => 
+                                                                                           {:proposition => proposition})}}
+    end
+  end
+
+  def close
+    @task.toggle!('closed')
+    respond_to do |wants|
+      wants.js do 
+        task_actions = {"task_actions_#{@task.to_param}" => render_to_string(:partial => 'task_actions',
+                                                                             :locals => {:task => @task})}
+        render :json => task_actions
+      end
     end
   end
 
   def assign
-    old_copywriter = @task.copywriter
-    copywriter = User.find_by_login(params[:copywriter_id])
-    @task.copywriter = copywriter
-    if @task.save
-      @propositions = Proposition.find(:all, :conditions => {:sender_id => [old_copywriter, copywriter],
-                                                             :task_id => @task})
-      respond_to do |wants|
-        wants.js do 
-          task_actions = {"#task_actions_#{@task.to_param}" => render_to_string(:partial => 'task_actions',
-                                                                                :locals => {:task => @task})}
+#     old_copywriter = @task.copywriter
+#     copywriter = User.find_by_login(params[:copywriter_id])
+#     @task.copywriter = copywriter
 
-          task_actions["#copywriter_for_#{@task.to_param}"] = '' if copywriter.nil?
-
-          render :json => (@propositions.inject(task_actions) do |fragments, p| 
-                             fragments["#proposition_#{p.to_param}"] = render_to_string(:partial => 'proposition', 
-                                                                                        :locals => {:proposition => p,
-                                                                                                    :task => @task})
-                             fragments
-                           end)
-        end
-      end
-    else
-      respond_to do |wants|
-        wants.js do 
-          render :json => {:status => 'failed'}
-        end
+    proposition = @task.propositions.find(params[:proposition_id])
+    proposition.toggle!('assigned')
+    respond_to do |wants|
+      wants.js do 
+        render :json => { "proposition_#{proposition.to_param}" => 
+                          render_to_string(:partial => 'proposition', :locals => {:proposition => proposition,
+                                                                                  :task => @task}) }
       end
     end
+  rescue ActiveRecord::RecordNotFound
+    head :status => :unauthorized
+
+#     if @task.save
+#       @propositions = Proposition.find(:all, :conditions => {:sender_id => [old_copywriter, copywriter],
+#                                                              :task_id => @task})
+#       respond_to do |wants|
+#         wants.js do 
+#           task_actions = {"#task_actions_#{@task.to_param}" => render_to_string(:partial => 'task_actions',
+#                                                                                 :locals => {:task => @task})}
+
+#           task_actions["#copywriter_for_#{@task.to_param}"] = '' if copywriter.nil?
+
+#           render :json => (@propositions.inject(task_actions) do |fragments, p| 
+#                              fragments["#proposition_#{p.to_param}"] = render_to_string(:partial => 'proposition', 
+#                                                                                         :locals => {:proposition => p,
+#                                                                                                     :task => @task})
+#                              fragments
+#                            end)
+#         end
+#       end
+#     else
+#       respond_to do |wants|
+#         wants.js do 
+#           render :json => {:status => 'failed'}
+#         end
+#       end
+#     end
   end
   
   def my
@@ -97,7 +121,10 @@ class TasksController < ApplicationController
   end
 
   def assigned
-    @assigned_tasks = current_user.assigned_tasks.find(:all, :include => {:articles => :author})
+    # @assigned_tasks = current_user.assigned_tasks.find(:all, :include => {:articles => :author})
+    @propositions = current_user.propositions.assigned
+    task_ids = @propositions.map {|p| p.task_id}.uniq
+    @tasks = Task.find(:all, :conditions => {:id => task_ids}, :include => :customer)
   end
 
   protected

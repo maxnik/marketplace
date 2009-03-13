@@ -1,5 +1,6 @@
 log
 tmp
+public/pictures
 db/*.sqlite3
 db/data.yml
 config/database.yml

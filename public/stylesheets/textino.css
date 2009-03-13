@@ -26,7 +26,18 @@ body {
 
 body,p,textarea,input,select {
   font-family: Tahoma, Arial, sans-serif;
-  color: #000;
+  color: #444;
+}
+
+A {
+  color: #06c;
+}
+A.put,
+A.delete,
+A.proposition {
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: dashed;
 }
 
 #top {
@@ -120,7 +131,7 @@ body,p,textarea,input,select {
 
 #main {
   margin-left: 11.5em;
-  padding: 0.5em 1em;
+  padding: 0.5em 0.2em 0.5em 0.9em;
 }
 
 #bottom {
@@ -232,12 +243,12 @@ h2.about {
   font-size: 1.5em;
 }
 #main form textarea {
-  width: 100%;
   height: 10em;
 }
+#main form textarea,
 #main form input.text-field,
 #main form input.error-field {
-  width: 100%;
+  width: 98%;
 }
 #main form .text-field {
   padding: 0.1em;
@@ -330,15 +341,12 @@ h2.about {
           margin-bottom: 0.4em;
           }
           #right dl dd a {
-                       font-size: 0.95em;
+                       font-size: 0.90em;
                        }
 #right dd {
   margin-left: 0.6em;
 }
 
-#right a {
-  color: #00f;
-}
 #right p.bottom-para {
   text-align: right;
   margin-right: 0.95em;
@@ -360,15 +368,18 @@ h2.about {
 A.user-link,
 #logout-link,
 #messages-link,
+#admin-messages-link,
 A.send-message-link,
-A.edit-task-link,
+A.edit-link,
 A.delete-link,
-A.free-task-link,
+A.lock-link,
+A.unlock-link,
+A.assign-link,
+A.deassign-link,
 A.new-task-link,
 #my-tasks-link,
 #assigned-tasks-link,
 A.new-article-link,
-A.edit-article-link,
 #refused-articles-link,
 #bought-articles-link,
 A.buy-article-link,
@@ -379,16 +390,15 @@ A.buy-article-link,
 #portfolio-link,
 A.propositions-link,
 a.proposition,
-A.assign-link,
 A.desc-link,
-A.asc-link {
+A.asc-link,
+.task-name {
   background-position: center left;
   background-repeat: no-repeat;
 }
 #logout-link,
 #messages-link,
 A.send-message-link,
-A.edit-task-link,
 A.new-task-link,
 #my-tasks-link,
 #assigned-tasks-link,
@@ -400,12 +410,12 @@ A.buy-article-link,
 #deposit-link,
 #withdraw-link,
 #edit-profile-link,
-#portfolio-link {
+#portfolio-link,
+.task-name {
   padding-left: 20px;
 }
 a.user-link {
   background-image: url(/images/user.png);
-  color: #000;
   padding-left: 17px;
 }
 #main table.users a.user-link {
@@ -416,6 +426,10 @@ a.user-link {
 }
 #messages-link {
   background-image: url(/images/mails.png);
+}
+#admin-messages-link {
+  background-image: url(/images/user_business.png);
+  padding-left: 17px;
 }
 A.send-message-link {
   background-image: url(/images/mail.png);
@@ -429,23 +443,32 @@ A.new-task-link {
 #assigned-tasks-link {
   background-image: url(/images/inbox_table.png);
 }
-A.edit-task-link {
-  background-image: url(/images/table__pencil.png);
+A.edit-link {
+  background-image: url(/images/pencil.png);
+  padding-left: 16px;
 }
 A.delete-link {
   background-image: url(/images/cross.png);
   padding-left: 16px;
 }
-A.free-task-link {
+A.lock-link {
+  background-image: url(/images/lock.png);
+  padding-left: 17px;
+}
+A.unlock-link {
   background-image: url(/images/lock_unlock.png);
   padding-left: 17px;
 }
+#main A.assign-link {
+  background-image: url(/images/brightness.png);
+  padding-left: 18px;
+}
+A.deassign-link {
+  background-image: url(/images/brightness_low.png);
+  padding-left: 18px;
+}
 A.new-article-link {
   background-image: url(/images/document__plus.png);
-}
-A.edit-article-link {
-  background-image: url(/images/document__pencil.png);
-  padding-left: 18px;
 }
 #refused-articles-link {
   background-image: url(/images/documents_exclamation.png);
@@ -479,10 +502,6 @@ A.buy-article-link {
   background-image: url(/images/balloons.png);
   padding-left: 17px;
 }
-#main A.assign-link {
-  background-image: url(/images/lock.png);
-  padding-left: 17px;
-}
 #main A.desc-link {
   background-image: url(/images/arrow_090.png);
   padding-left: 15px;
@@ -491,9 +510,8 @@ A.buy-article-link {
   background-image: url(/images/arrow_270.png);
   padding-left: 15px;
 }
-
-#main a.proposition {
-  color: #00f;
+.task-name {
+  background-image: url(/images/table.png);
 }
 
 #main table.users {
@@ -519,15 +537,9 @@ A.buy-article-link {
                           background-color: #eee;
                           color: #666;
                           }
-#main table.users TR.even A.user-link {
-                          color: #7bad00;
-                          }
 #main table.users TR.odd TD {
                          background-color: #ddd;
                          color: #666;
-                         }
-#main table.users TR.odd A.user-link {
-                         color: #000;
                          }
 #main table.users i {
   font-style: normal;
@@ -549,9 +561,6 @@ wbr:after { content: "\00200B" }
 #main I {
       color: #095e00;
       }
-#main A {
-      color: #00f;
-      }
 
 body div#heroku_toolbar {
   display: none;
@@ -563,22 +572,27 @@ body div#heroku_toolbar {
       margin-top: 1em;
       }
       #main P.about,
-      #main #propositions LI.proposition,
+      #propositions LI.proposition,
       LI.task {
       margin-top: 1em;
       margin-bottom: 1em;
       background-color: #f4f4f4;
       padding: 0.75em;
       }
+      ul.propositions LI,
+      #main #propositions LI.assigned {
+                          background-color: #ffc;
+                          }
+      ul.propositions LI {
+                      margin-bottom: 0.4em;
+                      }
       LI.task {
       list-style-type: none;
-      }
-      P.about-task {
-      color: #095e00;
       }
       P.about-task STRONG {
                    font-weight: bold;
                    }
+      H1.task-name,
       #main LI.task H2 {
                     color: orange;
 	            font-weight: bold;
@@ -587,7 +601,6 @@ body div#heroku_toolbar {
       #main #free-tasks LI B.proposition-error {
                            margin-left: 1em;
                            }
-      #main #propositions LI P.proposition-sender STRONG,
       #main #free-tasks LI B.proposition-success {
                            background-color: yellow;
                            color: #444;
@@ -597,15 +610,22 @@ body div#heroku_toolbar {
                            color: white;
                            }
 
+.task-body,
+.proposition-body {
+  font-size: 1.1em;
+  color: #000;
+}
+
 #main #propositions {
-      margin-top: 1em;
+      margin-top: 2em;
       }
-      #main #propositions LI P.proposition-sender {
-                             color: #095e00;
-                             }
       #main #propositions LI P.proposition-body {
                              margin: 0.5em 0;
                              }
+.task .task-body,
+#main .actions {
+      margin: 0.3em 0;
+      }
 #main .actions LI {
                display: inline;
                margin-right: 10px;
@@ -663,6 +683,7 @@ FORM #pictures {
      }
      FORM #pictures LI {
                     clear: left;
+                    margin-bottom: 1em;
                     }
                     FORM #pictures LI IMG {
                                       float: left;

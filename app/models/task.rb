@@ -1,15 +1,14 @@
 class Task < ActiveRecord::Base
 
   belongs_to :customer,   :class_name => 'User', :foreign_key => 'customer_id'
-  belongs_to :copywriter, :class_name => 'User', :foreign_key => 'copywriter_id'
 
-  named_scope :free_tasks, :conditions => {:copywriter_id => nil}, :include => :customer, :order => 'created_at DESC'
+  named_scope :free_tasks, :conditions => {:closed => false}, :include => :customer, :order => 'created_at DESC'
 
   attr_accessible :name, :body, :price
 
   has_many :propositions, :order => 'created_at ASC', :dependent => :destroy
 
-  has_many :articles, :as => 'owner', :order => 'created_at ASC'
+  has_many :articles, :as => 'owner', :order => 'created_at ASC', :dependent => :nullify
 
   include PriceInCents
 

@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20090206072004) do
     t.integer  "sender_id",  :limit => 11
     t.text     "body"
     t.integer  "task_id",    :limit => 11
+    t.boolean  "assigned"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,10 +68,10 @@ ActiveRecord::Schema.define(:version => 20090206072004) do
     t.string   "name"
     t.text     "body"
     t.integer  "price",              :limit => 11
-    t.integer  "customer_id",        :limit => 11,                :null => false
-    t.integer  "copywriter_id",      :limit => 11
+    t.integer  "customer_id",        :limit => 11,                    :null => false
     t.integer  "propositions_count", :limit => 11, :default => 0
     t.integer  "articles_count",     :limit => 11, :default => 0
+    t.boolean  "closed",                           :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

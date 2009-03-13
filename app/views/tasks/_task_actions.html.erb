@@ -1,9 +1,12 @@
 <ul class="actions" id="task_actions_<%= task.to_param %>">
-  <li><%= link_to('редактировать заказ', edit_task_path(task), :class => 'edit-task-link') %></li>
-  <li><%= link_to('удалить заказ', task_path(task), :class => 'delete delete-link', 
+  <li><%= link_to('удалить', task_path(task), :class => 'delete delete-link', 
                   :title => 'Вы уверены, что хотите удалить этот заказ?') %></li>
-  <% if task.copywriter -%>
-  <li><%= link_to('отменить выбор исполнителя', deassign_task_path(task), :class => 'put free-task-link',
-                  :title => 'Разрешить снова принимать заявки на этот заказ?') %></li>
-  <% end -%>
+  <li><%= link_to('редактировать', edit_task_path(task), :class => 'edit-link') %></li>
+  <% if task.closed? %>
+    <li><%= link_to('открыть', close_task_path(task), :class => 'put unlock-link',
+                    :title => 'Открыть заказ для приема заявок?') %></li>
+  <% else %>
+    <li><%= link_to('закрыть', close_task_path(task), :class => 'put lock-link',
+                    :title => 'Больше не принимать заявки для этого заказа?') %></li>
+  <% end %>
 </ul>

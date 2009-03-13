@@ -13,10 +13,10 @@
 
      <% if (logged_in? && article.author_id == current_user.id) %>
        <ul class="actions">
-         <li><%= link_to('редактировать статью', edit_article_path(article), :class => 'edit-article-link',
-	                 :rel => 'nofollow') %></li>
          <li><%= link_to('удалить статью', article_path(article), :class => 'delete delete-link',
                          :title => 'Вы уверены, что хотите удалить эту статью?') %></li>
+         <li><%= link_to('редактировать статью', edit_article_path(article), :class => 'edit-link',
+	                 :rel => 'nofollow') %></li>
        </ul>
      <% end %>
 

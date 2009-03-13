@@ -39,14 +39,15 @@ $(document).ready(function () {
 	$.ajax({
  	  beforeSend: function (XMLHttpRequest) {
  	    $('#status_task_'+$('input[name=proposition[task_id]]', $form).val())
-	      .after('<img id="busy" src="/images/busy.gif" />');
+	      .removeClass('proposition-error proposition-success').empty()
+	      .append('<img id="busy" src="/images/busy.gif" />');
  	  },
  	  complete: function (XMLHttpRequest, textStatus) {
  	    $('#busy').remove();
  	  },
  	  success: function (data, textStatus) {
  	    for (var id in data) {
-	      $(id).replaceWith(data[id]);
+	      $('#'+id).replaceWith(data[id]);
 	    }
  	  },
  	  type: 'POST',

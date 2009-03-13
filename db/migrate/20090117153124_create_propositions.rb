@@ -4,6 +4,7 @@ class CreatePropositions < ActiveRecord::Migration
       t.integer :sender_id
       t.text :body
       t.integer :task_id
+      t.boolean :assigned, :null => false, :default => false
       t.timestamps
     end
   end

@@ -26,7 +26,7 @@ $(document).ready(function() {
 	    beforeSend: function (XMLHttpRequest) {
 	      $(this.clickedLink).replaceWith('<img id="busy" src="/images/busy.gif" />');
 	    },
-	    error: function (XMLHttpRequest) {
+	    complete: function (XMLHttpRequest, textStatus) {
 	      $('#busy').replaceWith(this.clickedLink);
 	    },
 	    success: function (data, textStatus) { replace_elements(data); },
@@ -88,7 +88,7 @@ $(document).ready(function() {
 
 function replace_elements(elems) {
   for (var id in elems) {
-    $(id).replaceWith(elems[id]);
+    $('#'+id).replaceWith(elems[id]);
   }
 }
 
