@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   layout 'application'
 
-  before_filter :login_required, :except => [:index, :show, :new, :create]
+  before_filter :login_required, :except => [:index, :show, :new, :create, :ask, :recover]
   before_filter :load_catalog
   before_filter :find_user, :only => [:show, :edit, :update]
   before_filter :check_ownership, :only => [:edit, :update]
@@ -30,6 +30,22 @@ class UsersController < ApplicationController
 
   def show
     @articles = @user.authored_articles.forsale.with_categories.find(:all)
+  end
+
+  def edit
+  end
+ 
+  def update
+  end
+
+  def ask
+  end
+
+  def deliver
+  end
+
+  def recover
+    fail
   end
 
   protected

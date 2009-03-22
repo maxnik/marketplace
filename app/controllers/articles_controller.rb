@@ -4,17 +4,13 @@ class ArticlesController < ApplicationController
   before_filter :load_catalog, :except => :destroy
   before_filter :find_my_article, :only => [:edit, :update]
 
-  # rescue_from(ActiveRecord::RecordNotFound) {|_| redirect_to(articles_path) }
+  rescue_from(ActiveRecord::RecordNotFound) {|_| redirect_to(articles_path) }
 
   def index
-    page = (params[:page].to_i == 0) ? 1 : params[:page].to_i
-    if ['category_name', 'author_login', 'price', 'length', 'created_at'].include?(params[:order])
-      @order = params[:order]
-      @dir = ['asc', 'desc'].include?(params[:dir]) ? params[:dir] : 'asc'
-    else
-      @order, @dir = 'created_at', 'desc'      
-    end
-    @articles = Article.forsale.with_categories_and_author.paginate(:all, :order => "#{@order} #{@dir}", :page => page)
+    @order, @dir, @page = filter_params(Article.sort_columns(:all), 'created_at', 'desc')
+    @articles = Article.forsale.with_categories_and_author.paginate(:all, 
+                                                                    :order => "#{@order} #{@dir}", 
+                                                                    :page => @page)
   end
 
   def show

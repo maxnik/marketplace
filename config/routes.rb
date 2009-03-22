@@ -7,7 +7,9 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
 
-  map.resources :users
+  map.recover 'users/:login/recover/:crypted_password', :controller => 'users', :action => 'recover'
+
+  map.resources :users, :collection => {:ask => :get, :deliver => :post}
 
   map.resource :session
 

@@ -13,15 +13,17 @@
 
      <% if (logged_in? && article.author_id == current_user.id) %>
        <ul class="actions">
-         <li><%= link_to('удалить статью', article_path(article), :class => 'delete delete-link',
+         <li><%= link_to('удалить', article_path(article), :class => 'delete delete-link',
                          :title => 'Вы уверены, что хотите удалить эту статью?') %></li>
-         <li><%= link_to('редактировать статью', edit_article_path(article), :class => 'edit-link',
+         <li><%= link_to('редактировать', edit_article_path(article), :class => 'edit-link',
 	                 :rel => 'nofollow') %></li>
        </ul>
      <% end %>
 
   </td>
-  <td class="price"><%= h(article.price).gsub('.', ',') %><br />WMZ</td>
+  <td class="price">
+    <%= number_to_currency(article.price, :format => '%n<br />WMZ', :separator => ',', :delimiter => '') %>
+  </td>
   <td class="length"><%= sprintf('%.1f', article.length / 1000.0).gsub('.', ',') %> тыс.<br />знаков</td>
   <td class="time"><%= time_ago_in_words(article.created_at).gsub('около ', 'около<br />') %><br />назад</td>
 </tr>

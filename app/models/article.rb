@@ -20,6 +20,25 @@ class Article < ActiveRecord::Base
               :joins => 'LEFT OUTER JOIN categories ON categories.id = articles.owner_id 
                          LEFT OUTER JOIN users ON users.id = articles.author_id'
 
+  COLUMNS = {:all => [ ['category_name', 'Раздел и название'], 
+                       ['author_login', 'Автор'], 
+                       ['price', 'Цена'],
+                       ['length', 'Объем'],
+                       ['created_at', 'Дата'] ] }
+  COLUMNS[:category] = [['title', 'Название']] + COLUMNS[:all].slice(1..-1)
+
+  def self.sort_columns(type)
+    self::COLUMNS[type].map {|column, _| column}
+  end
+
+  def self.in_categories_with_author_paginate(categories, order, dir, page)
+    paginate(:all, :select => 'articles.title, articles.price, articles.length, articles.created_at, articles.id,
+                               users.login AS author_login', 
+             :joins => 'LEFT JOIN users ON users.id = articles.author_id',
+             :conditions => {:owner_type => 'Category', :owner_id => categories}, 
+             :order => "#{order} #{dir}", :page => page)
+  end
+
   belongs_to :buyer, :class_name => 'User'
 
   attr_accessible :title, :body, :price

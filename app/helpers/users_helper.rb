@@ -113,4 +113,20 @@ module UsersHelper
     end
   end
 
+  def personal_page_link_for(user)
+    if logged_in? && (current_user.login == user.login)
+      'Это Вы'
+    else
+      link_to(wbr_by(user.login, 10), user_path(user), :class => 'user-link')
+    end
+  end
+
+  def forsale_articles_for(user)
+    if user.forsale_articles_count == 0
+      'Нет статей <br /> в продаже'
+    else
+      user.forsale_articles_count.to_s + ' ' + user.forsale_articles_count.items('статья', 'статьи', 'статей')
+    end
+  end
+
 end

@@ -19,19 +19,21 @@
   <tbody>
 <% @users.each do |user| %>
   <tr class="<%= cycle('even', 'odd') -%>">
-    <td class="user-login"><%= link_to(wbr_by(h(user.login), 10), user_path(user), :class => 'user-link') %></td>
+    <td class="user-login">
+      <%= personal_page_link_for(user) %>
+    </td>
     <td class="user-rating"><i>+10</i><br /><b>-20</b></td>
-    <td><%= time_ago_in_words(user.created_at) %></td>
-    <% if (user.forsale_articles_count == 0) %>
-      <td>нет статей<br />в продаже</td>
-    <% else %>
-      <td><%= user.forsale_articles_count %> <%= user.forsale_articles_count.items('статья', 'статьи', 'статей') %></td>
-    <% end %>
+    <td>
+      <%= time_ago_in_words(user.created_at) %>
+    </td>
+    <td>
+      <%= forsale_articles_for(user) %>
+    </td>
     <td>не покупал<br />статей</td>
   </tr>
 <% end %>
   </tbody>
 </table>
 
-<%= will_paginate @users %>
+<%= will_paginate(@users, :previous_label => 'Предыдущая страница', :next_label => 'Следующая страница')%>
 <% end %>

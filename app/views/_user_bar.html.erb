@@ -19,9 +19,7 @@
       <dd><a href="#" id="deposit-link">пополнить счет</a></dd>
       <dd><a href="#" id="withdraw-link">вывести деньги</a></dd>
     <dt>Личные данные</dt>
-      <dd><a href="#" id="edit-profile-link">редактировать</a></dd>
-      <dd><a href="#" id="portfolio-link">портфолио</a></dd>
-
+      <dd><%= link_to('редактировать', edit_user_path(current_user), :id => 'edit-profile-link') %></dd>
   </dl>
 <% else -%>
   <% form_tag session_path do -%>
@@ -37,9 +35,11 @@
       <%= check_box_tag 'not_my_computer', 1, false, :class => 'checkbox' %>
       <%= label_tag 'not_my_computer', 'чужой компьютер' %>
     </p>
-    <p class="bottom-para">
-      <%= link_to('регистрация', new_user_path) %> <%= submit_tag 'Войти' %> 
-    </p>
+    <ul>
+      <li><%= submit_tag 'Войти' %></li>
+      <li><%= link_to('регистрация', new_user_path) %></li>
+      <li><%= link_to('забыли пароль?', ask_users_path) %></li>
+    </ul>
   <% end -%>
 <% end -%>
 

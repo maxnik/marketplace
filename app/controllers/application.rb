@@ -20,4 +20,14 @@ class ApplicationController < ActionController::Base
   def load_catalog
     @catalog = Category.load_catalog
   end
+
+  def filter_params(sort_columns, default_column, default_direction)
+    page = (params[:page].to_i == 0) ? 1 : params[:page].to_i
+    if sort_columns.include?(params[:order])
+      dir = ['asc', 'desc'].include?(params[:dir]) ? params[:dir] : 'asc'
+      return params[:order], dir, page
+    else
+      return default_column, default_direction, page
+    end
+  end
 end

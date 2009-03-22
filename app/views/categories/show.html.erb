@@ -1,13 +1,13 @@
-<% @title = 'Статьи на продажу' %>
+<% @title = 'Статьи по теме "' + @category.name + '"' %>
 
-<h1>Статьи на продажу из каталога</h1>
+<h1>Статьи на продажу из раздела каталога "<%= @category.name %>"</h1>
 
 <% if @articles.blank? %>
-  <p class="about">В каталоге нет еще ни одной статьи на продажу.</p>
+  <p class="about">Копирайтеры еще не добавили ни одной статьи на продажу в этот раздел каталога.</p>
 <% else %>
   <table class="articles">
   <thead><tr>
-  <% Article::COLUMNS[:all].each do |column, link_text| %>
+  <% Article::COLUMNS[:category].each do |column, link_text| %>
       <th>
         <%= sort_link(@order, @dir, column, link_text) %>
       </th>

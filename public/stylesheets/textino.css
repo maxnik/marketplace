@@ -347,10 +347,6 @@ h2.about {
   margin-left: 0.6em;
 }
 
-#right p.bottom-para {
-  text-align: right;
-  margin-right: 0.95em;
-}
 #right p label {
   color: #095e00;
   font-weight: bold;
@@ -657,24 +653,21 @@ body div#heroku_toolbar {
       #main TABLE.articles TD.price {
                            width: 4em;
                            }
-      #main TABLE.articles TR TD A.category-link {
-                                 color: #7bad00;
-                                 }
+      #main TABLE.articles TR TD {
+                              color: #666;
+                              }
       #main TABLE.articles TR.even TD {
                                    background-color: #eee;
-                                   color: #666;
                                    }
       #main TABLE.articles A.article-link {
-                           color: #000;
+                           color: #7bad00;
                            }
       #main TABLE.articles TR.odd TD {
                                   background-color: #ddd;
-                                  color: #666;
                                   }
       FORM #pictures LI.highlighted,
       #main TABLE.articles TR.highlighted TD {
                                           background-color: #d5ea9b;
-                                          color: #666;                                          
                                           }
 
 FORM #pictures {
