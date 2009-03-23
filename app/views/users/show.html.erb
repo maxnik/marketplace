@@ -50,16 +50,18 @@
     в каталог на продажу:
   </h2>
   <table class="articles">
-     <thead><tr>
-      <th><a href="#">Раздел и название статьи</a></th>
-      <th><a href="#">Цена</a></th>
-      <th><a href="#">Объем</a></th>
-      <th><a href="#">Дата</a></th>
-    </tr></thead>
+    <thead><tr>
+    <% Article::COLUMNS[:user].each do |column, link_text| %>
+        <th>
+          <%= sort_link(@order, @dir, column, link_text) %>
+        </th>
+    <% end %>
+    </tr><thead>
     <tbody>
     <% @articles.each do |article| %>
-      <%= render :partial => '/articles/article_row',  :locals => {:article => article} %>
+      <%= render :partial => 'article_row',  :locals => {:article => article} %>
     <% end %>
     </tbody>
   </table>
+  <%= will_paginate(@articles, :previous_label => 'Предыдущая страница', :next_label => 'Следующая страница') %>
 <% end %>

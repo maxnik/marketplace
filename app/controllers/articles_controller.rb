@@ -8,9 +8,8 @@ class ArticlesController < ApplicationController
 
   def index
     @order, @dir, @page = filter_params(Article.sort_columns(:all), 'created_at', 'desc')
-    @articles = Article.forsale.with_categories_and_author.paginate(:all, 
-                                                                    :order => "#{@order} #{@dir}", 
-                                                                    :page => @page)
+
+    @articles = Article.with_category_and_author_paginate(@order, @dir, @page)
   end
 
   def show

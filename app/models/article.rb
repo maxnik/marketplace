@@ -7,25 +7,13 @@ class Article < ActiveRecord::Base
 
   named_scope :forsale, :conditions => {:buyer_id => nil, :owner_type => 'Category'}
 
-  named_scope :with_categories, 
-              :select => 'articles.title, articles.price, articles.length, 
-                          articles.created_at, articles.author_id, articles.id,
-                          categories.name AS category_name, categories.url_name AS category_url_name',
-              :joins => 'LEFT OUTER JOIN categories ON articles.owner_id = categories.id'
-
-  named_scope :with_categories_and_author, 
-              :select => 'articles.title, articles.price, articles.length, articles.created_at, articles.id,
-                          categories.name AS category_name, categories.url_name AS category_url_name,
-                          users.login AS author_login',
-              :joins => 'LEFT OUTER JOIN categories ON categories.id = articles.owner_id 
-                         LEFT OUTER JOIN users ON users.id = articles.author_id'
-
   COLUMNS = {:all => [ ['category_name', 'Раздел и название'], 
                        ['author_login', 'Автор'], 
                        ['price', 'Цена'],
                        ['length', 'Объем'],
                        ['created_at', 'Дата'] ] }
   COLUMNS[:category] = [['title', 'Название']] + COLUMNS[:all].slice(1..-1)
+  COLUMNS[:user] = COLUMNS[:all].slice(0, 1) + COLUMNS[:all].slice(2..-1)
 
   def self.sort_columns(type)
     self::COLUMNS[type].map {|column, _| column}
@@ -35,7 +23,25 @@ class Article < ActiveRecord::Base
     paginate(:all, :select => 'articles.title, articles.price, articles.length, articles.created_at, articles.id,
                                users.login AS author_login', 
              :joins => 'LEFT JOIN users ON users.id = articles.author_id',
-             :conditions => {:owner_type => 'Category', :owner_id => categories}, 
+             :conditions => {:buyer_id => nil, :owner_type => 'Category', :owner_id => categories}, 
+             :order => "#{order} #{dir}", :page => page)
+  end
+
+  def self.authored_by_user_paginate(user, order, dir, page)
+    paginate(:all, :select => 'articles.title, articles.price, articles.length, articles.created_at, articles.id,
+                               categories.name AS category_name, categories.url_name AS category_url_name',
+             :joins => 'LEFT JOIN categories ON articles.owner_id = categories.id',
+             :conditions => {:buyer_id => nil, :owner_type => 'Category', :author_id => user.id},
+             :order => "#{order} #{dir}", :page => page)
+  end
+
+  def self.with_category_and_author_paginate(order, dir, page)
+    paginate(:all, :select => 'articles.title, articles.price, articles.length, articles.created_at, articles.id,
+                               categories.name AS category_name, categories.url_name AS category_url_name,
+                               users.login AS author_login',
+             :joins => 'LEFT OUTER JOIN categories ON categories.id = articles.owner_id 
+                        LEFT OUTER JOIN users ON users.id = articles.author_id',
+             :conditions => {:buyer_id => nil, :owner_type => 'Category'},
              :order => "#{order} #{dir}", :page => page)
   end
 

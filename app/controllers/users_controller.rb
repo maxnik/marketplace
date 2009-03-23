@@ -29,7 +29,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @articles = @user.authored_articles.forsale.with_categories.find(:all)
+    @order, @dir, @page = filter_params(Article.sort_columns(:user), 'created_at', 'desc')
+
+    @articles = Article.authored_by_user_paginate(@user, @order, @dir, @page)
   end
 
   def edit
