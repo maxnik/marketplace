@@ -14,4 +14,20 @@ JAVASCRIPT
     end
   end
 
+  def items(num, one, two, many)
+    if num == 0
+      'ни одной<br />' + two
+    else
+      num.to_s + ' ' + num.items(one, two, many)
+    end    
+  end
+
+  def time_ago_in_words_or_never(date)
+    if date.nil?
+      'никогда'
+    else
+      time_ago_in_words(date) + '<br/>назад'
+    end
+  end
+
 end

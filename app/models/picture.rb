@@ -10,6 +10,8 @@ class Picture < ActiveRecord::Base
 
   validates_as_attachment
 
+  named_scope :fullsize, :conditions => {:parent_id => nil}
+
   protected
   
   def validate

@@ -12,7 +12,7 @@
 <% else %>
   <% @tasks.each do |task| %>
     <li class="task" id="task_<%= task.to_param %>">
-      <h2 class="task-name"><%= h(task.name) %></h2>
+      <h2 class="task-link"><%= h(task.name) %></h2>
       <p class="about-task">
       <strong><%= number_to_currency(task.price, :format => '%n WMZ', :separator => ',', :delimiter => '') %></strong> 
       за тысячу знаков, размещен

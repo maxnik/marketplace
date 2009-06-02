@@ -388,7 +388,8 @@ A.propositions-link,
 a.proposition,
 A.desc-link,
 A.asc-link,
-.task-name {
+.task-link,
+.category-link {
   background-position: center left;
   background-repeat: no-repeat;
 }
@@ -407,7 +408,8 @@ A.buy-article-link,
 #withdraw-link,
 #edit-profile-link,
 #portfolio-link,
-.task-name {
+.task-link,
+.category-link {
   padding-left: 20px;
 }
 a.user-link {
@@ -449,7 +451,7 @@ A.delete-link {
 }
 A.lock-link {
   background-image: url(/images/lock.png);
-  padding-left: 17px;
+  padding-left: 18px;
 }
 A.unlock-link {
   background-image: url(/images/lock_unlock.png);
@@ -475,6 +477,7 @@ A.new-article-link {
 A.buy-article-link {
   background-image: url(/images/safe_minus.png);
 }
+.category-link,
 #my-articles-link {
   background-image: url(/images/documents.png);
 }
@@ -506,7 +509,7 @@ A.buy-article-link {
   background-image: url(/images/arrow_270.png);
   padding-left: 15px;
 }
-.task-name {
+.task-link {
   background-image: url(/images/table.png);
 }
 
@@ -529,13 +532,17 @@ A.buy-article-link {
 #main table.users th {
   text-align: center;
 }
-#main table.users TR.even TD {
-                          background-color: #eee;
-                          color: #666;
+#main TABLE.tasks TR TD,
+#main TABLE.users TR TD {
+                     color: #666;
+                     }
+#main TABLE.tasks TR.even TD,
+#main TABLE.users TR.even TD {
+                          background-color: #eee;                          
                           }
-#main table.users TR.odd TD {
+#main TABLE.tasks TR.odd TD,
+#main TABLE.users TR.odd TD {
                          background-color: #ddd;
-                         color: #666;
                          }
 #main table.users i {
   font-style: normal;
@@ -552,6 +559,7 @@ wbr:after { content: "\00200B" }
       display: none;
       background-color: #d5ea9b;
       padding: 1em;
+      width: 50em;
       }
 
 #main I {
@@ -631,10 +639,7 @@ body div#heroku_toolbar {
       margin: 1em auto 0 auto;
       width: 100%;
       }
-      #main TABLE.articles TD {
-                           vertical-align: middle;
-                           padding: 0.25em 0;
-                           }
+      #main TABLE.articles TD.author,
       #main TABLE.articles TD.price,
       #main TABLE.articles TD.length,
       #main TABLE.articles TD.time,
@@ -682,4 +687,31 @@ FORM #pictures {
                                       float: left;
                                       margin: 0 1em 1em 0;
                                       }
+TABLE.articles TR TD,
+TABLE.tasks TR TH,
+TABLE.tasks TR TD {
+               vertical-align: middle;
+               }
+TABLE.tasks TR TD.name A {
+                       display: block;
+                       color: #7bad00;
+                       }
+TABLE.articles TR TD,
+TABLE.tasks TR TD {
+               padding: 0.5em;
+               }
+TABLE.tasks TR TH,
+TABLE.tasks TR TD.created-at,
+TABLE.tasks TR TD.articles,
+TABLE.tasks TR TD.propositions,
+TABLE.tasks TR TD.last-proposition {
+               text-align: center;
+               }
+TABLE.tasks TR TD.created-at,
+TABLE.tasks TR TD.articles,
+TABLE.tasks TR TD.propositions,
+TABLE.tasks TR TD.last-proposition {
+               width: 6em;
+               }
+
 

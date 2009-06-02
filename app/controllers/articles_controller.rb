@@ -1,20 +1,19 @@
 class ArticlesController < ApplicationController
 
-  before_filter :login_required, :except => [:index, :show]
+  before_filter :login_required, :except => [:index]
   before_filter :load_catalog, :except => :destroy
-  before_filter :find_my_article, :only => [:edit, :update]
+  before_filter :find_my_article, :only => [:show, :edit, :update]
 
   rescue_from(ActiveRecord::RecordNotFound) {|_| redirect_to(articles_path) }
 
   def index
-    @order, @dir, @page = filter_params(Article.sort_columns(:all), 'created_at', 'desc')
+    order_string, page, @order, @dir = filter_params(Article::COLUMNS[:all], 'created_at', 'desc')
 
-    @articles = Article.with_category_and_author_paginate(@order, @dir, @page)
+    @articles = Article.with_category_and_author_paginate(order_string, page)
   end
 
   def show
-    @article = Article.forsale.find(params[:id], :include => [:owner, :author])
-    # @pictures = @article.pictures.fullsize
+    # only for author, from 'my articles' link, observe even sold
   end
 
   def new
@@ -27,7 +26,7 @@ class ArticlesController < ApplicationController
     @article.owner = Category.find(params[:category_id]) 
     if @article.save
       Picture.update_all("owner_type = 'Article', owner_id = #{@article.id}", {:id => current_user.picture_ids})
-      redirect_to(user_path(current_user))
+      redirect_to(my_articles_path)
     else
       @pictures = current_user.pictures
       render :action => 'new'
@@ -70,10 +69,16 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def my
+    order_string, page, @order, @dir = filter_params(Article::COLUMNS[:my], 'created_at', 'desc')
+    
+    @articles = Article.authored_by_with_owner_and_buyer_paginate(current_user, order_string, page)
+  end
+
   protected
   
   def find_my_article
-    @article = current_user.authored_articles.find(params[:id], :include => [:pictures, :owner])
+    @article = current_user.authored_articles.find(params[:id], :include => :pictures)
   end
 
 end

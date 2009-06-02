@@ -21,13 +21,30 @@ class ApplicationController < ActionController::Base
     @catalog = Category.load_catalog
   end
 
-  def filter_params(sort_columns, default_column, default_direction)
+  def filter_params(columns, default_column, default_direction)
     page = (params[:page].to_i == 0) ? 1 : params[:page].to_i
-    if sort_columns.include?(params[:order])
-      dir = ['asc', 'desc'].include?(params[:dir]) ? params[:dir] : 'asc'
-      return params[:order], dir, page
+
+    sort_params = columns.find {|column, *| column == params[:order]}
+    
+    if sort_params.nil?
+      # order column omitted in params or wrong sort column name passed
+      order_string = "#{default_column} #{default_direction}"
+      order, dir = default_column, default_direction
     else
-      return default_column, default_direction, page
+      order = params[:order] # order column name passed is valid
+      dir = ['asc', 'desc'].include?(params[:dir]) ? params[:dir] : 'asc'
+      
+      if (sort_params.size == 2)
+        order_string = "#{order} #{dir}" # column name equals to param
+      else
+        # use hardcoded order strings from model
+        if (dir == 'asc')
+          order_string = "#{sort_params[2]}"
+        else
+          order_string = "#{sort_params[3]}"
+        end
+      end
     end
+    return order_string, page, order, dir
   end
 end

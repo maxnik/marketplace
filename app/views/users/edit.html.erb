@@ -1,0 +1,9 @@
+<% @title = "Редактирование личных данных" %>
+
+<h1>Редактирование личных данных</h1>
+
+<% dived_form_for @user, :html => {:class => 'new-form'} do |f| %>
+  <%= render :partial => 'fields', :locals => {:f => f} %>
+  <%= f.submit_tag 'Сохранить изменения' %>
+<% end %>
+

@@ -2,7 +2,7 @@
   <li class="task">Заказ удален</li>
 <% else %>
   <li class="task" id="task_<%= task.to_param %>">
-    <h2 class="task-name"><%= h(task.name) %></h2>
+    <h2 class="task-link"><%= h(task.name) %></h2>
     <p class="about-task">
       <strong>$<%= task.price %></strong> за тысячу знаков, размещен <%= time_ago_in_words(task.created_at) %> назад
     </p>
@@ -25,7 +25,7 @@
       <th>Автор</th>
       <th>Цена</th>
       <th>Объем</th>
-      <th>Дата</th>      
+      <th>Размещена</th>      
     </tr></thead>
     <tbody>
     <% task.articles.each do |article| %>

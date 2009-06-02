@@ -7,13 +7,6 @@
 <% dived_form_for @user, :html => {:class => 'new-form'} do |f| %>
   <%= f.text_field_for(:login, :label => 'Имя', 
                                :bottom => 'от 3-х до 40-ка латинских букв или цифр') %>
-  <%= f.text_field_for(:email, :label => 'E-mail',
-                               :bottom => 'сюда будут приходить уведомления от Textino') %>
-  <%= f.password_field_for(:password, :label => 'Пароль',
-                                      :bottom => 'минимум 6-ть символов для надежной защиты') %>
-  <%= f.password_field_for(:password_confirmation, :label => 'Пароль еще раз',
-                                      :bottom => 'повторите чтобы исключить ошибку') %>
-  <%= f.text_field_for(:wmz, :label => 'Кошелек WMZ',
-                             :bottom => 'сюда Вам будут приходить все выплаты от Textino') %>
+  <%= render :partial => 'fields', :locals => {:f => f} %>
   <%= f.submit_tag 'Зарегистрироваться' %>
 <% end %>

@@ -26,4 +26,23 @@ class Task < ActiveRecord::Base
 
   validates_presence_of :customer_id, :message => 'анонимные заказы не допускаются'
 
+  def self.per_page
+    10
+  end
+
+  # [order param value, column header]
+  # 4 elements arrays contain also ASC order string and DESC order string
+  COLUMNS = {:my => [['name', 'Название'],
+                     ['created_at', 'Размещен'],
+                     ['articles_count', 'Готово'],
+                     ['propositions_count', 'Заявок'],
+                     ['last_proposition_at', 'Последняя заявка']]}
+
+  protected
+
+  def after_save
+    Article.update_all("owner_name = '#{self.name}', owner_param = '#{self.to_param}'", 
+                       {:owner_type => 'Task', :owner_id => self.id})
+  end
+
 end

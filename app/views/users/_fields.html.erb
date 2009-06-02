@@ -1,0 +1,8 @@
+<%= f.text_field_for(:email, :label => 'E-mail',
+                             :bottom => 'сюда будут приходить уведомления от Textino') %>
+<%= f.password_field_for(:password, :label => 'Пароль',
+                                    :bottom => 'минимум 6-ть символов для надежной защиты') %>
+<%= f.password_field_for(:password_confirmation, :label => 'Подтверждение пароля',
+                                                 :bottom => 'повторите чтобы исключить ошибку') %>
+<%= f.text_field_for(:wmz, :label => 'Кошелек WMZ',
+                           :bottom => 'сюда Вам будут приходить все выплаты от Textino') %>

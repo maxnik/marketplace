@@ -7,7 +7,7 @@
        </ul>
   </td>
   <td class="author"><%= link_to(article.author.login, user_path(article.author), :class => 'user-link') %></td>
-  <td class="price"><%= h(article.price).gsub('.', ',') %><br />WMZ</td>
-  <td class="length"><%= sprintf('%.1f', article.length / 1000.0).gsub('.', ',') %> тыс.<br />знаков</td>
-  <td class="time"><%= time_ago_in_words(article.created_at).gsub('около ', 'около<br />') %><br />назад</td>
+  <td class="price"><%= formatted_article_price(article) %></td>
+  <td class="length"><%= formatted_article_length(article) %></td>
+  <td class="time"><%= formatted_article_time(article) %></td>
 </tr>

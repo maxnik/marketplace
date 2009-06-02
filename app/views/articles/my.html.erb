@@ -1,0 +1,40 @@
+<% @title = "Все Ваши статьи" %>
+
+<%= yield_authenticity_token %>
+<%= javascript_include_tag 'jquery-1.3.min' %>
+<%= javascript_include_tag 'application' %>
+
+<% RuTils::overrides = true %>
+
+<h1>Все статьи, которые разместили Вы</h1>
+
+<% if @articles.blank? %>
+  <p class="about">Вы еще не разместили в системе ни одной своей статьи. 
+  </p>
+<% else %>
+  <table class="articles">
+    <tr>
+    <% Article::COLUMNS[:my].each do |column, link_text, *| %>
+      <th>
+        <%= sort_link(@order, @dir, column, link_text) %>
+      </th>
+    <% end %>
+    </tr>
+    <% @articles.each do |article| %>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <td>
+        <%= owner_link_to(article) %>
+	<br />
+	<%= link_to(h(article.title), article_path(article), :class => 'article-link') %>
+      </td>
+      <td class="buyer"><%= buyer_link_or_nobody(article) %></td>
+      <td class="price"><%= formatted_article_price(article) %></td>
+      <td class="length"><%= formatted_article_length(article) %></td>
+      <td class="time"><%= formatted_article_time(article) %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <%= will_paginate(@articles, :previous_label => 'Предыдущая страница', :next_label => 'Следующая страница') %>
+
+<% end %>

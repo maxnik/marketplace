@@ -6,7 +6,7 @@
 
 <% RuTils::overrides = true %>
 
-<h1 class="tasks-group">Вы заказали написать</h1> 
+<h1 class="tasks-group">Заказы, которые Вы разместили</h1> 
 
 <ol id="my-tasks">
 <% if @my_tasks.blank? %>
@@ -17,6 +17,26 @@
     в систему, либо купив понравившуюся статью в <%= link_to('каталоге', articles_path) %>.
   </li>
 <% else %>
-    <%= render :partial => 'task', :collection => @my_tasks %>
+  <table class="tasks">
+    <tr>
+    <% Task::COLUMNS[:my].each do |column, link_text| %>
+      <th>
+        <%= sort_link(@order, @dir, column, link_text) %>
+      </th>
+    <% end %>
+    </tr>
+    <% @tasks.each do |task| %>
+    <tr class="<%= cycle('even', 'odd') %>">
+      <% task_name_link_class = task.closed? ? 'lock-link' : 'task-link' %>
+      <td class="name"><%= link_to(h(task.name), task_path(task), :class => task_name_link_class) %></td>
+      <td class="created-at"><%= time_ago_in_words(task.created_at) %> назад</td>
+      <td class="articles"><%= items(task.articles_count, 'статья', 'статьи', 'статей') %></td>
+      <td class="propositions"><%= items(task.propositions_count, 'заявка', 'заявки', 'заявок') %></td>
+      <td class="last-proposition"><%= time_ago_in_words_or_never(task.last_proposition_at) %></td>
+    </tr>
+    <% end %>
+  </table>
+  <%= will_paginate(@tasks, :previous_page => 'Предыдущая страница', :next_page => 'Следующая страница') %>
+  <%= render :partial => 'task', :collection => @my_tasks %>
 <% end %>
 </ol>

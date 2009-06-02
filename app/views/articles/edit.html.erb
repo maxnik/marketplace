@@ -60,16 +60,13 @@
     <% end %>
     </select>
   </div>
+
+  <%= f.text_area_for :description, :label => 'Описание', 
+                                    :bottom => 'этот текст видят все пользователи и индексируют поисковые системы' %>
+ 
   <%= f.text_area_for :body, :label => 'Текст статьи', 
-                             :bottom => 'размер статьи ограничен 5-тью тысячами знаков' %>
-  <% unless @article.pictures.blank? %>
-    <ol class="pictures">
-    <% @article.pictures.each do |picture| %>
-      <li>
-      </li>
-    <% end %>
-    </ol>
-  <% end %>
+                             :bottom => 'видит только покупатель, размер ограничен 10 000 знаков' %>
+
   <ol id="pictures">
     <%= render :partial => '/pictures/picture', :collection => @article.pictures %>
   </ol>

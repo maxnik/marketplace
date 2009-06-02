@@ -117,7 +117,20 @@ class TasksController < ApplicationController
   end
   
   def my
+
+    # obsolete
     @my_tasks = current_user.my_tasks.find(:all, :include => {:articles => :author})
+    # obsolete
+
+    order_string, page, @order, @dir = filter_params(Task::COLUMNS[:my], 'last_proposition_at', 'desc')
+
+    @tasks = current_user.my_tasks.paginate(:all, 
+                                        :select => 'tasks.name, tasks.created_at, articles_count, propositions_count,
+                                                    tasks.closed, tasks.id,
+                                                    MAX(propositions.created_at) AS last_proposition_at', 
+                                        :joins => 'LEFT JOIN propositions ON propositions.task_id = tasks.id', 
+                                        :group => 'tasks.id',
+                                        :order => order_string, :page => page)
   end
 
   def assigned

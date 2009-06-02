@@ -28,8 +28,7 @@ class User < ActiveRecord::Base
   end
 
   has_many :my_tasks, 
-           :class_name => 'Task', :foreign_key => 'customer_id', 
-           :order => 'created_at DESC', :include => :articles, :dependent => :destroy
+           :class_name => 'Task', :foreign_key => 'customer_id', :dependent => :destroy
 
 #   has_many :my_messages,       :class_name => 'Message', :foreign_key => 'sender_id'
 #   has_many :received_messages, :class_name => 'Message', :foreign_key => 'recipient_id'
@@ -45,54 +44,25 @@ class User < ActiveRecord::Base
 
   has_many :pictures, :as => 'owner', :dependent => :destroy
 
-  def validate
-    errors.clear
+  include MyValidations
 
-    login_users = User.find(:all, :conditions => if new_record?
-                                                   {:login => login}
-                                                 else
-                                                   ['login = ? AND id <> ?', login, id]
-                                                 end)
-    login_error = case 
-                  when login.blank? then 'у каждого пользователя должно быть имя'
-                  when login.size < 3 then 'слишком короткое имя'
-                  when login.size > 40 then 'слишком длинное имя'
-                  when login !~ LOGIN_REGEX then 'имя содержит недопустимые символы'
-                  when ! login_users.blank? then 'это имя уже занято'
-                  end
-    errors.add(:login, login_error) unless login_error.nil?
+  my_validates_presence_of :login, :message => 'у каждого пользователя должно быть имя'
+  my_validates_length_of :login, :in => 3..40, :too_short => 'слишком короткое имя', :too_long => 'слишком длинное имя'
+  my_validates_format_of :login, :with => LOGIN_REGEX, :message => 'имя содержит недопустимые символы'
+  my_validates_uniqueness_of :login, :message => 'это имя уже занято другим пользователем'
 
-    email_users = User.find(:all, :conditions => if new_record? 
-                                                   {:email => email}
-                                                 else
-                                                   ['email = ? AND id <> ?', email, id]
-                                                 end)
-    email_error = case
-                  when email.blank? then 'адрес e-mail нужен для регистрации'
-                  when email !~ EMAIL_REGEX then 'что-то не похоже на адрес e-mail'
-                  when ! email_users.blank? then 'этот адрес связан с другим именем'
-                  end
-    errors.add(:email, email_error) unless email_error.nil?
+  my_validates_presence_of :email, :message => 'адрес электронной почты нужен для регистрации'
+  my_validates_format_of :email, :with => EMAIL_REGEX, :message => 'что-то не похоже это на адрес e-mail'
+  my_validates_uniqueness_of :email, :message => 'этот адрес уже связан с другим именем пользователя'
 
-    password_error = case
-                     when password.blank? then 'пароль нужен для защиты Ваших данных'
-                     when password.size < 6 then 'слишком короткий пароль'
-                     end
-    errors.add(:password, password_error) unless password_error.nil?
+  password_proc = Proc.new {|u| u.errors.on(:password).blank? && u.password_required? }
 
-   confirm_error = case
-                   when ! errors.on(:password).nil? then 'повторите правильный пароль'
-                   when password != password_confirmation
-                     errors.add(:password, 'оба введенных пароля должны совпадать')
-                     'повтор не совпадает с первым вводом'
-                   end
-    errors.add(:password_confirmation, confirm_error) unless confirm_error.nil?
+  validates_presence_of :password, :message => 'пароль нужен для защиты Ваших данных', :if => password_proc
+  validates_length_of :password, :minimum => 6, :message => 'слишком короткий пароль', :if => password_proc
+  validates_confirmation_of :password, :message => 'пароль и его подтверждение должны совпадать', :if => password_proc
 
-    wmz_error = case
-                when (!wmz.blank?) && wmz !~ /^Z(\d){12}$/ then 'неправильный формат номера кошелька'
-                end
-    errors.add(:wmz, wmz_error) unless wmz_error.nil?
-  end
+  validates_format_of :wmz, :with => /^Z(\d){12}$/, :message => 'неправильный формат номера кошелька', 
+                      :unless => Proc.new {|u| u.wmz.blank? }
 
   def self.per_page
     10

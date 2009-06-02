@@ -31,9 +31,12 @@
   <%= f.text_field_for :price, :label => 'Цена статьи',
                                :bottom => 'указывается в WMZ только если статья на продажу',
                                :div_id => 'price-div' %>
-
+ 
+  <%= f.text_area_for :description, :label => 'Описание', 
+                                    :bottom => 'этот текст видят все пользователи и индексируют поисковые системы' %>
+ 
   <%= f.text_area_for :body, :label => 'Текст статьи', 
-                             :bottom => 'размер статьи ограничен 5-тью тысячами знаков' %>
+                             :bottom => 'видит только покупатель, размер ограничен 10 000 знаков' %>
   <ol id="pictures">
     <%= render :partial => '/pictures/picture', :collection => @pictures %>
   </ol>

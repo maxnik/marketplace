@@ -9,19 +9,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090206072004) do
+ActiveRecord::Schema.define(:version => 20090323150217) do
 
   create_table "articles", :force => true do |t|
-    t.string   "title",                    :null => false
-    t.text     "body",                     :null => false
-    t.integer  "length",     :limit => 11
-    t.integer  "buyer_id",   :limit => 11
-    t.integer  "author_id",  :limit => 11, :null => false
-    t.integer  "owner_id",   :limit => 11
+    t.string   "title",                     :null => false
+    t.text     "body",                      :null => false
+    t.integer  "length",      :limit => 11
+    t.integer  "buyer_id",    :limit => 11
+    t.integer  "author_id",   :limit => 11, :null => false
+    t.integer  "owner_id",    :limit => 11
     t.string   "owner_type"
-    t.integer  "price",      :limit => 11
+    t.integer  "price",       :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "description",               :null => false
+    t.string   "owner_name",                :null => false
+    t.string   "owner_param",               :null => false
   end
 
   create_table "categories", :force => true do |t|

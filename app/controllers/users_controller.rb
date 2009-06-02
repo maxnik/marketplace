@@ -29,15 +29,20 @@ class UsersController < ApplicationController
   end
 
   def show
-    @order, @dir, @page = filter_params(Article.sort_columns(:user), 'created_at', 'desc')
+    order_string, page, @order, @dir = filter_params(Article::COLUMNS[:user], 'created_at', 'desc')
 
-    @articles = Article.authored_by_user_paginate(@user, @order, @dir, @page)
+    @articles = Article.authored_by_user_paginate(@user, order_string, page)
   end
 
   def edit
   end
  
   def update
+    if @user.update_attributes(params[:user])
+      redirect_to(user_path(@user))
+    else
+      render :action => 'edit'
+    end
   end
 
   def ask

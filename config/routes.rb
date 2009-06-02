@@ -9,7 +9,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.recover 'users/:login/recover/:crypted_password', :controller => 'users', :action => 'recover'
 
-  map.resources :users, :collection => {:ask => :get, :deliver => :post}
+  map.resources :users, :collection => {:ask => :get, :deliver => :post, :recover => :get}
 
   map.resource :session
 
@@ -23,13 +23,17 @@ ActionController::Routing::Routes.draw do |map|
                                         :my => :get, 
                                         :assigned => :get},
                         :member => {:close => :put} do |task|
+
     task.resources :articles, :controller => 'task_articles', :member => {:buy => :put}
+
   end
+
   map.with_options :controller => 'tasks', :conditions => {:method => :put} do |t|
     t.assign_task 'tasks/:id/assign/:proposition_id', :action => 'assign'
   end
 
-  map.category 'categories/:id', :controller => 'categories', :action => 'show'
+  map.category 'categories/:id', :controller => 'categories', :action => 'index'
+  map.category_article 'categories/:category_id/articles/:id', :controller => 'categories', :action => 'show'
 
   # The priority is based upon order of creation: first created -> highest priority.
 

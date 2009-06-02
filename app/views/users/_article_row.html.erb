@@ -1,13 +1,11 @@
 <tr class="<%= cycle('even', 'odd') %>">
   <td class="title">
-    <%= link_to(article.category_name, category_path(article.category_url_name), :class => 'category-link') %>
+    <%= link_to(article.owner_name, category_path(article.owner_param), :class => 'category-link') %>
     <br />
-    <%= link_to(h(article.title).gsub(' ', ' <wbr />'), article_path(article), :class => 'article-link') %>
+    <%= public_or_personal_article_link(article, current_user) %>
   </td>
-  <td class="price">
-    <%= number_to_currency(article.price, :format => '%n<br />WMZ', :separator => ',', :delimiter => '') %>
-  </td>
-  <td class="length"><%= sprintf('%.1f', article.length / 1000.0).gsub('.', ',') %> тыс.<br />знаков</td>
-  <td class="time"><%= time_ago_in_words(article.created_at).gsub('около ', 'около<br />') %><br />назад</td>
+  <td class="price"><%= formatted_article_price(article) %></td>
+  <td class="length"><%= formatted_article_length(article) %></td>
+  <td class="time"><%= formatted_article_time(article) %></td>
 </tr>
 

@@ -123,7 +123,7 @@ module UsersHelper
 
   def forsale_articles_for(user)
     if user.forsale_articles_count == 0
-      'Нет статей <br /> в продаже'
+      'нет статей <br /> в продаже'
     else
       user.forsale_articles_count.to_s + ' ' + user.forsale_articles_count.items('статья', 'статьи', 'статей')
     end
