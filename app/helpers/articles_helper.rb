@@ -48,7 +48,7 @@ module ArticlesHelper
   end
 
   def public_or_personal_article_link(article, user)
-    if article.author_id == user.id
+    if user && article.author_id == user.id
       # personal link, only for author
       link_to(h(article.title), article_path(article), :class => 'article-link')
     else
