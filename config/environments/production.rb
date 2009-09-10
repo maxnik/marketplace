@@ -26,6 +26,6 @@ config.action_mailer.smtp_settings = {
   :port => 587,
   :domain => 'gmail.com',
   :authentication => :plain,
-  :user_name => 'textino.admin',
-  :password => 'gfhjkm1hfp'
+  :user_name => '',
+  :password => ''
 }
