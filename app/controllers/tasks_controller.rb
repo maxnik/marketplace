@@ -124,6 +124,8 @@ class TasksController < ApplicationController
 
     order_string, page, @order, @dir = filter_params(Task::COLUMNS[:my], 'last_proposition_at', 'desc')
 
+    # workaround for difference between mysql and postresql
+    # http://web.elctech.com/2009/07/21/workaround-pgerror-error-column-model-ref-must-appear-in-the-group-by-clause-or-be-used-in-an-aggregate-function/
     columns = Task.column_names.map {|c| "tasks.#{c}" }.join(',')
     @tasks = current_user.my_tasks.paginate(:all, 
                                         :select => 'tasks.name, tasks.created_at, articles_count, propositions_count,
