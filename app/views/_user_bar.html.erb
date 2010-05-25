@@ -5,7 +5,7 @@
   <span>на Вашем счете 234 WMZ</span>
   <dl>
     <dd><%= link_to('выйти из системы', logout_path, :id => 'logout-link') %></dd>
-    <dd><%= link_to('личные сообщения', messages_path, :id => 'messages-link') %></dd>
+    <dd><%= link_to('личные сообщения', '#', :id => 'messages-link') %></dd>
     <dd><%= link_to('письмо администратору', '#', :id => 'admin-messages-link') %></dd>
     <dt>Управление заказами</dt>
       <dd><%= link_to('разместить заказ', new_task_path, :class => 'new-task-link') %></dd>
@@ -14,7 +14,7 @@
     <dt>Управление статьями</dt>
       <dd><%= link_to('разместить статью', new_article_path, :class => 'new-article-link') %></dd>
       <dd><%= link_to('Вы разместили', my_articles_path, :id => 'my-articles-link') %></dd>
-      <dd><%= link_to('Вы купили', bought_articles_path, :id => 'bought-articles-link') %></dd>      
+      <dd><%= link_to('Вы купили', '#', :id => 'bought-articles-link') %></dd>      
     <dt>Управление счетом</dt>
       <dd><a href="#" id="deposit-link">пополнить счет</a></dd>
       <dd><a href="#" id="withdraw-link">вывести деньги</a></dd>
