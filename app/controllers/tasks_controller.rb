@@ -124,12 +124,13 @@ class TasksController < ApplicationController
 
     order_string, page, @order, @dir = filter_params(Task::COLUMNS[:my], 'last_proposition_at', 'desc')
 
+    columns = Task.column_names.map {|c| "tasks.#{c}" }.join(',')
     @tasks = current_user.my_tasks.paginate(:all, 
                                         :select => 'tasks.name, tasks.created_at, articles_count, propositions_count,
                                                     tasks.closed, tasks.id,
                                                     MAX(propositions.created_at) AS last_proposition_at', 
                                         :joins => 'LEFT JOIN propositions ON propositions.task_id = tasks.id', 
-                                        :group => 'tasks.id',
+                                        :group => "tasks.id, #{columns}",
                                         :order => order_string, :page => page)
   end
 
